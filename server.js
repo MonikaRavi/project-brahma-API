@@ -8,10 +8,14 @@ var path = require('path');
 var viewPath = __dirname + '/public/';
 
 var sfData = require('./Salesforce/Query/accounts');
-var sfQuery = require('./Salesforce/Query/opportunity');
+var aggregateData=require('./aggregate.js');
+
 
 var app = express();
 app.use(cors());
+
+
+
 
 const port = process.env.PORT || 3000;
 
@@ -51,26 +55,32 @@ app.get('/data/:type', (req, res) => {
 // get the opportunity by AX account no
 
 app.get('/opportunity/:account', (req, res) => {
+  console.log(req.params.account);
+  aggregateData.aggregateData(req.params.account).then((data)=>{
+    console.log(data);
+    res.send(data);
+  },(error)=>{
+    res.send(error);
+  });
+  // aggregateData.aggregateData(req,res).then(function(values){
+  //    //console.log('values inside:',values);
+  //    var sf={'salesforce':values}
+  //    console.log('Values[0]',sf);
+  //    var a65={
+  //                         "customer":{
+  //                                       "CustAccount":req.params.account,
+  //                                       "Customer":"Some random name for now"
+  //                                   },
+  //                         "data":values[1]
+  //                     }
+   
+  //    console.log('Values[1]',a65);
 
 
-  sfQuery.querySoql(decodeURI(req.params.account)).then(
-
-    (data) => {
-
-      res.send(JSON.stringify(data, undefined, 2));
-      // console.log({data});
-    },
-    (err) => {
-      res.status(400).send(err);
-    }
-
-  ).catch((err) => {
-    res.status(400).send(err);
-  })
-
-
-});
-
+  //    res.send({'salesforce':values[0],'AX365':a65
+  //    });
+  //    });
+})
 
 
 app.listen(port, () => {

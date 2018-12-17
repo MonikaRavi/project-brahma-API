@@ -9,8 +9,8 @@ var querySoql = (accountName) => {
 
                 if (res.accToken) {
 
-                    var query = `select Name, probability, amount from Opportunity  where isClosed = false and AccountID in 
-                                (select Id from Account where axaccountnum__c = '${accountName}' )`
+                    var query = `select  Name, probability, amount from Opportunity  where isClosed = false and AccountID in 
+                                (select Id from Account where axaccountnum__c = '${accountName}' ) LIMIT 5`
 
                     sfConnection.conn.query(query, function (err, result) {
 
@@ -20,7 +20,7 @@ var querySoql = (accountName) => {
                             reject(err); 
                         }
 
-                        console.log(result)
+                        //console.log('result_______',result);
 
                         var data = [];
                         var dataArray = [];

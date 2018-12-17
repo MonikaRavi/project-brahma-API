@@ -1,22 +1,16 @@
 var jsforce = require('jsforce');
+var configSF=require('./configSF.js');
 
 var conn = new jsforce.Connection({
-    oauth2: {
-      // you can change loginUrl to connect to sandbox or prerelease env.
-      loginUrl: 'https://test.salesforce.com/',
-      clientId: '3MVG9MHOv_bskkhQKsOfEdjGIWrWajLB2pf_QqbXZQZhEXGBNlP2NxNzBStxHH4augZU7vuG.FchltxVAIVrd',
-      clientSecret: '2261574018905486495',
-      redirectUri: 'http://localhost:3000/'
-      
-    }
-  });
+  oauth2:configSF.oauth
+});
 
-  //callback function to get the token 
+//callback function to get the token 
 
-  var getToken = (callback)=>{
+var getToken = (callback)=>{
 
-    var securityToken = 'JDmYHNZGLnsTocy1MtePvltqB';  //received from Salesforce 
-
+    //var securityToken = 'JDmYHNZGLnsTocy1MtePvltqB';  //received from Salesforce 
+  var securityToken=configSF.securityToken.token;
   conn.login('systems@hawsco.com.iot', 'SF18r3s3t'+securityToken, function (err, userInfo) { //use security token to use SF in a browser or desktop app
     if (err) { 
       
