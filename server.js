@@ -9,12 +9,13 @@ var viewPath = __dirname + '/public/';
 
 var sfData = require('./Salesforce/Query/accounts');
 var aggregateData=require('./aggregate.js');
+var intersection=require('./intersection.js');
+var list=require('./list.js');
+var customer=require('./customer.js');
 
 
 var app = express();
 app.use(cors());
-
-
 
 
 const port = process.env.PORT || 3000;
@@ -55,36 +56,55 @@ app.get('/data/:type', (req, res) => {
 // get the opportunity by AX account no
 
 app.get('/opportunity/:account', (req, res) => {
+
   console.log(req.params.account);
+  
   aggregateData.aggregateData(req.params.account).then((data)=>{
-    console.log(data);
+  
+    console.log(data);  
     res.send(data);
-  },(error)=>{
+  
+  },(error)=>{  
     res.send(error);
   });
-  // aggregateData.aggregateData(req,res).then(function(values){
-  //    //console.log('values inside:',values);
-  //    var sf={'salesforce':values}
-  //    console.log('Values[0]',sf);
-  //    var a65={
-  //                         "customer":{
-  //                                       "CustAccount":req.params.account,
-  //                                       "Customer":"Some random name for now"
-  //                                   },
-  //                         "data":values[1]
-  //                     }
-   
-  //    console.log('Values[1]',a65);
 
-
-  //    res.send({'salesforce':values[0],'AX365':a65
-  //    });
-  //    });
 })
 
 
-app.listen(port, () => {
-  console.log(`Server started at port ${port}..`);
+//get detailed information for certain orders present in SF that made it into AX
+app.get('/intersection/:salesOrder',(req,res)=>{
+  //console.log(req.params.account);
+  intersection.intersection(req.params.account).then((result)=>{
+  console.log('data:',result);
+  res.send(result);
+ });
+  
+});
+
+
+app.get('/list',(req,res)=>{
+  list.listFunc().then((result)=>{
+    console.log('List:',result);
+    res.send(result);
+  })
+})
+
+app.get('/customerDetail/:account',(req,res)=>{
+  customer.customer(req.params.account).then((result)=>{
+    console.log('Customer Details:',result);
+    res.send(result);
+  })
+});
+
+
+
+
+
+
+app.listen(3000, () => {
+
+  console.log(`Server started at port 3000..`);
+
 });
 
 
