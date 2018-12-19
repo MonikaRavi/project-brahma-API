@@ -1,4 +1,4 @@
-const config9=require('./AX2009/config2009.js');
+//const config9=require('./AX2009/config2009.js');
 const sfConnection = require('./Salesforce/access');
 const sql=require('mssql');
 
@@ -6,8 +6,13 @@ function customer(account){
 	return new Promise((resolve,reject)=>{
     
 			console.log('account:',account);
-			var config1=config9.config;
-	   
+			//var config1=config9.config;
+	  	var	config1={
+		user: 'nodeapp',
+        password: 'traynor_1906',
+        server: 'HWSSQL3', 
+        database: 'HawsBusinessAnalysis'
+    };
 	        sql.connect(config1, function (err) {    
 	        
 	            if (err) console.log(err);

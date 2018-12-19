@@ -6,7 +6,12 @@ function accountAX2009(account){
 	return new Promise((resolve,reject)=>{
     
 		var config1=config.config;
-   
+    //     var config1={
+    //     user: 'nodeapp',
+    //     password: 'traynor_1906',
+    //     server: 'HWSSQL3', 
+    //     database: 'HawsBusinessAnalysis'
+    // };
         sql.connect(config1, function (err) {    
         
             if (err) console.log(err);

@@ -2,9 +2,8 @@ const sfConnection = require('../access');
 
 var querySoql = (accountName) => {
 
-    return new Promise(
-
-        (resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        
             sfConnection.getToken((err, res) => {
 
                 if (res.accToken) {

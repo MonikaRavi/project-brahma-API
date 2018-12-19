@@ -12,7 +12,13 @@ function intersection(account){
 		return new Promise((resolve,reject)=>{
     
 			console.log('hi');
-			var config1=config9.config;
+			//var config1=config9.config;
+			var config1={
+		user: 'nodeapp',
+        password: 'traynor_1906',
+        server: 'HWSSQL3', 
+        database: 'HawsBusinessAnalysis'
+    };
 	   
 	        sql.connect(config1, function (err) {    
 	        

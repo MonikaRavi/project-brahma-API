@@ -84,14 +84,14 @@ app.get('/intersection/:salesOrder',(req,res)=>{
 
 app.get('/list',(req,res)=>{
   list.listFunc().then((result)=>{
-    console.log('List:',result);
+    //console.log('List:',result);
     res.send(result);
   })
 })
 
 app.get('/customerDetail/:account',(req,res)=>{
   customer.customer(req.params.account).then((result)=>{
-    console.log('Customer Details:',result);
+    //console.log('Customer Details:',result);
     res.send(result);
   })
 });
