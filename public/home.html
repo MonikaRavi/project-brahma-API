@@ -46,9 +46,10 @@
 
             <!-- API 1 : Accounts by Distributor Type -->
 
-            <h3>/data/:type</h3>
+            <h3>/v2/salesforce/:type</h3>
 
             <h5>returns Distributor Detail by Distributor Type</h5>
+            <h5>:type can be {safety,plumbing}<h5>
 
             <h6><u>JSON Structure</u></h6>
 
@@ -64,9 +65,10 @@
 
             <!-- API 2 : Opportunity by AX Customer ID -->
 
-            <h3>/opportunity/:AxCustomerId</h3>
+            <h3>/v2/AX2009_SF_AX365/opportunities/:AxCustomerId</h3>
 
             <h5>returns Opportunity by AX Account Number</h5>
+            <h5>:AxCustomerId for trial {00764}</h5>
 
             <h6><u>JSON Structure</u></h6>
 
@@ -77,6 +79,83 @@
                             "amount": Amount
                         }
             </code>
+        
+
+            <h3>/v2/AX2009_SF/intersection/:salesOrder</h3>
+
+            <h5>Returns all sales order present in Salesforce that have made it to AX2009</h5>
+            <h5>:salesOrder for trial {1787116}</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                    {    
+                        "AX2009":{
+                            "SalesId": Sales Id,
+                            "SalesName": Sales Name
+                            "createdDate": createdDate,
+                            "Amount":amount
+                        },
+                        'Salesforce':{
+                            "Name": Account Name,
+                            "amount": Amount,
+                            "ERP_Sales_Order_Number__c": Sales Order Number,
+                            "ERP_Final_Amount__c": Final Amount,
+                            "CloseDate":closing date,
+                            "Opportunity_State_Province__c":State
+                        }
+                    }
+            </code>
+
+
+            <h3>/v2/AX2009/list</h3>
+
+            <h5>Lists all the orders of 2009</h5>
+            <h5>:salesOrder for trial {1787116}</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                    [    
+                        {
+                            "SalesId": Sales Id,
+                            "SalesName": Sales Name,
+                            "createdDate": createdDate,
+                            "customer":Customer Name,
+                            "ItemID": Item ID,
+                            "ItemName":Name of Item,
+                            "SalesQty": Quantity sold,
+                            "LineAmount": Amount,
+                            "SalesStatus": Status of sale
+                        },
+                        {
+                            ...
+                        },
+                        ...
+                    ]
+            </code>
+
+            <h3>/v2/AX2009/customers/:SalesId</h3>
+
+            <h5>Give the customer Details of AX2009 from SalesID</h5>
+            <h5>:salesId for trial {SO00000155}</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                    [    
+                        {
+                            "SalesId": Sales Id,
+                            "CustAccount": Customer Account,
+                            "customer":Customer Name,
+                            "Phone":Phone Number
+                            "Email": Email,
+                            "Address": Address,
+                            "RSD": 
+                        }
+                    ]
+            </code>
+
 
 
 

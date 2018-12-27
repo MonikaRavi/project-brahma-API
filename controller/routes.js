@@ -1,5 +1,6 @@
 var express=require('express');
 var router=express.Router();
+var path = require('path');
 
 //require controllers
 var aggregateDataController=require('./aggregate.controller');
@@ -9,10 +10,10 @@ var AX2009Controller=require('./AX2009.controller');
 
 
 //for landing page
-var viewPath = __dirname + '/public/';
+var viewPath = __dirname + '/../public/';
 router.get('/', (req, res) => {
-
-  res.sendFile(viewPath + "home.html");});
+  res.sendFile(path.resolve(viewPath + "home.html"));
+});
 
 
 //API EndPoints Version__1

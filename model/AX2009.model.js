@@ -55,14 +55,9 @@ function customerFunc(req,res){
     var account=req.params.account;
     return new Promise((resolve,reject)=>{
     
-        console.log('account:',account);
-        //var config1=config9.config;
-        var config1={
-                user: 'nodeapp',
-                password: 'traynor_1906',
-                server: 'HWSSQL3', 
-                database: 'HawsBusinessAnalysis'
-            };
+        //console.log('account:',account);
+        var config1=config.config;
+       
         sql.connect(config1, function (err) {    
         
             if (err) console.log(err);
@@ -91,18 +86,11 @@ function customerFunc(req,res){
 function listFunc(req,res){
     return new Promise((resolve,reject)=>{
     
-            console.log('hi');
-            // var config1=config9.config;
-            var config1={
-                user: 'nodeapp',
-                password: 'traynor_1906',
-                server: 'HWSSQL3', 
-                database: 'HawsBusinessAnalysis'
-            };
+            var config1=config.config;
+            
             sql.connect(config1, function (err) {    
             
                 if (err) console.log(err);
-
                 
                 var request = new sql.Request();           
                  
@@ -116,7 +104,7 @@ function listFunc(req,res){
                     
                     if (err) reject(err);
                     
-                     console.log(recordset.recordsets[0]);    
+                    // console.log(recordset.recordsets[0]);    
 
                     resolve(recordset.recordsets[0]);                            
                
