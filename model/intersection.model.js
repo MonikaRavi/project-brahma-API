@@ -1,24 +1,17 @@
-const config9=require('./AX2009/config2009.js');
-const sfConnection = require('./Salesforce/access');
+const sfConnection = require('../configuration/accessSF');
 const sql=require('mssql');
 
-
-function intersection(account){
-	//have to make queries to 2009 and SF sequentially, make an object combining the two and return it
-
-	//connection to AX2009
-	
-	var AX2009Func=function(){
+var AX2009Func=function(){
 		return new Promise((resolve,reject)=>{
     
 			console.log('hi');
 			//var config1=config9.config;
 			var config1={
-		user: 'nodeapp',
-        password: 'traynor_1906',
-        server: 'HWSSQL3', 
-        database: 'HawsBusinessAnalysis'
-    };
+				user: 'nodeapp',
+		        password: 'traynor_1906',
+		        server: 'HWSSQL3', 
+		        database: 'HawsBusinessAnalysis'
+		   	};
 	   
 	        sql.connect(config1, function (err) {    
 	        
@@ -32,7 +25,7 @@ function intersection(account){
 	                
 	                if (err) reject(err);
 	            	
-	            	 console.log(recordset.recordsets[0]);    
+	            	// console.log(recordset.recordsets[0]);    
 
 	            	resolve(recordset.recordsets[0]);      	                     
 	           
@@ -62,7 +55,7 @@ function intersection(account){
                             reject(err); 
                         }
 
-                        console.log('result_______',result.records[0]);
+                        //console.log('result_______',result.records[0]);
 
                         resolve(result.records[0]);
 
@@ -77,22 +70,7 @@ function intersection(account){
 		})
 	}
 
-    return Promise.all([AX2009Func(),SFFunc()]).then(function(values){
-    	return({
-    				AX2009:values[0][0],
-    				SalesForce:{
-    					Name:values[1].Name,
-    					Amount:values[1].Amount,
-    					ERP_Sales_Order_Number__c:values[1].ERP_Sales_Order_Number__c,
-    					ERP_Final_Amount__c:values[1].ERP_Final_Amount__c,
-    					AccountID:values[1].AccountID,
-    					CloseDate:values[1].CloseDate,
-    					Opportunity_State_Province__c:values[1].Opportunity_State_Province__c
-    				}
-    			});
-    });	
-}
-
 module.exports={
-	intersection
+	SFFunc,
+	AX2009Func
 }

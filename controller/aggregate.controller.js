@@ -1,9 +1,11 @@
-var sfQuery = require('./Salesforce/Query/opportunity');
-var ax365Query=require('./AX365/accounts.js');
-var ax2009Query=require('./AX2009/accounts.js');
+var sfQuery = require('../model/salesforce.model');
+var ax365Controller=require('../controller/AX365.controller');
+var ax2009Controller=require('../controller/AX2009.controller');
 
 
-var aggregateData= async function(account){
+var aggregateData= async function(req,res){
+	// console.log('account:',req.params.account);
+	// var account=req.params.account;
 	//declare the variable to store the returned data
 	
 
@@ -39,6 +41,7 @@ var aggregateData= async function(account){
 
 		//____________________________________________trying async await ________________________________________________________________
 
+		var account=req.params.account;
 
 		async function sf(){
 			let salesPromise=sfQuery.querySoql(account);
@@ -48,14 +51,14 @@ var aggregateData= async function(account){
 		}
 
 		async function AX65(){
-			let ax65Promise=ax365Query.accountAX365(account);
+			let ax65Promise=ax365Controller.AX365Controller(req,res);
 			let ax65Result=await ax65Promise;
 			//console.log('ax65Result:',ax65Result);
 			return ax65Result;
 		}
 
 		async function AX9(){
-			let ax9Promise=ax2009Query.accountAX2009(account);
+			let ax9Promise=ax2009Controller.AX2009Controller(req,res);
 			let ax9Result=await ax9Promise;
 			//console.log('ax9Result:',ax9Result);
 			return ax9Result; 
@@ -71,7 +74,7 @@ var aggregateData= async function(account){
 			AX2009:AXData9
 		}
 		//console.log('JSON',JSON);
-		return JSON;
+		res.send(JSON);
 
 		// sf().then((data)=>{
 		// 	console.log(data);

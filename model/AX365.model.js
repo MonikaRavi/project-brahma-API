@@ -1,8 +1,8 @@
 const sql=require('mssql');
-const config365=require('./config365.js');
+const config365=require('../configuration/configAX365.js');
 
 
-function accountAX365(account){
+function accountAX365Func(account){
 
 	return new Promise((resolve,reject)=>{
 
@@ -58,6 +58,6 @@ function accountAX365(account){
 
 module.exports={
 
-	accountAX365
+	accountAX365Func
 
 }

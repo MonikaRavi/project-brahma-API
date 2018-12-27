@@ -1,9 +1,9 @@
 const sql=require('mssql');
-const config=require('./config2009.js');
+const config=require('../configuration/configAX2009.js');
 
-function accountAX2009(account){
-
-	return new Promise((resolve,reject)=>{
+function accountAX2009Func(req,res){
+    var account=req.params.account;
+    return new Promise((resolve,reject)=>{
     
 		var config1=config.config;
     //     var config1={
@@ -56,7 +56,45 @@ function accountAX2009(account){
 
 }
 
+function customerFunc(req,res){
+    var account=req.params.account;
+    return new Promise((resolve,reject)=>{
+    
+        console.log('account:',account);
+        //var config1=config9.config;
+        var config1={
+                user: 'nodeapp',
+                password: 'traynor_1906',
+                server: 'HWSSQL3', 
+                database: 'HawsBusinessAnalysis'
+            };
+        sql.connect(config1, function (err) {    
+        
+            if (err) console.log(err);
+            
+            var request = new sql.Request();           
+             
+            ourQuery = `select TOP 10 SALESID, CUSTACCOUNT , Customer, PHONE, EMAIL, ADDRESS, RSD from Customer_SalesID 
+            where SALESID='${account}'`;
+
+            request.query(ourQuery, function (err, recordset) {
+                
+                if (err) reject(err);
+                
+                 console.log(recordset.recordsets[0]);    
+
+                resolve(recordset.recordsets[0]);                            
+           
+                sql.close();
+            
+             });
+        
+            });
+        })
+}
+
 
 module.exports={
-	accountAX2009
+	accountAX2009Func,
+    customerFunc
 }
