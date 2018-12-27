@@ -26,7 +26,7 @@ Open Link http://localhost:3000/
 
 **Code** : uses APEX Rest class in Salesforce
 
-**Path** :  `/data/:type`
+**Path** :  `v2/salesforce/:type`
 
  ````
      Options :  1. safety
@@ -37,8 +37,27 @@ Open Link http://localhost:3000/
 
 **Code** : uses Query class in JSforce and SOQL to access tables
 
-**Path** : `opportunity/:account`
+**Path** : `/v2/AX2009_SF_AX365/opportunities/:account`
 
 ````
         Options : 07280, 00764, 03465
 ````
+
+###### Order from Salesforce that made it into AX2009:
+**Code** : queries Salesforce and Ax2009 to get the intersection data
+**Path** : '/v2/AX2009_SF/intersection/:salesOrder'
+`````
+		Options:  1787116
+`````
+
+###### List order of 2009:
+**Code** : queries Ax2009 to get the list data
+**Path** : '/v2/AX2009/list'
+
+
+###### Get customer details from SalesId:
+**Code** : queries Ax2009 to get the information of customer
+**Path** : '/v2/AX2009/customers/:SalesId'
+`````
+		Options:  SO00000155
+`````
