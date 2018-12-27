@@ -2,11 +2,11 @@ const sfConnection = require('../configuration/accessSF');
 const request = require('request');
 
 
-var querySoql = (accountName) => {
+var querySoql = function (accountName) {
 
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject) {
         
-            sfConnection.getToken((err, res) => {
+            sfConnection.getToken(function(err, res) {
 
                 if (res.accToken) {
 
@@ -20,10 +20,9 @@ var querySoql = (accountName) => {
                             console.log(err);
                             reject(err); 
                         }
-
-                        //console.log('result_______',result);
-
+                        
                         var data = [];
+
                         var dataArray = [];
 
                         dataArray = result.records;
@@ -54,22 +53,13 @@ var querySoql = (accountName) => {
 }
 
 
-
-
-
-
-
-
-
-var accounts = (accountType) => {
-
-    //returns a promise with request output
+var accounts = function(accountType) {
 
     return new Promise(
 
         (resolve, reject) => {
 
-            sfConnection.getToken((err, resp) => {
+            sfConnection.getToken(function(err, resp){
 
                 if (err) {
 
@@ -88,7 +78,7 @@ var accounts = (accountType) => {
                             auth: { bearer: resp.accToken }
 
                         },
-                        (err, response, body) => {
+                        function(err, response, body){
 
                             if (err) {
 
@@ -110,8 +100,6 @@ var accounts = (accountType) => {
                                         Website : element.Website
 
                                     })
-
-
 
                                 });
 

@@ -10,7 +10,14 @@ function AX2009CustomerController(req,res){
 	})
 }
 
+function AX2009List(req,res){
+	AX2009Model.listFunc(req,res).then((result)=>{
+		res.send(result);
+	})
+}
+
 module.exports={
 	AX2009Controller,
-	AX2009CustomerController
+	AX2009CustomerController,
+	AX2009List
 }

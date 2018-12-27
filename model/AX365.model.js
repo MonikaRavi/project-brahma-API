@@ -4,15 +4,10 @@ const config365=require('../configuration/configAX365.js');
 
 function accountAX365Func(account){
 
-	return new Promise((resolve,reject)=>{
+	return new Promise(function(resolve,reject){
 
     config=config365.config;
-    // config={
-    //     user: 'biplavt',
-    //     password: 'traynor_1906',
-    //     server: '13.77.146.247', 
-    //     database: 'AXDATA' 
-    // };
+    
   	sql.connect(config, function (err) {    
 
         if (err) console.log(err);

@@ -3,9 +3,6 @@ var router=express.Router();
 var sfModel = require('../model/salesforce.model');
 
 
-
-
-
 // get Accounts by distributor type
 
  function getAccounts(req, res) {

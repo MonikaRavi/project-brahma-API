@@ -1,74 +1,65 @@
 const sfConnection = require('../configuration/accessSF');
+const config=require('../configuration/configAX2009.js');
 const sql=require('mssql');
 
 var AX2009Func=function(){
-		return new Promise((resolve,reject)=>{
-    
-			console.log('hi');
-			//var config1=config9.config;
-			var config1={
-				user: 'nodeapp',
-		        password: 'traynor_1906',
-		        server: 'HWSSQL3', 
-		        database: 'HawsBusinessAnalysis'
-		   	};
-	   
-	        sql.connect(config1, function (err) {    
-	        
-	            if (err) console.log(err);
-	            
-	            var request = new sql.Request();           
-	             
-	            ourQuery = `select SALESID, SalesName, createdDate, Amount from SalesSummary_Hws where SALESID = 'SO-1787116'`;
+		
+	return new Promise(function(resolve,reject){
 
-	            request.query(ourQuery, function (err, recordset) {
-	                
-	                if (err) reject(err);
-	            	
-	            	// console.log(recordset.recordsets[0]);    
-
-	            	resolve(recordset.recordsets[0]);      	                     
-	           
-	                sql.close();
-	            
-	             });
-	        
-	        });
-		});
-	}
-	
-	var SFFunc=function(){
-		return new Promise((resolve, reject) => {
+		var config1=config.config;
+		
+        sql.connect(config1, function (err) {    
         
-            sfConnection.getToken((err, res) => {
+            if (err) console.log(err);
+            
+            var request = new sql.Request();           
+             
+            ourQuery = `select SALESID, SalesName, createdDate, Amount from SalesSummary_Hws where SALESID = 'SO-1787116'`;
 
-                if (res.accToken) {
+            request.query(ourQuery, function (err, recordset) {
+                
+                if (err) reject(err);
+            	
+            	resolve(recordset.recordsets[0]);      	                     
+           
+                sql.close();
+            
+             });
+        
+        });
+	});
+}
 
-                    var query = `select name, Amount, ERP_Sales_Order_Number__c, ERP_Final_Amount__c, AccountID, CloseDate, 
-                    				Opportunity_State_Province__c from Opportunity where ERP_Sales_Order_Number__c = 'SO-1787116' `
+var SFFunc=function(){
+	return new Promise(function(resolve, reject) {
+    
+        sfConnection.getToken(function(err, res) {
 
-                    sfConnection.conn.query(query, function (err, result) {
+            if (res.accToken) {
 
-                        if (err) { 
-                            
-                            console.log(err);
-                            reject(err); 
-                        }
+                var query = `select name, Amount, ERP_Sales_Order_Number__c, ERP_Final_Amount__c, AccountID, CloseDate, 
+                				Opportunity_State_Province__c from Opportunity where ERP_Sales_Order_Number__c = 'SO-1787116' `
 
-                        //console.log('result_______',result.records[0]);
+                sfConnection.conn.query(query, function (err, result) {
 
-                        resolve(result.records[0]);
+                    if (err) { 
+                        
+                        console.log(err);
+                        reject(err); 
+                    }
 
-                    });
+                    resolve(result.records[0]);
 
-                } else {
+                });
 
-                    console.log(err);
-                }
+            } else {
 
-            });
-		})
-	}
+                console.log(err);
+            }
+
+        });
+	})
+}
 
 module.exports={
 	SFFunc,
