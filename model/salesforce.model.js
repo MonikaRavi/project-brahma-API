@@ -1,124 +1,101 @@
 const sfConnection = require('../configuration/accessSF');
+const utilityModel=require('./utility/utilityModel');
 const request = require('request');
+
 
 
 var querySoql = function (accountName) {
 
-    return new Promise(function(resolve, reject) {
-        
-            sfConnection.getToken(function(err, res) {
+    var query = `select  Name, probability, amount from Opportunity  where isClosed = false and AccountID in 
+                                (select Id from Account where axaccountnum__c = '${accountName}' ) LIMIT 5`;
 
-                if (res.accToken) {
+    //call database using Utility Function and format the data as required
+        return new Promise(function(resolve, reject){
 
-                    var query = `select  Name, probability, amount from Opportunity  where isClosed = false and AccountID in 
-                                (select Id from Account where axaccountnum__c = '${accountName}' ) LIMIT 5`
+            utilityModel.SFQuery(query).then(function(result){
 
-                    sfConnection.conn.query(query, function (err, result) {
+            var data = [];
 
-                        if (err) { 
-                            
+            var dataArray = [];
+
+            dataArray = result.records;
+
+            result.records.forEach(function(element){
+
+                data.push({
+
+                    name: element.Name,
+                    probability: element.Probability,
+                    amount: element.Amount
+                });
+
+            });
+            
+            resolve(data);
+        });
+       }) 
+}
+
+
+var accounts = function(accountType) {
+
+    //call SF database and format data as required
+    
+        return new Promise(function(resolve, reject) {
+
+            sfConnection.getToken().then(function(result){
+                console.log('token:',result);
+
+                url = 'https://haws--iot.cs8.my.salesforce.com/services/apexrest/showAccounts/' + accountType
+
+                request(url,
+                    {
+                        json: true,
+
+                        auth: { bearer: result.accToken }
+
+                    },
+                    function(err, response, body){
+
+                        if (err) {
+
                             console.log(err);
-                            reject(err); 
-                        }
-                        
-                        var data = [];
 
-                        var dataArray = [];
+                            reject(err);
+                        } else {
 
-                        dataArray = result.records;
+                            var dataObj = [];
 
-                        result.records.forEach(element => {
+                            body.forEach(function(element){
+                                
+                                dataObj.push({
 
-                            data.push({
+                                    accountId : element.Id,
+                                    Name : element.Name,
+                                    Type : element.Type,
+                                    Phone : element.Phone,
+                                    Website : element.Website
 
-                                name: element.Name,
-                                probability: element.Probability,
-                                amount: element.Amount
+                                })
+
                             });
+                            
+                            resolve(dataObj);
 
-                        });
-
-                        resolve(data);
+                        }
 
                     });
 
-                } else {
-
-                    console.log(err);
-                }
-
+                },
+            function(err){  
+                console.log(err);
+                reject(err);
             });
 
         });
 }
 
 
-var accounts = function(accountType) {
-
-    return new Promise(
-
-        (resolve, reject) => {
-
-            sfConnection.getToken(function(err, resp){
-
-                if (err) {
-
-                    console.log(err);
-
-                    reject(err);
-
-                } else {
-
-                    url = 'https://haws--iot.cs8.my.salesforce.com/services/apexrest/showAccounts/' + accountType
-
-                    request(url,
-                        {
-                            json: true,
-
-                            auth: { bearer: resp.accToken }
-
-                        },
-                        function(err, response, body){
-
-                            if (err) {
-
-                                console.log(err);
-
-                                reject(err);
-                            } else {
-
-                                var dataObj = [];
-
-                                body.forEach(element => {
-                                    
-                                    dataObj.push({
-
-                                        accountId : element.Id,
-                                        Name : element.Name,
-                                        Type : element.Type,
-                                        Phone : element.Phone,
-                                        Website : element.Website
-
-                                    })
-
-                                });
-
-                                resolve(JSON.stringify(dataObj));
-
-                            }
-
-                        });
-
-                }
-
-            }
-            )
-
-        }
-
-    );
-
-}
 
 
 module.exports = {

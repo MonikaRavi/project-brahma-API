@@ -7,33 +7,90 @@ var aggregateData= async function(req,res){
 	
 	var account=req.params.account;
 
-	async function sf(){
-		let salesPromise=sfQuery.querySoql(account);
-		let sfResult=await salesPromise;
-		return sfResult;
-	}
+	//get required data for Account from Salesforce
+		async function sf(){
+			let salesPromise=sfQuery.querySoql(account);
+			let sfResult=await salesPromise;
+			return sfResult;
+		}
 
-	async function AX65(){
-		let ax65Promise=ax365Controller.AX365Controller(req,res);
-		let ax65Result=await ax65Promise;
-		return ax65Result;
-	}
+	//get required data for Account from AX365
+		async function AX65(){
+			let ax65Promise=ax365Controller.AX365Controller(req,res);
+			let recordset=await ax65Promise;
 
-	async function AX9(){
-		let ax9Promise=ax2009Controller.AX2009Controller(req,res);
-		let ax9Result=await ax9Promise;
-		return ax9Result; 
-	}
+			//format the data as required
+				//get the Name and account of the customer
+					var customer={
+				                CustAccount:recordset.recordsets[0][1].CustAccount,
+				                Customer:recordset.recordsets[0][1].Customer
+				         	};
 
-	var SfData=await sf();
-	var AXData65=await AX65();
-	var AXData9=await AX9();
+			    //get the first five sales records of the customer     		
+			          	var tempData=[];
+			            recordset.recordsets[0].forEach(function(customer){
+			                var tempCus={
+			                    SalesId:customer.SalesID,
+			                    createdDate:customer.createdDate,
+			                    Amount:customer.Amount
+			                }
+			                tempData.push(tempCus);
+			            });
 
-	var JSON={
-		salesforce:SfData,
-		AX655:AXData65,
-		AX2009:AXData9
-	}
+			    //return the data
+					return ({
+				            	customer: customer,
+				          	    data: tempData
+				            });;
+		}
+
+	//get required data from AX2009
+		async function AX9(){
+
+			let ax9Promise=ax2009Controller.AX2009Controller(req,res);
+			try{
+				let recordset=await ax9Promise;
+				//format the data as required
+				 	//get the Customer Name and account
+						var customer={
+					        CustAccount:recordset.recordsets[0][1].CustAccount,
+					        Customer:recordset.recordsets[0][1].Customer
+					    };
+				    //get the top 5 sales order of the customer
+				        var tempData=[];
+				        recordset.recordsets[0].forEach(function(customer){
+				            var tempCus={
+				                SalesId:customer.SalesID,
+				                createdDate:customer.createdDate,
+				                Amount:customer.Amount
+				            }
+				            tempData.push(tempCus);
+				        });
+				    //return the data
+						return ({
+					      	customer: customer,
+					        data: tempData
+					    });;
+			}catch(error){
+				return res.status(400).send(error);
+			}
+			
+			
+			
+			
+		}
+
+	//wait for the 3 different data sources to provide the data
+		var SfData=await sf();
+		var AXData65=await AX65();
+		var AXData9=await AX9();
+
+	//make an object of the three different sources
+		var JSON={
+			salesforce:SfData,
+			AX365:AXData65,
+			AX2009:AXData9
+		}
 	
 	res.send(JSON);
 }

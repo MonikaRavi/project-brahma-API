@@ -1,54 +1,16 @@
-const sql=require('mssql');
+
 const config365=require('../configuration/configAX365.js');
+const utilityModel=require('./utility/utilityModel');
 
 
 function accountAX365Func(account){
 
-	return new Promise(function(resolve,reject){
+  var config=config365.config;
 
-    config=config365.config;
-    
-  	sql.connect(config, function (err) {    
-
-        if (err) console.log(err);
-
-        var request = new sql.Request();           
-       
-        var ourQuery = `select top 5 SalesID, createdDate,Amount, CustAccount, Customer from SalesSummary_Avlis where CustAccount='C000622' order by createdDate desc`
-
-        request.query(ourQuery, function (err, recordset) {
-          
-          if (err) reject(err);
-
-          var customer={
-              CustAccount:recordset.recordsets[0][1].CustAccount,
-              Customer:recordset.recordsets[0][1].Customer
-         	};
-
-          var tempData=[];
-            recordset.recordsets[0].forEach(customer=>{
-                var tempCus={
-                    SalesId:customer.SalesID,
-                    createdDate:customer.createdDate,
-                    Amount:customer.Amount
-                }
-                tempData.push(tempCus);
-            });
-
-          resolve(
-            {
-              customer: customer,
-          	  data: tempData
-            }
-          );
-
-          sql.close(); 
-        
-        });
-    
-    });
-
-	})
+  var ourQuery = `select top 5 SalesID, createdDate,Amount, CustAccount, Customer from SalesSummary_Avlis where CustAccount='C000622' order by createdDate desc`
+  
+  return utilityModel.sqlQuery(ourQuery,config);
+  	
 }
 
 module.exports={

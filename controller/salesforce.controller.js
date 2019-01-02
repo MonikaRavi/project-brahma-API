@@ -1,25 +1,31 @@
 var express=require('express');
-var router=express.Router();
-var sfModel = require('../model/salesforce.model');
+var salesforceModel = require('../model/salesforce.model');
 
 
 // get Accounts by distributor type
 
  function getAccounts(req, res) {
 
-  sfModel.accounts(req.params.type).then(
+  //
+  salesforceModel.accounts(req.params.type).then(
 
-    (data) => {
+    function(data){
 
-      res.send(JSON.stringify(data, undefined, 2));
-      // console.log({data});
+      res.send(data);
+
     },
-    (err) => {
+    function(err) {
+
+      console.log(err);
+      
       res.status(400).send(err);
+    
     }
 
-  ).catch((err) => {
+  ).catch(function(err){
+    
     res.status(400).send(err);
+  
   })
 
 };
