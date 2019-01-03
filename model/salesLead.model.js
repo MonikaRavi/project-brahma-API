@@ -3,9 +3,10 @@ const config=require('../configuration/configAX2009.js');
 const utilityModel=require('./utility/utilityModel');
 const sql=require('mssql');
 
-var getSalesOrder=function(){ //getSalesOrder
+//get sales order for a particular sales ID
+var getSalesOrder=function(salesId){ //getSalesOrder
 
-    var ourQuery = `select SALESID, SalesName, createdDate, Amount from SalesSummary_Hws where SALESID = 'SO-1787116'`;
+    var ourQuery = `select SALESID, SalesName, createdDate, Amount from SalesSummary_Hws where SALESID = '${salesId}'`;
     
     var config1=config.config;
 
@@ -13,10 +14,12 @@ var getSalesOrder=function(){ //getSalesOrder
 
 }
 
-var getSalesDetails=function(){ //getSalesDetails
+
+//get sales order details related to a sales order
+var getSalesDetails=function(salesId){ //getSalesDetails
 
     var ourQuery=`select name, Amount, ERP_Sales_Order_Number__c, ERP_Final_Amount__c, AccountID, CloseDate, 
-                                Opportunity_State_Province__c from Opportunity where ERP_Sales_Order_Number__c = 'SO-1787116' `;
+                                Opportunity_State_Province__c from Opportunity where ERP_Sales_Order_Number__c = '${salesId}' `;
 
     return utilityModel.SFQuery(ourQuery);
 

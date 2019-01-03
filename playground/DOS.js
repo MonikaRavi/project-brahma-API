@@ -40,7 +40,7 @@ server.post('/api', (req, res) => {
   // setTimeout(()=>{
   // 	res.send(`done${payload}`);
   // },1000) 
-  //res.send(`done${payload}`);
+  res.send(`done${payload}`);
 });
 
 server.listen(port, () => console.info(`Server is up on ${port}.`));

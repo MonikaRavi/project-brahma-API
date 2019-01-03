@@ -3,7 +3,7 @@ const utilityModel=require('./utility/utilityModel');
 const request = require('request');
 
 
-
+//gets opportunity for a particular account
 var getOpportunity = function (accountName) { //qrySoql
 
     var query = `select  Name, probability, amount from Opportunity  where isClosed = false and AccountID in 
@@ -36,7 +36,7 @@ var getOpportunity = function (accountName) { //qrySoql
        }) 
 }
 
-
+//gets accounts of salesforce for a particular account type
 var getAccounts = function(accountType) {//accounts
 
     //call SF database and format data as required

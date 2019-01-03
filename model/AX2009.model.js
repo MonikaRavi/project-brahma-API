@@ -3,7 +3,7 @@ const config=require('../configuration/configAX2009.js');
 const utilityModel=require('./utility/utilityModel');
 var config09=config.config;
 
-
+//gets sales information for a particular customer
 function getSalesFromCustomer(req,res){//get sales from customer
 
     var account=req.params.account;
@@ -15,6 +15,7 @@ function getSalesFromCustomer(req,res){//get sales from customer
 
 }
 
+//gets customer details from sales id
 function getCustomerDetailsFromSales(req,res){ //get customer from sales
 
     var salesId=req.params.salesId;
@@ -26,6 +27,7 @@ function getCustomerDetailsFromSales(req,res){ //get customer from sales
     return utilityModel.sqlQuery(ourQuery,config09,salesId);
 }
 
+//gets sales order list from Salesforce that made it to AX2009
 function getSalesOrderList(req,res){   //listFunc
 
     var value='';

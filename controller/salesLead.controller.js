@@ -2,11 +2,12 @@ const config9=require('../configuration/configAX2009.js');
 const salesLeadModel=require('../model/salesLead.model');
 
 
-//return the salesLead
+//returns the sales lead from AX2009 and Salesforce
 function getSalesLead(req,res){//salesLead
+
 		
     //wait for Promises from AX2009 and SalesForce to be fulfilled, and format the data properly and return the data to user
-        var values= Promise.all([salesLeadModel.getSalesOrder(),salesLeadModel.getSalesDetails()]).then(function(values){
+        var values= Promise.all([salesLeadModel.getSalesOrder(req.params.salesOrder),salesLeadModel.getSalesDetails(req.params.salesOrder)]).then(function(values){
 
         	res.send({
         				AX2009:values[0].recordsets[0][0],

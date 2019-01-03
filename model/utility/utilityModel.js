@@ -2,7 +2,7 @@ const sql=require('mssql');
 const sfConnection = require('../../configuration/accessSF');
 
 
-
+//performs sql query by taking in 'OurQuery' and configuration value of 'config' with escaped value 'value' to prevent SQL injection
 var sqlQuery=function(ourQuery,config,value){
 
 	//make a connection to db using given Configuration=config  and query=ourQuery
@@ -32,6 +32,8 @@ var sqlQuery=function(ourQuery,config,value){
 	})
 }
 
+
+//performs query to salesforce database
 var SFQuery=function(ourQuery){
 
 	//make a connection to db using given uery=ourQuery
@@ -40,17 +42,25 @@ var SFQuery=function(ourQuery){
     
         sfConnection.getToken().then(function(res) {
 
-                sfConnection.conn.query(ourQuery, function (err, result) {
+                // sfConnection.conn.query(ourQuery, function (err, result) {
 
-                    if (err) { 
+                //     if (err) { 
                         
-                        console.log(err);
-                        reject(err); 
-                    }
+                //         console.log(err);
+                //         reject(err); 
+                //     }
 
-                    resolve(result);
+                //     resolve(result);
 
-                });
+                // });
+
+                sfConnection.conn.query(ourQuery)
+                	.on("record",function(record){
+                		resolve(record);
+                	})
+                	.on("end",function(query){
+
+                	})
 
             },function(error){
 

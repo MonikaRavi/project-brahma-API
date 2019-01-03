@@ -8,14 +8,24 @@
 
 	const array = Array.from(Array(23).keys());
 	array.forEach(arrayItem=>{
-		fetch('http://localhost:3000/api',{
+		/*fetch('http://localhost:3000/api',{
 			method:'POST',
 			mode:'cors',
 			body:JSON.stringify(`hello${arrayItem}`)
 		})
 		.then(response=>console.log(response.json()))
 		.catch(error=>console.error(`Fetch Error:`,error));
-		console.log(arrayItem);
+		console.log(arrayItem);*/
+		fetch('http://localhost:3000/v2/AX2009_SF_AX365/opportunities/00764',{
+			method:'GET',
+			mode:'cors'
+			// body:JSON.stringify(`hello${arrayItem}`)
+		})
+		.then(response=>console.log(response.json()))
+		.catch(error=>console.error(`Fetch Error:`,error));
+		console.log(arrayItem)
+
+
 	})
 </script>
 

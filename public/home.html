@@ -81,7 +81,7 @@
             </code>
         
 
-            <h3>/v2/AX2009_SF/intersection/:salesOrder</h3>
+            <h3>/v2/AX2009_SF/salesLeads/:salesOrder</h3>
 
             <h5>Returns all sales order present in Salesforce that have made it to AX2009</h5>
             <h5>:salesOrder for trial {1787116}</h5>
@@ -108,7 +108,7 @@
             </code>
 
 
-            <h3>/v2/AX2009/list</h3>
+            <h3>/v2/AX2009/salesOrderList</h3>
 
             <h5>Lists all the orders of 2009</h5>
             <h5>:salesOrder for trial {1787116}</h5>
@@ -135,7 +135,7 @@
                     ]
             </code>
 
-            <h3>/v2/AX2009/customers/:SalesId</h3>
+            <h3>/v2/AX2009/customerDetails/:SalesId</h3>
 
             <h5>Give the customer Details of AX2009 from SalesID</h5>
             <h5>:salesId for trial {SO00000155}</h5>
@@ -152,6 +152,26 @@
                             "Email": Email,
                             "Address": Address,
                             "RSD": 
+                        }
+                    ]
+            </code>
+
+             <h3>/v2/AX365/customerDetails/:SalesId</h3>
+
+            <h5>Give the customer Details of AX2365 from SalesID</h5>
+            <h5>:salesId for trial {OV000446}</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                    [    
+                        {
+                            "Name":Customer Name,
+                            "Account": Customer Account,
+                            "Address": Address,
+                            "Phone":Phone Number
+                            "Email": Email,
+                            "SalesId": Sales Id 
                         }
                     ]
             </code>

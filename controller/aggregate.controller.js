@@ -2,7 +2,7 @@ var sfQuery = require('../model/salesforce.model');
 var ax365Controller=require('../controller/AX365.controller');
 var ax2009Controller=require('../controller/AX2009.controller');
 
-
+//return the informatoin of a sales order existing in AX2009, AX365 and Salesforce
 var aggregateData= async function(req,res){
 	
 	var account=req.params.account;
