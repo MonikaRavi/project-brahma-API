@@ -9,14 +9,14 @@ var aggregateData= async function(req,res){
 
 	//get required data for Account from Salesforce
 		async function sf(){
-			let salesPromise=sfQuery.querySoql(account);
+			let salesPromise=sfQuery.getOpportunity(account);
 			let sfResult=await salesPromise;
 			return sfResult;
 		}
 
 	//get required data for Account from AX365
 		async function AX65(){
-			let ax65Promise=ax365Controller.AX365Controller(req,res);
+			let ax65Promise=ax365Controller.salesOrderByCustomer(req,res);
 			let recordset=await ax65Promise;
 
 			//format the data as required
@@ -47,7 +47,7 @@ var aggregateData= async function(req,res){
 	//get required data from AX2009
 		async function AX9(){
 
-			let ax9Promise=ax2009Controller.AX2009Controller(req,res);
+			let ax9Promise=ax2009Controller.salesFromCustomer(req,res);
 			try{
 				let recordset=await ax9Promise;
 				//format the data as required

@@ -22,8 +22,9 @@ var sqlQuery=function(ourQuery,config,value){
 
 	         	resolve(recordset);	  
 
-	         	sql.close();        		
-        
+	         	//console.log(recordset);
+	         	sql.close();
+        		
         	});
 	        	
 	    })

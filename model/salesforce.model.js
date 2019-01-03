@@ -4,7 +4,7 @@ const request = require('request');
 
 
 
-var querySoql = function (accountName) {
+var getOpportunity = function (accountName) { //qrySoql
 
     var query = `select  Name, probability, amount from Opportunity  where isClosed = false and AccountID in 
                                 (select Id from Account where axaccountnum__c = '${accountName}' ) LIMIT 5`;
@@ -37,7 +37,7 @@ var querySoql = function (accountName) {
 }
 
 
-var accounts = function(accountType) {
+var getAccounts = function(accountType) {//accounts
 
     //call SF database and format data as required
     
@@ -100,7 +100,7 @@ var accounts = function(accountType) {
 
 module.exports = {
 
-    querySoql,
-    accounts
+    getOpportunity,
+    getAccounts
 
 };

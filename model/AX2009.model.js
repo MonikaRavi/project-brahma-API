@@ -4,7 +4,7 @@ const utilityModel=require('./utility/utilityModel');
 var config09=config.config;
 
 
-function accountAX2009Func(req,res){
+function getSalesFromCustomer(req,res){//get sales from customer
 
     var account=req.params.account;
     var value=account;
@@ -15,18 +15,18 @@ function accountAX2009Func(req,res){
 
 }
 
-function customerFunc(req,res){
+function getCustomerDetailsFromSales(req,res){ //get customer from sales
 
     var salesId=req.params.salesId;
 
     var value=salesId;
 
-    var ourQuery = "select TOP 10 SALESID, CUSTACCOUNT , Customer, PHONE, EMAIL, ADDRESS, RSD from Customer_SalesID where SALESID = @value";
+    var ourQuery = "select SALESID, CUSTACCOUNT , Customer, PHONE, EMAIL, ADDRESS, RSD from Customer_SalesID where SALESID = @value";
 
     return utilityModel.sqlQuery(ourQuery,config09,salesId);
 }
 
-function listFunc(req,res){
+function getSalesOrderList(req,res){   //listFunc
 
     var value='';
     var ourQuery = `select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, 
@@ -40,7 +40,7 @@ function listFunc(req,res){
 
 
 module.exports={
-	accountAX2009Func,
-    customerFunc,
-    listFunc
+	getSalesFromCustomer,
+    getCustomerDetailsFromSales,
+    getSalesOrderList
 }

@@ -1,19 +1,19 @@
 const AX2009Model=require('../model/AX2009.model');
 
-function AX2009Controller(req,res){
-	return AX2009Model.accountAX2009Func(req,res);
+function salesFromCustomer(req,res){
+	return AX2009Model.getSalesFromCustomer(req,res);
 }
 
-function AX2009CustomerDetails(req,res){
-	AX2009Model.customerFunc(req,res).then(function(result){
+function AX2009CustomerDetailsFromSales(req,res){
+	AX2009Model.getCustomerDetailsFromSales(req,res).then(function(result){
 		res.send(result.recordsets[0]);
 	},function(error){
 		res.send(error);
 	})
 }
 
-function AX2009List(req,res){
-	AX2009Model.listFunc(req,res).then(function(result){
+function AX2009SalesOrderList(req,res){
+	AX2009Model.getSalesOrderList(req,res).then(function(result){
 		res.send(result.recordsets[0]);
 	},function(error){
 		res.send(error);
@@ -21,7 +21,7 @@ function AX2009List(req,res){
 }
 
 module.exports={
-	AX2009Controller,
-	AX2009CustomerDetails,
-	AX2009List
+	salesFromCustomer,
+	AX2009CustomerDetailsFromSales,
+	AX2009SalesOrderList
 }

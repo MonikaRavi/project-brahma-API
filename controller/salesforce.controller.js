@@ -4,10 +4,10 @@ var salesforceModel = require('../model/salesforce.model');
 
 // get Accounts by distributor type
 
- function getAccounts(req, res) {
+ function accountsByType(req, res) {
 
   //
-  salesforceModel.accounts(req.params.type).then(
+  salesforceModel.getAccounts(req.params.type).then(
 
     function(data){
 
@@ -31,5 +31,5 @@ var salesforceModel = require('../model/salesforce.model');
 };
 
 module.exports= {
-    getAccounts
+    accountsByType
 }

@@ -3,7 +3,7 @@ const config365=require('../configuration/configAX365.js');
 const utilityModel=require('./utility/utilityModel');
 
 
-function accountAX365Func(account){
+function getSalesOrderByCustomer(account){//salesOrderByCustomer
 
   var config=config365.config;
 
@@ -13,8 +13,29 @@ function accountAX365Func(account){
   	
 }
 
+function getCustomerDetailsBySalesId(salesId){
+
+
+	var config=config365.config;
+	
+	return new Promise(function(resolve,reject){
+		var ourQuery=`SELECT dbo.CustCustomerV2Staging.CUSTOMERACCOUNT, dbo.CustCustomerV2Staging.ORGANIZATIONNAME, dbo.CustCustomerV2Staging.FULLPRIMARYADDRESS, 
+                         dbo.CustCustomerV2Staging.PRIMARYCONTACTEMAIL, dbo.CustCustomerV2Staging.PRIMARYCONTACTPHONE, dbo.SalesOrderHeaderV2Staging.SALESORDERNUMBER
+                        
+					FROM dbo.CustCustomerV2Staging 
+					CROSS JOIN
+                         dbo.SalesOrderHeaderV2Staging
+                    WHERE dbo.SalesOrderHeaderV2Staging.ORDERINGCUSTOMERACCOUNTNUMBER=dbo.CustCustomerV2Staging.CUSTOMERACCOUNT 
+						 AND dbo.SalesOrderHeaderV2Staging.SALESORDERNUMBER='${salesId}'`;
+
+		resolve (utilityModel.sqlQuery(ourQuery,config));
+	})
+
+	
+}
+
 module.exports={
 
-	accountAX365Func
-
+	getSalesOrderByCustomer,
+	getCustomerDetailsBySalesId
 }
