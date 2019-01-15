@@ -3,8 +3,7 @@ var salesforceModel = require('../model/salesforce.model');
 
 
 // get Accounts by distributor type
-
- function accountsByType(req, res) {
+function accountsByType(req, res) {
 
   //
   salesforceModel.getAccounts(req.params.type).then(
@@ -30,7 +29,7 @@ var salesforceModel = require('../model/salesforce.model');
 
   };
 
-function salesforceDetailsForSalesId(req,res){
+function salesOrderDetailsFromSalesId(req,res){
   salesforceModel.getSalesDetailsFromSalesID(req.params.salesId).then(function(result){
     // console.log(result.records);
     var tempVal=result.records[0];
@@ -61,6 +60,6 @@ function opportunity(req,res){
 
 module.exports= {
     accountsByType,
-    salesforceDetailsForSalesId,
+    salesOrderDetailsFromSalesId,
     opportunity
 }

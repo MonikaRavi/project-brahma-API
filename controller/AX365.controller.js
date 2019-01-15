@@ -7,25 +7,25 @@ function salesOrderByCustomer(req,res){
 }
 
 //retruns the customer details for a particular sales Id
-function customerDetails(req,res){
-	var data=AX365Model.getCustomerDetailsBySalesId(req.params.salesId).then(function(result){
-		//console.log('result:',result);
-		var data=result.recordset[0];
-		//console.log('data',data);
-		res.send([{
-			Name:data.ORGANIZATIONNAME,
-			Account:data.CUSTOMERACCOUNT,			
-			Address:data.FULLPRIMARYADDRESS,
-			Phone:data.PRIMARYCONTACTPHONE,
-			Email:data.PRIMARYCONTACTEMAIL,
-			SalesId:data.SALESORDERNUMBER
+// function customerDetails(req,res){
+// 	var data=AX365Model.getCustomerDetailsBySalesId(req.params.salesId).then(function(result){
+// 		//console.log('result:',result);
+// 		var data=result.recordset[0];
+// 		//console.log('data',data);
+// 		res.send([{
+// 			Name:data.ORGANIZATIONNAME,
+// 			Account:data.CUSTOMERACCOUNT,			
+// 			Address:data.FULLPRIMARYADDRESS,
+// 			Phone:data.PRIMARYCONTACTPHONE,
+// 			Email:data.PRIMARYCONTACTEMAIL,
+// 			SalesId:data.SALESORDERNUMBER
 
-	}])
-	},function(error){
-		console.log(error);
-	})
+// 	}])
+// 	},function(error){
+// 		console.log(error);
+// 	})
 	
-}
+// }
 
 function opportunity(req,res){
 
@@ -56,6 +56,6 @@ function opportunity(req,res){
 
 module.exports={
 	salesOrderByCustomer,
-	customerDetails,
+	// customerDetails,
 	opportunity
 }

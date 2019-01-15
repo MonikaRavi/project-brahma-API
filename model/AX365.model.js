@@ -22,35 +22,35 @@ function getSalesOrderByCustomer(account){//salesOrderByCustomer
 
 
 //get customer details for a particular salesID
-function getCustomerDetailsBySalesId(salesId){
+// function getCustomerDetailsBySalesId(salesId){
 
-	var config=config365.config;	
-  const sizeofSalesId=8;
+// 	var config=config365.config;	
+//   const sizeofSalesId=8;
 
-	var ourQuery=`SELECT dbo.CustCustomerV2Staging.CUSTOMERACCOUNT, dbo.CustCustomerV2Staging.ORGANIZATIONNAME, dbo.CustCustomerV2Staging.FULLPRIMARYADDRESS, 
-                     dbo.CustCustomerV2Staging.PRIMARYCONTACTEMAIL, dbo.CustCustomerV2Staging.PRIMARYCONTACTPHONE, dbo.SalesOrderHeaderV2Staging.SALESORDERNUMBER
+// 	var ourQuery=`SELECT dbo.CustCustomerV2Staging.CUSTOMERACCOUNT, dbo.CustCustomerV2Staging.ORGANIZATIONNAME, dbo.CustCustomerV2Staging.FULLPRIMARYADDRESS, 
+//                      dbo.CustCustomerV2Staging.PRIMARYCONTACTEMAIL, dbo.CustCustomerV2Staging.PRIMARYCONTACTPHONE, dbo.SalesOrderHeaderV2Staging.SALESORDERNUMBER
                     
-				FROM dbo.CustCustomerV2Staging 
-				CROSS JOIN
-                     dbo.SalesOrderHeaderV2Staging
-                WHERE dbo.SalesOrderHeaderV2Staging.ORDERINGCUSTOMERACCOUNTNUMBER=dbo.CustCustomerV2Staging.CUSTOMERACCOUNT 
-					 AND dbo.SalesOrderHeaderV2Staging.SALESORDERNUMBER='${salesId}'`;
+// 				FROM dbo.CustCustomerV2Staging 
+// 				CROSS JOIN
+//                      dbo.SalesOrderHeaderV2Staging
+//                 WHERE dbo.SalesOrderHeaderV2Staging.ORDERINGCUSTOMERACCOUNTNUMBER=dbo.CustCustomerV2Staging.CUSTOMERACCOUNT 
+// 					 AND dbo.SalesOrderHeaderV2Staging.SALESORDERNUMBER='${salesId}'`;
 
-	// return (utilityModel.sqlQuery(ourQuery,config));
-	return new Promise(function(resolve,reject){
-  	utilityModel.sqlQuery(ourQuery,config).then(function(result){
-  		resolve(result);
-  },function(error){
-  		reject(error);
-  	});
-  }); 
+// 	// return (utilityModel.sqlQuery(ourQuery,config));
+// 	return new Promise(function(resolve,reject){
+//   	utilityModel.sqlQuery(ourQuery,config).then(function(result){
+//   		resolve(result);
+//   },function(error){
+//   		reject(error);
+//   	});
+//   }); 
 
 
 	
-}
+// }
 
 module.exports={
 
-	getSalesOrderByCustomer,
-	getCustomerDetailsBySalesId
+	getSalesOrderByCustomer
+	// getCustomerDetailsBySalesId
 }

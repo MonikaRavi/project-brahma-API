@@ -16,7 +16,7 @@ function getSalesFromCustomer(req,res){//get sales from customer
 }
 
 //gets customer details from sales id
-function getCustomerDetailsFromSales(req,res){ //get customer from sales
+function getCustomerDetailsFromSalesId(req,res){ //get customer from sales
 
     var salesId=req.params.salesId;
 
@@ -27,18 +27,18 @@ function getCustomerDetailsFromSales(req,res){ //get customer from sales
     return utilityModel.sqlQuery(ourQuery,config09,salesId);
 }
 
-//gets sales order list from Salesforce that made it to AX2009
-function getSalesOrderList(req,res){   
+// //gets sales order list from Salesforce that made it to AX2009
+// function getSalesOrderList(req,res){   
 
-    var value='';
-    var ourQuery = `select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, 
+//     var value='';
+//     var ourQuery = `select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, 
 
-                                ITEMID ,ITEMNAME, SALESQTY , LINEAMOUNT, SalesStatus
+//                                 ITEMID ,ITEMNAME, SALESQTY , LINEAMOUNT, SalesStatus
 
-                                from SalesDetail_hws A join temp_SOSF B on A.SALESID = B.SALESID`;
+//                                 from SalesDetail_hws A join temp_SOSF B on A.SALESID = B.SALESID`;
   
-    return utilityModel.sqlQuery(ourQuery,config09,value);
-}
+//     return utilityModel.sqlQuery(ourQuery,config09,value);
+// }
 
 function getSalesOrderDetailsFromSalesId(salesId){
     var value=salesId;
@@ -66,8 +66,8 @@ var getSalesOrderListNew=function(){
 
 module.exports={
 	getSalesFromCustomer,
-    getCustomerDetailsFromSales,
-    getSalesOrderList,
+    getCustomerDetailsFromSalesId,
+    // getSalesOrderList,
     getSalesOrderListNew,
     getSalesOrderDetailsFromSalesId
 }

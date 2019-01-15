@@ -4,7 +4,6 @@ var path = require('path');
 
 //require controllers
 	var aggregateDataController=require('./aggregate.controller');
-	var salesLeadController=require('./salesLead.controller.js'); //intersection
 	var salesforceController=require('./salesforce.controller');
 	var AX2009Controller=require('./AX2009.controller');
 	var AX365Controller=require('./AX365.controller');
@@ -18,39 +17,17 @@ var path = require('path');
 
 
 //API EndPoints Version__1
-//is not used right now, just for previous lookup
-	router.route('/v1/opportunities/:account').get(aggregateDataController.aggregateData);
-	router.route('/v1/salesforce/:type').get(salesforceController.accountsByType);
-	router.route('/v1/salesLeads/:salesOrder').get(salesLeadController.getSalesLead);
-	router.route('/v1/AX2009/list').get(AX2009Controller.AX2009SalesOrderList);
-	router.route('/v2/AX2009/customerDetails/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSales);
 
 
-//API Endpoints Version__2
-
-	router.route('/v2/salesforce/:type').get(salesforceController.accountsByType);	//{safety,plumbing}
-
-	router.route('/v2/AX2009_SF_AX365/opportunities/:account').get(aggregateDataController.aggregateData);  //00764
-
-	router.route('/v2/AX2009_SF/salesLeads/:salesOrder').get(salesLeadController.getSalesLead);  //SO-1787116
-
-	router.route('/v2/AX2009/salesOrderList').get(AX2009Controller.AX2009SalesOrderList);
-
-	router.route('/v2/AX2009/customerDetails/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSales);	//SO00000155
-
-	router.route('/v2/AX365/customerDetails/:salesId').get(AX365Controller.customerDetails);  //OV000446
-
-
-//API Endpoints Version__3
-//currently in use
+	router.route('/v3/AX2009_SF_AX365/opportunities/:account').get(aggregateDataController.aggregateData);  //00764
 
 	router.route('/v3/AX2009/salesOrderlist').get(AX2009Controller.AX2009SalesOrderListNew);
 
-	router.route('/v3/AX2009/customerDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSales); //SO00000155
+	router.route('/v3/AX2009/customerDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSalesId); //SO00000155
 
 	router.route('/v3/AX2009/salesOrderDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009salesOrderDetailsFromSalesID); //SO-1787116
 
-	router.route('/v3/salesforce/salesOrderDetailsFromSalesId/:salesId').get(salesforceController.salesforceDetailsForSalesId) //SO-1787116
+	router.route('/v3/salesforce/salesOrderDetailsFromSalesId/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116
 
 	router.route('/v3/salesforce/opportunities/:account').get(salesforceController.opportunity);  //00764
 

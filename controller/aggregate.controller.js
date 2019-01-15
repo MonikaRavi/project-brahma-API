@@ -1,4 +1,4 @@
-var sfQuery = require('../model/salesforce.model');
+var salesforceModel = require('../model/salesforce.model');
 var ax365Controller=require('../controller/AX365.controller');
 var ax2009Controller=require('../controller/AX2009.controller');
 
@@ -9,7 +9,7 @@ var aggregateData= async function(req,res){
 
 	//get required data for Account from Salesforce
 		async function sf(){
-			let salesPromise=sfQuery.getOpportunity(account);
+			let salesPromise=salesforceModel.getOpportunity(account);
 			let sfResult=await salesPromise;
 			return sfResult;
 		}
