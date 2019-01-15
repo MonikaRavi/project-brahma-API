@@ -22,7 +22,7 @@ function getCustomerDetailsFromSales(req,res){ //get customer from sales
 
     var value=salesId;
 
-    var ourQuery = "select SALESID, CUSTACCOUNT , Customer, PHONE, EMAIL, ADDRESS, RSD from Customer_SalesID where SALESID = @value";
+    var ourQuery = `select SALESID, CUSTACCOUNT , Customer, PHONE, EMAIL, ADDRESS, RSD from Customer_SalesID where SALESID = '${salesId}'`;
 
     return utilityModel.sqlQuery(ourQuery,config09,salesId);
 }

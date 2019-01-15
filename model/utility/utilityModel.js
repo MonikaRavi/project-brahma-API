@@ -15,15 +15,15 @@ var sqlQuery=function(ourQuery,config,value){
 
 	        var request = new sql.Request();      
 
-	        request.input('value',sql.VarChar(10),value); 
+	        request.input('value',sql.VarChar(15),value); 
 
         	request.query(ourQuery, function (err, recordset) {
-          
+               // console.log(ourQuery);
 	            if (err) reject(err);
-
+                //console.log(recordset);
 	         	resolve(recordset);	  
 
-	         	//console.log(recordset);
+	         	
 	         	sql.close();
         		
         	});
@@ -65,7 +65,7 @@ var SFQuery=function(ourQuery){
 
             },function(error){
 
-                console.log(err);
+                reject(error);
             });
 	})
 }

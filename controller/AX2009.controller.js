@@ -37,7 +37,16 @@ function opportunity(req,res){
 //returns the customer details from a sales ID
 function AX2009CustomerDetailsFromSales(req,res){
 	AX2009Model.getCustomerDetailsFromSales(req,res).then(function(result){
-		res.send(result.recordsets[0]);
+		console.log(result.recordsets[0][0]);
+		res.send([{
+			so:result.recordsets[0][0].SALESID,
+			account:result.recordsets[0][0].CustAccount,
+			name:result.recordsets[0][0].Customer,
+			phone:result.recordsets[0][0].PHONE,
+			email:result.recordsets[0][0].EMAIL,
+			address:result.recordsets[0][0].ADDRESS,
+			RSD:result.recordsets[0][0].RSD
+		}])
 	},function(error){
 		res.send(error);
 	})
