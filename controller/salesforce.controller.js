@@ -22,14 +22,45 @@ var salesforceModel = require('../model/salesforce.model');
     
     }
 
-  ).catch(function(err){
+    ).catch(function(err){
     
     res.status(400).send(err);
   
-  })
+    })
 
-};
+  };
+
+function salesforceDetailsForSalesId(req,res){
+  salesforceModel.getSalesDetailsFromSalesID(req.params.salesId).then(function(result){
+    // console.log(result.records);
+    var tempVal=result.records[0];
+    res.send([{
+      name:tempVal.Name,
+      qAmount:tempVal.Amount,
+      so:tempVal.ERP_Sales_Order_Number__c,
+      erpAmount:tempVal.ERP_Final_Amount__c,
+      accountID:tempVal.AccountId,
+      closeDate:tempVal.CloseDate,
+      deliveryState:tempVal.Opportunity_State_Province__c
+    }]);
+  },function(error){
+    res.send(error);
+  })
+}
+
+function opportunity(req,res){
+  salesforceModel.getOpportunity(req.params.account).then(function(result){
+    res.send(result);
+  },function(error){
+    res.send(error);
+  })
+}
+
+
+
 
 module.exports= {
-    accountsByType
+    accountsByType,
+    salesforceDetailsForSalesId,
+    opportunity
 }

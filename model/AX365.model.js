@@ -25,6 +25,7 @@ function getSalesOrderByCustomer(account){//salesOrderByCustomer
 function getCustomerDetailsBySalesId(salesId){
 
 	var config=config365.config;	
+  const sizeofSalesId=8;
 
 	var ourQuery=`SELECT dbo.CustCustomerV2Staging.CUSTOMERACCOUNT, dbo.CustCustomerV2Staging.ORGANIZATIONNAME, dbo.CustCustomerV2Staging.FULLPRIMARYADDRESS, 
                      dbo.CustCustomerV2Staging.PRIMARYCONTACTEMAIL, dbo.CustCustomerV2Staging.PRIMARYCONTACTPHONE, dbo.SalesOrderHeaderV2Staging.SALESORDERNUMBER

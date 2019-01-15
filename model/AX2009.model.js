@@ -28,7 +28,7 @@ function getCustomerDetailsFromSales(req,res){ //get customer from sales
 }
 
 //gets sales order list from Salesforce that made it to AX2009
-function getSalesOrderList(req,res){   //listFunc
+function getSalesOrderList(req,res){   
 
     var value='';
     var ourQuery = `select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, 
@@ -40,9 +40,34 @@ function getSalesOrderList(req,res){   //listFunc
     return utilityModel.sqlQuery(ourQuery,config09,value);
 }
 
+function getSalesOrderDetailsFromSalesId(salesId){
+    var value=salesId;
+
+    var ourQuery = "select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, ITEMID ,ITEMNAME, SALESQTY , LINEAMOUNT, SalesStatus from SalesDetail_hws A join temp_SOSF B on A.SALESID = B.SALESID WHERE A.SALESID=@value";
+
+    return utilityModel.sqlQuery(ourQuery,config09,value);
+}
+
+var getSalesOrderListNew=function(){
+    var value='';
+    //var ourQuery = `select SALESID, SalesName, createdDate, Amount from SalesSummary_Hws`;
+    var ourQuery=`select [SALESID]
+      ,[Amount]
+      ,[createdDate]
+      ,[CUSTACCOUNT]
+      ,[Customer]
+      ,[SALESNAME]
+      ,[RecentPickUp] from SalesSummary_Hws where YEAR(RecentPickUp) = 2019`;
+    var config1=config.config;
+
+    return utilityModel.sqlQuery(ourQuery,config1,value);
+}
+
 
 module.exports={
 	getSalesFromCustomer,
     getCustomerDetailsFromSales,
-    getSalesOrderList
+    getSalesOrderList,
+    getSalesOrderListNew,
+    getSalesOrderDetailsFromSalesId
 }

@@ -15,6 +15,9 @@ var getSalesOrder=function(salesId){ //getSalesOrder
 }
 
 
+
+
+
 //get sales order details related to a sales order
 var getSalesDetails=function(salesId){ //getSalesDetails
 

@@ -8,7 +8,7 @@ function getSalesLead(req,res){//salesLead
 		
     //wait for Promises from AX2009 and SalesForce to be fulfilled, and format the data properly and return the data to user
         var values= Promise.all([salesLeadModel.getSalesOrder(req.params.salesOrder),salesLeadModel.getSalesDetails(req.params.salesOrder)]).then(function(values){
-
+            console.log('values',values[0]);
         	res.send({
         				AX2009:values[0].recordsets[0][0],
         				SalesForce:{

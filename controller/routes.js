@@ -27,19 +27,38 @@ var path = require('path');
 
 
 //API Endpoints Version__2
-//currently in use
-	router.route('/v2/salesforce/:type').get(salesforceController.accountsByType);
 
-//	router.route('/v2/AX2009_SF_AX365/opportunities/:account').get(aggregateDataController.aggregateData);
+	router.route('/v2/salesforce/:type').get(salesforceController.accountsByType);	//{safety,plumbing}
 
-	router.route('/v2/AX2009_SF/salesLeads/:salesOrder').get(salesLeadController.getSalesLead);
+	router.route('/v2/AX2009_SF_AX365/opportunities/:account').get(aggregateDataController.aggregateData);  //00764
+
+	router.route('/v2/AX2009_SF/salesLeads/:salesOrder').get(salesLeadController.getSalesLead);  //SO-1787116
 
 	router.route('/v2/AX2009/salesOrderList').get(AX2009Controller.AX2009SalesOrderList);
 
-	router.route('/v2/AX2009/customerDetails/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSales);
+	router.route('/v2/AX2009/customerDetails/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSales);	//SO00000155
 
-	router.route('/v2/AX365/customerDetails/:salesId').get(AX365Controller.customerDetails);
+	router.route('/v2/AX365/customerDetails/:salesId').get(AX365Controller.customerDetails);  //OV000446
 
+
+//API Endpoints Version__3
+//currently in use
+
+	router.route('/v3/AX2009/salesOrderlist').get(AX2009Controller.AX2009SalesOrderListNew);
+
+	router.route('/v3/AX2009/customerDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSales); //SO00000155
+
+	router.route('/v3/AX2009/salesOrderDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009salesOrderDetailsFromSalesID); //SO-1787116
+
+	router.route('/v3/salesforce/salesOrderDetailsFromSalesId/:salesId').get(salesforceController.salesforceDetailsForSalesId) //SO-1787116
+
+	router.route('/v3/salesforce/opportunities/:account').get(salesforceController.opportunity);  //00764
+
+	router.route('/v3/AX2009/opportunities/:account').get(AX2009Controller.opportunity);  //00764
+
+	router.route('/v3/AX365/opportunities/:account').get(AX365Controller.opportunity); //00764
+
+	router.route('/v3/salesforce/:type').get(salesforceController.accountsByType); //{safety,plumbing}
 
 
 
