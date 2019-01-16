@@ -37,13 +37,8 @@ function getSalesOrderDetailsFromSalesId(salesId){
 
 var getSalesOrderList=function(){
     var value='';
-    var ourQuery=`select [SALESID]
-      ,[Amount]
-      ,[createdDate]
-      ,[CUSTACCOUNT]
-      ,[Customer]
-      ,[SALESNAME]
-      ,[RecentPickUp] from SalesSummary_Hws where YEAR(RecentPickUp) = 2019`;
+    var ourQuery=`select * from SalesSummary_Hws A INNER JOIN
+                      dbo.temp_SOSF AS E ON A.SALESID = E.SalesID`;
     var config1=config.config;
 
     return utilityModel.sqlQuery(ourQuery,config1,value);
