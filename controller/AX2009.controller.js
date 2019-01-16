@@ -52,15 +52,6 @@ function AX2009CustomerDetailsFromSalesId(req,res){
 	})
 }
 
-// //returns sales Order list from Salesforce that made it to AX2009
-// function AX2009SalesOrderList(req,res){
-// 	AX2009Model.getSalesOrderList(req,res).then(function(result){
-// 		res.send(result.recordsets[0]);
-// 	},function(error){
-// 		res.send(error);
-// 	})
-// }
-
 function AX2009salesOrderDetailsFromSalesID(req,res){
 	AX2009Model.getSalesOrderDetailsFromSalesId(req.params.salesId).then(function(result){
 		res.send(result.recordsets[0]);
@@ -69,8 +60,8 @@ function AX2009salesOrderDetailsFromSalesID(req,res){
 	})
 }
 
-function AX2009SalesOrderListNew(req,res){
-	AX2009Model.getSalesOrderListNew().then(function(result){
+function AX2009SalesOrderList(req,res){
+	AX2009Model.getSalesOrderList().then(function(result){
 		res.send(result.recordsets[0]);
 	},function(error){
 		res.send(error);
@@ -80,8 +71,7 @@ function AX2009SalesOrderListNew(req,res){
 module.exports={
 	salesFromCustomer,
 	AX2009CustomerDetailsFromSalesId,
-	// AX2009SalesOrderList,
-	AX2009SalesOrderListNew,
+	AX2009SalesOrderList,
 	AX2009salesOrderDetailsFromSalesID,
 	opportunity
 }

@@ -3,7 +3,7 @@ var app =  express();
 app.use(express.static('public'));
 var RateLimit=require('express-rate-limit');
 
-// var bodyParser = require('body-parser');   //required for POST requests? 
+// var bodyParser = require('body-parser');   //required for POST requests
 // app.use(bodyParser.json());
 
 var cors = require('cors');
@@ -18,7 +18,7 @@ var path = require('path');
 app.use(favicon(path.join(__dirname, '/public', 'favicon.ico')));
 
 //require routes
-app.use(require('./controller/routes'));
+app.use(require('./routes/routes'));
 
 const port = process.env.PORT || 3000;
 

@@ -46,7 +46,7 @@
 
             <!-- API 1 : Accounts by Distributor Type -->
 
-            <h3>/v2/salesforce/:type</h3>
+            <h3>/v1/salesforce/:type</h3>
 
             <h5>returns Distributor Detail by Distributor Type</h5>
             <h5>:type can be {safety,plumbing}<h5>
@@ -65,7 +65,7 @@
 
             <!-- API 2 : Opportunity by AX Customer ID -->
 
-            <h3>/v2/AX2009_SF_AX365/opportunities/:AxCustomerId</h3>
+            <h3>/v1/AX2009_SF_AX365/opportunities/:AxCustomerId</h3>
 
             <h5>returns Opportunity by AX Account Number</h5>
             <h5>:AxCustomerId for trial {00764}</h5>
@@ -81,58 +81,22 @@
             </code>
         
 
-            <h3>/v2/AX2009_SF/salesLeads/:salesOrder</h3>
+            <h3>/v1/AX2009/salesOrderList</h3>
 
-            <h5>Returns all sales order present in Salesforce that have made it to AX2009</h5>
-            <h5>:salesOrder for trial {1787116}</h5>
+            <h5>get sales order list from AX2</h5>
 
             <h6><u>JSON Structure</u></h6>
 
             <code style="display:block;white-space:pre-wrap">
                     {    
-                        "AX2009":{
-                            "SalesId": Sales Id,
-                            "SalesName": Sales Name
-                            "createdDate": createdDate,
-                            "Amount":amount
-                        },
-                        'Salesforce':{
-                            "Name": Account Name,
-                            "amount": Amount,
-                            "ERP_Sales_Order_Number__c": Sales Order Number,
-                            "ERP_Final_Amount__c": Final Amount,
-                            "CloseDate":closing date,
-                            "Opportunity_State_Province__c":State
-                        }
-                    }
-            </code>
-
-
-            <h3>/v2/AX2009/salesOrderList</h3>
-
-            <h5>Lists all the orders of 2009</h5>
-            <h5>:salesOrder for trial {1787116}</h5>
-
-            <h6><u>JSON Structure</u></h6>
-
-            <code style="display:block;white-space:pre-wrap">
-                    [    
-                        {
-                            "SalesId": Sales Id,
-                            "SalesName": Sales Name,
-                            "createdDate": createdDate,
-                            "customer":Customer Name,
-                            "ItemID": Item ID,
-                            "ItemName":Name of Item,
-                            "SalesQty": Quantity sold,
-                            "LineAmount": Amount,
-                            "SalesStatus": Status of sale
-                        },
-                        {
-                            ...
-                        },
-                        ...
-                    ]
+                        "SalesId": Sales Id,
+                        "Amount":amount                   ,
+                        "createdDate": createdDate,
+                        "CUSTACCOUNT":customer account,
+                        "Customer":Customer name,
+                        "SalesName":Sales Name,
+                        "RecentPickUp":recent pickup date
+                    }                       
             </code>
 
             <h3>/v2/AX2009/customerDetails/:SalesId</h3>
@@ -156,28 +120,98 @@
                     ]
             </code>
 
-             <h3>/v2/AX365/customerDetails/:SalesId</h3>
+            <h3>/v1/AX2009/salesOrderDetailsFromSalesId/:salesId</h3>
 
-            <h5>Give the customer Details of AX2365 from SalesID</h5>
-            <h5>:salesId for trial {OV000446}</h5>
+            <h5>Get sales order details from sales Id for AX2009</h5>
+            <h5>:salesOrder for trial {SO-1787116}</h5>
 
             <h6><u>JSON Structure</u></h6>
 
             <code style="display:block;white-space:pre-wrap">
                     [    
                         {
-                            "Name":Customer Name,
-                            "Account": Customer Account,
-                            "Address": Address,
-                            "Phone":Phone Number
-                            "Email": Email,
-                            "SalesId": Sales Id 
-                        }
+                            "SalesId": Sales Id,
+                            "SalesName": Sales Name,
+                            "createdDate": createdDate,
+                            "customer":Customer Name,
+                            "ItemID": Item ID,
+                            "ItemName":Name of Item,
+                            "SalesQty": Quantity sold,
+                            "LineAmount": Amount,
+                            "SalesStatus": Status of sale
+                        },
+                        {
+                            ...
+                        },
+                        ...
                     ]
             </code>
 
+            <h3>/v1/salesforce/salesOrderDetailsFromSalesId/:salesId</h3>
 
+            <h5>Get sales order details from sales Id for salesforce</h5>
+            <h5>:salesOrder for trial {SO-1787116}</h5>
 
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                    [    
+                        {
+                            "Name": sales Name,
+                            "qAmount": line Amount,
+                            "so": Sales Order Number,
+                            "erpAmount":ERP Final Amount,
+                            "accountID": account ID,
+                            "closeDate":close Date,
+                            "deliveryState":Delivery state
+                        },
+                    ]
+            </code> 
+
+             <h3>/v1/AX2009/opportunities/:AxCustomerId</h3>
+
+            <h5>returns Opportunity by AX Account Number</h5>
+            <h5>:AxCustomerId for trial {00764}</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                        {
+                            "name": Account Name,
+                            "probability": Probability%,
+                            "amount": Amount
+                        }
+            </code>
+
+             <h3>/v1/AX365/opportunities/:AxCustomerId</h3>
+
+            <h5>returns Opportunity by AX Account Number</h5>
+            <h5>:AxCustomerId for trial {00764}</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                        {
+                            "name": Account Name,
+                            "probability": Probability%,
+                            "amount": Amount
+                        }
+            </code>
+
+            <h3>/v1/salesforce/opportunities/:AxCustomerId</h3>
+
+            <h5>returns Opportunity by salesforce Account Number</h5>
+            <h5>:AxCustomerId for trial {00764}</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                        {
+                            "name": Account Name,
+                            "probability": Probability%,
+                            "amount": Amount
+                        }
+            </code>
 
         </div>
 

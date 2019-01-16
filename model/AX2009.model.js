@@ -3,7 +3,7 @@ const config=require('../configuration/configAX2009.js');
 const utilityModel=require('./utility/utilityModel');
 var config09=config.config;
 
-//gets sales information for a particular customer
+//gets sales information for a particular customer  //used in aggregate and opportunity
 function getSalesFromCustomer(req,res){//get sales from customer
 
     var account=req.params.account;
@@ -27,19 +27,6 @@ function getCustomerDetailsFromSalesId(req,res){ //get customer from sales
     return utilityModel.sqlQuery(ourQuery,config09,salesId);
 }
 
-// //gets sales order list from Salesforce that made it to AX2009
-// function getSalesOrderList(req,res){   
-
-//     var value='';
-//     var ourQuery = `select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, 
-
-//                                 ITEMID ,ITEMNAME, SALESQTY , LINEAMOUNT, SalesStatus
-
-//                                 from SalesDetail_hws A join temp_SOSF B on A.SALESID = B.SALESID`;
-  
-//     return utilityModel.sqlQuery(ourQuery,config09,value);
-// }
-
 function getSalesOrderDetailsFromSalesId(salesId){
     var value=salesId;
 
@@ -48,9 +35,8 @@ function getSalesOrderDetailsFromSalesId(salesId){
     return utilityModel.sqlQuery(ourQuery,config09,value);
 }
 
-var getSalesOrderListNew=function(){
+var getSalesOrderList=function(){
     var value='';
-    //var ourQuery = `select SALESID, SalesName, createdDate, Amount from SalesSummary_Hws`;
     var ourQuery=`select [SALESID]
       ,[Amount]
       ,[createdDate]
@@ -66,8 +52,7 @@ var getSalesOrderListNew=function(){
 
 module.exports={
 	getSalesFromCustomer,
-    getCustomerDetailsFromSalesId,
-    // getSalesOrderList,
-    getSalesOrderListNew,
-    getSalesOrderDetailsFromSalesId
+  getCustomerDetailsFromSalesId,
+  getSalesOrderList,
+  getSalesOrderDetailsFromSalesId
 }

@@ -26,38 +26,54 @@ Open Link http://localhost:3000/
 
 **Code** : uses APEX Rest class in Salesforce
 
-**Path** :  `v2/salesforce/:type`
+**Path** :  `v1/salesforce/:type`
 
  ````
      Options :  1. safety
                2. plumbing 
  ````
 
-###### Opportunity by AX Account Number :moneybag:
+###### Opportunity by AX2009 Account Number :moneybag:
 
-**Code** : uses Query class in JSforce and SOQL to access tables
-
-**Path** : `/v2/AX2009_SF_AX365/opportunities/:account`
+**Path** : `/v1/AX2009/opportunities/:account`
 
 ````
         Options : 07280, 00764, 03465
 ````
 
-###### Order from Salesforce that made it into AX2009:
-**Code** : queries Salesforce and Ax2009 to get the intersection data
-**Path** : '/v2/AX2009_SF/intersection/:salesOrder'
+###### Opportunity by AX365 Account Number :moneybag:
+
+**Path** : `/v1/AX365/opportunities/:account`
+
+````
+        Options : 07280, 00764, 03465
+````
+###### Opportunity by Salesforce Account Number :moneybag:
+
+**Path** : `/v1/salesforce/opportunities/:account`
+
+````
+        Options : 07280, 00764, 03465
+````
+
+###### List of recent (2019) sales order from AX2009:
+**Path** : '/v1/AX2009/salesOrderList'
+
+
+###### Customer Details from SalesId for AX2009:
+**Path** : '/v1/AX2009/customerDetailsFromSalesId/:salesId'
+````
+        Options : SO-00000155
+````
+
+###### Get sales order details from SalesId in AX2009:
+**Path** : '/v1/AX2009/salesOrderDetailsFromSalesId/:salesId'
 `````
-		Options:  1787116
+		Options:  SO-1787116
+`````
+###### Get sales order details from salesId in Salesforce:
+**Path** : '/v1/salesforce/salesOrderDetailsFromSalesId/:salesId'
+`````
+		Options:  SO-1787116
 `````
 
-###### List order of 2009:
-**Code** : queries Ax2009 to get the list data
-**Path** : '/v2/AX2009/list'
-
-
-###### Get customer details from SalesId:
-**Code** : queries Ax2009 to get the information of customer
-**Path** : '/v2/AX2009/customers/:SalesId'
-`````
-		Options:  SO00000155
-`````
