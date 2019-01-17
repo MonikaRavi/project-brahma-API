@@ -6,7 +6,7 @@ var config09=config.config;
 //get recent sales order list from AX2009
 var getSalesOrderList=function(){
     var value='';
-    var ourQuery=`select * from SalesSummary_Hws A INNER JOIN
+    var ourQuery=`select A.SALESID,Amount,createdDate,CustAccount,Customer,SalesName,RecentPickUp,Status from SalesSummary_Hws A INNER JOIN
                       dbo.temp_SOSF AS E ON A.SALESID = E.SalesID`;
     var config1=config.config;
 
