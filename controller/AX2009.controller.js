@@ -1,10 +1,15 @@
 const AX2009Model=require('../model/AX2009.model');
 
-//returns the list of sales order for a particular customer //used in aggregate
-function salesFromCustomer(req,res){
-	return AX2009Model.getSalesFromCustomer(req,res);
+//get sales order list for 2009
+function AX2009SalesOrderList(req,res){
+	AX2009Model.getSalesOrderList().then(function(result){
+		res.send(result.recordsets[0]);
+	},function(error){
+		res.send(error);
+	})
 }
 
+//find the opportunity for AX2009 for a particular customer
 function opportunity(req,res){
 
 	AX2009Model.getSalesFromCustomer(req,res).then(function(recordset){
@@ -37,7 +42,7 @@ function opportunity(req,res){
 //returns the customer details from a sales ID
 function AX2009CustomerDetailsFromSalesId(req,res){
 	AX2009Model.getCustomerDetailsFromSalesId(req,res).then(function(result){
-		console.log(result.recordsets[0][0]);
+
 		res.send([{
 			so:result.recordsets[0][0].SALESID,
 			account:result.recordsets[0][0].CustAccount,
@@ -52,6 +57,8 @@ function AX2009CustomerDetailsFromSalesId(req,res){
 	})
 }
 
+
+//returns the sales order details of a particular Sales Id in Ax2009
 function AX2009salesOrderDetailsFromSalesID(req,res){
 	AX2009Model.getSalesOrderDetailsFromSalesId(req.params.salesId).then(function(result){
 		res.send(result.recordsets[0]);
@@ -60,13 +67,11 @@ function AX2009salesOrderDetailsFromSalesID(req,res){
 	})
 }
 
-function AX2009SalesOrderList(req,res){
-	AX2009Model.getSalesOrderList().then(function(result){
-		res.send(result.recordsets[0]);
-	},function(error){
-		res.send(error);
-	})
+//returns the list of sales order for a particular customer //used in aggregate
+function salesFromCustomer(req,res){
+	return AX2009Model.getSalesFromCustomer(req,res);
 }
+
 
 module.exports={
 	salesFromCustomer,

@@ -1,11 +1,13 @@
 const AX365Model=require('../model/AX365.model');
 
 
-//return the sales orders for a particular customer account
+//return the top 5 sales orders for a particular customer account
 function salesOrderByCustomer(req,res){
 	return AX365Model.getSalesOrderByCustomer(req.params.account);
 }
 
+
+//find the opportunity for a particular customer in AX365
 function opportunity(req,res){
 
 	AX365Model.getSalesOrderByCustomer(req.params.account).then(function(recordset){

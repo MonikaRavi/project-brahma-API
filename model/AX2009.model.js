@@ -3,16 +3,14 @@ const config=require('../configuration/configAX2009.js');
 const utilityModel=require('./utility/utilityModel');
 var config09=config.config;
 
-//gets sales information for a particular customer  //used in aggregate and opportunity
-function getSalesFromCustomer(req,res){//get sales from customer
+//get recent sales order list from AX2009
+var getSalesOrderList=function(){
+    var value='';
+    var ourQuery=`select * from SalesSummary_Hws A INNER JOIN
+                      dbo.temp_SOSF AS E ON A.SALESID = E.SalesID`;
+    var config1=config.config;
 
-    var account=req.params.account;
-    var value=account;
-
-    var ourQuery = 'select top 5 SalesID, createdDate,Amount,CustAccount, Customer from SalesSummary_Hws where CustAccount = @value order by createdDate desc';
-
-    return utilityModel.sqlQuery(ourQuery,config09,account);
-
+    return utilityModel.sqlQuery(ourQuery,config1,value);
 }
 
 //gets customer details from sales id
@@ -27,6 +25,7 @@ function getCustomerDetailsFromSalesId(req,res){ //get customer from sales
     return utilityModel.sqlQuery(ourQuery,config09,salesId);
 }
 
+//gets sales order details for a particular sales ID in AX 2009
 function getSalesOrderDetailsFromSalesId(salesId){
     var value=salesId;
 
@@ -35,14 +34,20 @@ function getSalesOrderDetailsFromSalesId(salesId){
     return utilityModel.sqlQuery(ourQuery,config09,value);
 }
 
-var getSalesOrderList=function(){
-    var value='';
-    var ourQuery=`select * from SalesSummary_Hws A INNER JOIN
-                      dbo.temp_SOSF AS E ON A.SALESID = E.SalesID`;
-    var config1=config.config;
+//gets sales information for a particular customer  //used in aggregate and opportunity
+function getSalesFromCustomer(req,res){//get sales from customer
 
-    return utilityModel.sqlQuery(ourQuery,config1,value);
+    var account=req.params.account;
+    var value=account;
+
+    var ourQuery = 'select top 5 SalesID, createdDate,Amount,CustAccount, Customer from SalesSummary_Hws where CustAccount = @value order by createdDate desc';
+
+    return utilityModel.sqlQuery(ourQuery,config09,account);
+
 }
+
+
+
 
 
 module.exports={

@@ -2,6 +2,15 @@ const sfConnection = require('../configuration/accessSF');
 const utilityModel=require('./utility/utilityModel');
 const request = require('request');
 
+// gets sales details for a particular sales ID in salesforce
+var getSalesDetailsFromSalesID=function(salesId){ //getSalesDetails
+
+    var ourQuery=`select name, Amount, ERP_Sales_Order_Number__c, ERP_Final_Amount__c, AccountID, CloseDate, 
+                                Opportunity_State_Province__c from Opportunity where ERP_Sales_Order_Number__c = '${salesId}' `;
+
+    return utilityModel.SFQuery(ourQuery);
+}
+
 
 //gets opportunity for a particular account
 var getOpportunity = function (accountName) { //qrySoql
@@ -95,14 +104,8 @@ var getAccounts = function(accountType) {//accounts
         });
 }
 
-var getSalesDetailsFromSalesID=function(salesId){ //getSalesDetails
 
-    var ourQuery=`select name, Amount, ERP_Sales_Order_Number__c, ERP_Final_Amount__c, AccountID, CloseDate, 
-                                Opportunity_State_Province__c from Opportunity where ERP_Sales_Order_Number__c = '${salesId}' `;
 
-    return utilityModel.SFQuery(ourQuery);
-
-}
 
 
 

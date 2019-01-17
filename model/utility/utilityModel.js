@@ -18,11 +18,10 @@ var sqlQuery=function(ourQuery,config,value){
 	        request.input('value',sql.VarChar(15),value); 
 
         	request.query(ourQuery, function (err, recordset) {
-               // console.log(ourQuery);
-	            if (err) reject(err);
-                //console.log(recordset);
-	         	resolve(recordset);	  
+	            
+                if (err) reject(err);
 
+                resolve(recordset);	  
 	         	
 	         	sql.close();
         		
@@ -54,14 +53,6 @@ var SFQuery=function(ourQuery){
                     resolve(result);
 
                 });
-
-                // sfConnection.conn.query(ourQuery)
-                // 	.on("record",function(record){
-                // 		resolve(record);
-                // 	})
-                // 	.on("end",function(query){
-
-                // 	})
 
             },function(error){
 
