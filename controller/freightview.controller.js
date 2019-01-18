@@ -21,7 +21,17 @@ function getShipmentDataFromFreightView(req,res){
 	
 	request(options, function (err, response, body) {
 	  if (err) throw err;
-	  res.send(JSON.parse(body));
+	  data=JSON.parse(body);
+	  // console.log(data.shipments.length);
+	  if(data.shipments.length!==0){
+	  	 res.send(data);
+	  }else{
+	  	res.status(400).send({
+	  		status:400,
+	  		errorMessage: 'No shipping information was available for this sales Order. Please try with different one!'
+	  	})
+	  }
+	 
 	})
 	
 }
