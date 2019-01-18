@@ -24,7 +24,15 @@ function getShipmentDataFromFreightView(req,res){
 	  data=JSON.parse(body);
 	  // console.log(data.shipments.length);
 	  if(data.shipments.length!==0){
-	  	 res.send(data);
+	  	 res.send({
+	  	 	carrier:data.shipments[0].rate.carrier,
+	  	 	total:data.shipments[0].rate.total,
+	  	 	charges:data.shipments[0].rate.charges,
+	  	 	referenceNumber:data.shipments[0].origin.referenceNumber,
+	  	 	destination: data.shipments[0].destination.address+ data.shipments[0].destination.city + data.shipments[0].destination.state,
+	  	 	company:data.shipments[0].destination.company,
+	  	 	tracking:data.shipments[0].tracking
+	  	 });
 	  }else{
 	  	res.status(400).send({
 	  		status:400,
