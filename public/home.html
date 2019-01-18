@@ -63,23 +63,6 @@
                         }
             </code>
 
-            <!-- API 2 : Opportunity by AX Customer ID -->
-
-            <h3>/v1/AX2009_SF_AX365/opportunities/:AxCustomerId</h3>
-
-            <h5>returns Opportunity by AX Account Number</h5>
-            <h5>:AxCustomerId for trial {00764}</h5>
-
-            <h6><u>JSON Structure</u></h6>
-
-            <code style="display:block;white-space:pre-wrap">
-                        {
-                            "name": Account Name,
-                            "probability": Probability%,
-                            "amount": Amount
-                        }
-            </code>
-        
 
             <h3>/v1/AX2009/salesOrderList</h3>
 
@@ -168,32 +151,40 @@
                     ]
             </code> 
 
-             <h3>/v1/AX2009/opportunities/:AxCustomerId</h3>
+             <h3>/v1/AX2009/customerSalesList/:AxCustomerId</h3>
 
-            <h5>returns Opportunity by AX Account Number</h5>
+            <h5>returns customer Sales List by AX Account Number</h5>
             <h5>:AxCustomerId for trial {00764}</h5>
 
             <h6><u>JSON Structure</u></h6>
 
             <code style="display:block;white-space:pre-wrap">
                         {
-                            "name": Account Name,
-                            "probability": Probability%,
+                            "CustAccount":customer account,
+                            "Customer":customer Name
+                        },
+                        {
+                            "SalesId": Account Name,
+                            "createdDate": Probability%,
                             "amount": Amount
                         }
             </code>
 
-             <h3>/v1/AX365/opportunities/:AxCustomerId</h3>
+             <h3>/v1/AX365/salesOrderlist/:AxCustomerId</h3>
 
-            <h5>returns Opportunity by AX Account Number</h5>
+            <h5>returns sales order list by AX Account Number</h5>
             <h5>:AxCustomerId for trial {00764}</h5>
 
             <h6><u>JSON Structure</u></h6>
 
             <code style="display:block;white-space:pre-wrap">
                         {
-                            "name": Account Name,
-                            "probability": Probability%,
+                            "CustAccount":customer account,
+                            "Customer":customer Name
+                        },
+                        {
+                            "SalesId": Account Name,
+                            "createdDate": Probability%,
                             "amount": Amount
                         }
             </code>

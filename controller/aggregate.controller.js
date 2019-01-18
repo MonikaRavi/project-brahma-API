@@ -73,17 +73,18 @@ var aggregateData= async function(req,res){
 					    });;
 			}catch(error){
 				return res.status(400).send(error);
-			}
-			
-			
-			
-			
+			}		
 		}
 
 	//wait for the 3 different data sources to provide the data
+	try{
 		var SfData=await sf();
 		var AXData65=await AX65();
 		var AXData9=await AX9();
+	}catch(error){
+		return res.status(400).send(error);
+	}
+		
 
 	//make an object of the three different sources
 		var JSON={

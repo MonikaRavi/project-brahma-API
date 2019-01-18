@@ -8,26 +8,34 @@ function salesOrderByCustomer(req,res){
 
 
 //find the opportunity for a particular customer in AX365
-function opportunity(req,res){
+function salesOrderlist(req,res){
 
 	AX365Model.getSalesOrderByCustomer(req.params.account).then(function(recordset){
-		var customer={
+		
+		if(recordset.recordsets[0].length!==0){
+			var customer={
 		                CustAccount:recordset.recordsets[0][1].CustAccount,
 		                Customer:recordset.recordsets[0][1].Customer
 		         	};
 
 			    //get the first five sales records of the customer     		
-      	var tempData=[];
-        recordset.recordsets[0].forEach(function(customer){
-            var tempCus={
-                SalesId:customer.SalesID,
-                createdDate:customer.createdDate,
-                Amount:customer.Amount
-            }
-            tempData.push(tempCus);
-        });
+	      	var tempData=[];
+	        recordset.recordsets[0].forEach(function(customer){
+	            var tempCus={
+	                SalesId:customer.SalesID,
+	                createdDate:customer.createdDate,
+	                Amount:customer.Amount
+	            }
+	            tempData.push(tempCus);
+	        });
 
-        res.send(tempData);
+        	res.send(tempData);
+		}else{
+			res.status(400).send({
+				status: 200,
+				errorMessage:'No records could be found for this salesId, please retry with another Customer id.'
+			})
+		}	
 
 	},function(error){
 		res.status(400).send(err);
@@ -38,5 +46,5 @@ function opportunity(req,res){
 module.exports={
 	salesOrderByCustomer,
 	// customerDetails,
-	opportunity
+	salesOrderlist
 }

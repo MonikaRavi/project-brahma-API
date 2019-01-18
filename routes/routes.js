@@ -7,6 +7,7 @@ var path = require('path');
 	var salesforceController=require('./../controller/salesforce.controller');
 	var AX2009Controller=require('./../controller/AX2009.controller');
 	var AX365Controller=require('./../controller/AX365.controller');
+	var freightViewController=require('./../controller/freightview.controller');
 
 
 //API end point for landing page
@@ -23,7 +24,7 @@ var path = require('path');
 	router.route('/v1/AX2009/salesOrderlist').get(AX2009Controller.AX2009SalesOrderList);
 
 		//get customer details from sales Id for AX2009
-	router.route('/v1/AX2009/customerDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSalesId); //SO00000155
+	router.route('/v1/AX2009/customerDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSalesId); //SO00000155 (correct)
 
 		//get sales order details from sales Id for AX2009
 	router.route('/v1/AX2009/salesOrderDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009salesOrderDetailsFromSalesID); //SO-1787116
@@ -31,22 +32,19 @@ var path = require('path');
 		//get sales order details from sales id for Salesforce
 	router.route('/v1/salesforce/salesOrderDetailsFromSalesId/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116
 
-		//aggregate the opportunities for an account from SF, AX365, AX2009 with a single request 
-	router.route('/v1/AX2009_SF_AX365/opportunities/:account').get(aggregateDataController.aggregateData);  //00764
-
 		//get opportunity for an account for salesforce
 	router.route('/v1/salesforce/opportunities/:account').get(salesforceController.opportunity);  //00764
 
-		//get opportunity for an account for AX2009
-	router.route('/v1/AX2009/opportunities/:account').get(AX2009Controller.opportunity);  //00764
+		//get customer info and the related sales list for an account for AX2009
+	router.route('/v1/AX2009/customerSalesList/:account').get(AX2009Controller.customerSalesList);  //00764
 
-		//get opportunity for an account for AX365
-	router.route('/v1/AX365/opportunities/:account').get(AX365Controller.opportunity); //00764
+		//get sales order list for a customer account for AX365
+	router.route('/v1/AX365/salesOrderlist/:account').get(AX365Controller.salesOrderlist); //C000622
 
 		//get safety/plumbing accounts from salesforce 
 	router.route('/v1/salesforce/:type').get(salesforceController.accountsByType); //{safety,plumbing}
 
-
+	router.route('/v1/freightview/:salesOrder').get(freightViewController.getShipmentDataFromFreightView);
 
 
 

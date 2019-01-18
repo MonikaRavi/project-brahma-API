@@ -7,7 +7,7 @@ function getSalesOrderByCustomer(account){//salesOrderByCustomer
 
   var config=config365.config;
 
-  var ourQuery = `select top 5 SalesID, createdDate,Amount, CustAccount, Customer from SalesSummary_Avlis where CustAccount='C000622' order by createdDate desc`;
+  var ourQuery = `select top 5 SalesID, createdDate,Amount, CustAccount, Customer from SalesSummary_Avlis where CustAccount='${account}' order by createdDate desc`;
   
   // return utilityModel.sqlQuery(ourQuery,config);
   return new Promise(function(resolve,reject){
