@@ -6,8 +6,8 @@ function AX2009SalesOrderList(req,res){
 		if(result!==null){
 			res.send(result.recordsets[0]);
 		}else{
-			res.send({
-				status: 400,
+			res.status(404).send({
+				status: 404,
 				errorMessage:'No results were found for this query!'
 			});
 		}		
@@ -45,8 +45,8 @@ function customerSalesList(req,res){
 			        data: tempData
 			    });
 			}else{
-				res.status(400).send({
-				status: 400,
+				res.status(404).send({
+				status: 404,
 				errorMessage:'No records could be found for this salesId, please retry with another customer Account.'
 			});
 			}
@@ -72,8 +72,8 @@ function AX2009CustomerDetailsFromSalesId(req,res){
 			RSD:result.recordsets[0][0].RSD
 		}])
 		}else{
-			res.status(400).send({
-				status: 400,
+			res.status(404).send({
+				status: 404,
 				errorMessage:'No records could be found for this salesId, please retry with another SalesId.'
 			})
 		}
@@ -90,8 +90,8 @@ function AX2009salesOrderDetailsFromSalesID(req,res){
 		if(result.recordsets[0].length!==0){
 			res.send(result.recordsets[0]);
 		}else{
-			res.status(400).send({
-				status: 400,
+			res.status(404).send({
+				status: 404,
 				errorMessage:'No records could be found for this salesId, please retry with another SalesId.'
 			})
 		}

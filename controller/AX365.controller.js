@@ -31,8 +31,8 @@ function salesOrderlist(req,res){
 
         	res.send(tempData);
 		}else{
-			res.status(400).send({
-				status: 400,
+			res.status(404).send({
+				status: 404,
 				errorMessage:'No records could be found for this salesId, please retry with another Customer id.'
 			})
 		}	

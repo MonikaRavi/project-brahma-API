@@ -17,14 +17,12 @@ function shipmentDataFromFreightView(req,res){
 		  	 	status:data.status,
 		  	 	pickupDate:data.pickupDate,
 		  	 	tracking:data.tracking
-
-
 	  		})
 	  	}
 
 	},function(error){
-		res.status(400).send({
-	  		status:400,
+		res.status(404).send({
+	  		status:404,
 	  		errorMessage: 'No shipping information was available for this sales Order. Please try with different one!'
 	  	})
 	})

@@ -19,8 +19,8 @@ function salesOrderDetailsFromSalesId(req,res){
       deliveryState:tempVal.Opportunity_State_Province__c
     }]);
     }else{
-      res.status(400).send({
-        status: 200,
+      res.status(404).send({
+        status: 404,
         errorMessage:'No records could be found for this salesId, please retry with another SalesId.'
       })
     }    
@@ -35,8 +35,8 @@ function opportunity(req,res){
     if(result.length!==0){
       res.send(result);
     }else{
-      res.status(400).send({
-        status: 200,
+      res.status(404).send({
+        status: 404,
         errorMessage:'No records could be found for this salesId, please retry with another customer Account.'
       });
     }
