@@ -20,6 +20,7 @@ function AX2009SalesOrderList(req,res){
 function customerSalesList(req,res){
 
 	AX2009Model.getSalesFromCustomer(req,res).then(function(recordset){
+		console.log(recordset);
 		console.log('recordset.recorsets:',recordset.recordsets[0]);
 		console.log('recordset: length',recordset.recordsets[0].length);
 		
@@ -59,6 +60,7 @@ function customerSalesList(req,res){
 //returns the customer details from a sales ID
 function AX2009CustomerDetailsFromSalesId(req,res){
 	AX2009Model.getCustomerDetailsFromSalesId(req,res).then(function(result){
+		console.log(result);
 		if(result.recordsets[0].length!==0){
 			res.send([{
 			so:result.recordsets[0][0].SALESID,

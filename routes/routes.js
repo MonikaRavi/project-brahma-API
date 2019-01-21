@@ -3,7 +3,7 @@ var router=express.Router();
 var path = require('path');
 
 //require controllers
-	var aggregateDataController=require('./../controller/aggregate.controller');
+	// var aggregateDataController=require('./../controller/aggregate.controller');
 	var salesforceController=require('./../controller/salesforce.controller');
 	var AX2009Controller=require('./../controller/AX2009.controller');
 	var AX365Controller=require('./../controller/AX365.controller');
@@ -44,7 +44,8 @@ var path = require('path');
 		//get safety/plumbing accounts from salesforce 
 	router.route('/v1/salesforce/:type').get(salesforceController.accountsByType); //{safety,plumbing}
 
-	router.route('/v1/freightview/:salesOrder').get(freightViewController.getShipmentDataFromFreightView);
+		//get shipping details from feightview
+	router.route('/v1/freightview/:salesOrder').get(freightViewController.shipmentDataFromFreightView);
 
 
 

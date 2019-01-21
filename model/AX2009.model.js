@@ -6,8 +6,16 @@ var config09=config.config;
 //get recent sales order list from AX2009
 var getSalesOrderList=function(){
     var value='';
-    var ourQuery=`select A.SALESID,Amount,createdDate,CustAccount,Customer,SalesName,RecentPickUp,Status from SalesSummary_Hws A INNER JOIN
-                      dbo.temp_SOSF AS E ON A.SALESID = E.SalesID`;
+    var ourQuery=`SELECT [SALESID]
+      ,[Amount]
+      ,[createdDate]
+      ,[CUSTACCOUNT]
+      ,[Customer]
+      ,[SALESNAME]
+      ,[RecentPickUp]
+      ,[Status]
+      ,[SF]
+  FROM View_NodeSalesList`;
     var config1=config.config;
 
     return utilityModel.sqlQuery(ourQuery,config1,value);
