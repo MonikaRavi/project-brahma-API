@@ -14,7 +14,11 @@ function shipmentDataFromFreightView(req,res){
 		  	 	referenceNumber:data.origin.referenceNumber,
 		  	 	destination: data.destination.address+ data.destination.city + data.destination.state,
 		  	 	company:data.destination.company,
+		  	 	status:data.status,
+		  	 	pickupDate:data.pickupDate,
 		  	 	tracking:data.tracking
+
+
 	  		})
 	  	}
 

@@ -15,7 +15,7 @@ var getSalesOrderList=function(){
       ,[RecentPickUp]
       ,[Status]
       ,[SF]
-  FROM View_NodeSalesList`;
+      FROM View_NodeSalesList`;
     var config1=config.config;
 
     return utilityModel.sqlQuery(ourQuery,config1,value);
@@ -37,7 +37,7 @@ function getCustomerDetailsFromSalesId(req,res){ //get customer from sales
 function getSalesOrderDetailsFromSalesId(salesId){
     var value=salesId;
 
-    var ourQuery = "select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, ITEMID ,ITEMNAME, SALESQTY , LINEAMOUNT, SalesStatus from SalesDetail_hws A join temp_SOSF B on A.SALESID = B.SALESID WHERE A.SALESID=@value";
+    var ourQuery = "select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, ITEMID ,ITEMNAME, SALESQTY , LINEAMOUNT, SalesStatus from SalesDetail_hws A  WHERE A.SALESID=@value";
 
     return utilityModel.sqlQuery(ourQuery,config09,value);
 }
