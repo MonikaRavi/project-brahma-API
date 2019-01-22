@@ -1,10 +1,10 @@
-const sql=require('mssql');
+const sql = require('mssql');
 const sfConnection = require('../../configuration/accessSF');
 
 
 
 //performs sql query by taking in 'OurQuery' and configuration value of 'config' with escaped value 'value' to prevent SQL injection
-var sqlQuery=function(ourQuery,config,value){
+var sqlQuery = function(ourQuery,config,value){
 
 	//make a connection to db using given Configuration=config  and query=ourQuery
 	return new Promise(function(resolve,reject){   
@@ -34,7 +34,7 @@ var sqlQuery=function(ourQuery,config,value){
 
 
 //performs query to salesforce database
-var SFQuery=function(ourQuery){
+var SFQuery = function(ourQuery){
 
 	//make a connection to db using given uery=ourQuery
 
@@ -61,7 +61,7 @@ var SFQuery=function(ourQuery){
 	})
 }
 
-module.exports={
+module.exports = {
 	sqlQuery,
 	SFQuery
 }

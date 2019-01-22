@@ -1,11 +1,11 @@
 const sfConnection = require('../configuration/accessSF');
-const utilityModel=require('./utility/utilityModel');
+const utilityModel = require('./utility/utilityModel');
 const request = require('request');
 
 // gets sales details for a particular sales ID in salesforce
-var getSalesDetailsFromSalesID=function(salesId){ //getSalesDetails
+var getSalesDetailsFromSalesID = function(salesId){ //getSalesDetails
 
-    var ourQuery=`select name, Amount, ERP_Sales_Order_Number__c, ERP_Final_Amount__c, AccountID, CloseDate, 
+    var ourQuery = `select name, Amount, ERP_Sales_Order_Number__c, ERP_Final_Amount__c, AccountID, CloseDate, 
                                 Opportunity_State_Province__c from Opportunity where ERP_Sales_Order_Number__c = '${salesId}' `;
 
     return utilityModel.SFQuery(ourQuery);
@@ -19,30 +19,31 @@ var getOpportunity = function (accountName) { //qrySoql
                                 (select Id from Account where axaccountnum__c = '${accountName}' ) LIMIT 5`;
 
     //call database using Utility Function and format the data as required
-        return new Promise(function(resolve, reject){
+    return new Promise(function(resolve, reject){
 
-            utilityModel.SFQuery(query).then(function(result){
-                
-                var data = [];
-
-                var dataArray = [];
-
-                dataArray = result.records;
-
-                result.records.forEach(function(element){
-
-                    data.push({
-
-                        name: element.Name,
-                        probability: element.Probability,
-                        amount: element.Amount
-                    });
-
-                });
+        utilityModel.SFQuery(query).then(function(result){
             
-            resolve(data);
-        });
-       }) 
+            var data = [];
+
+            var dataArray = [];
+
+            dataArray = result.records;
+
+            result.records.forEach(function(element){
+
+                data.push({
+
+                    name: element.Name,
+                    probability: element.Probability,
+                    amount: element.Amount
+                });
+
+            });
+        
+        resolve(data);
+    });
+
+   }) 
 }
 
 //gets accounts of salesforce for a particular account type
@@ -96,9 +97,12 @@ var getAccounts = function(accountType) {//accounts
                     });
 
                 },
+
             function(err){  
+                
                 console.log(err);
                 reject(err);
+            
             });
 
         });

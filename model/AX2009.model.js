@@ -1,12 +1,12 @@
-const sql=require('mssql');
-const config=require('../configuration/configAX2009.js');
-const utilityModel=require('./utility/utilityModel');
-var config09=config.config;
+const sql = require('mssql');
+const config = require('../configuration/configAX2009.js');
+const utilityModel = require('./utility/utilityModel');
+var config09 = config.config;
 
 //get recent sales order list from AX2009
-var getSalesOrderList=function(){
-    var value='';
-    var ourQuery=`SELECT [SALESID]
+var getSalesOrderList = function(){
+    var value = '';
+    var ourQuery = `SELECT [SALESID]
       ,[Amount]
       ,[createdDate]
       ,[CUSTACCOUNT]
@@ -16,7 +16,7 @@ var getSalesOrderList=function(){
       ,[Status]
       ,[SF]
       FROM View_NodeSalesList`;
-    var config1=config.config;
+    var config1 = config.config;
 
     return utilityModel.sqlQuery(ourQuery,config1,value);
 }
@@ -24,9 +24,9 @@ var getSalesOrderList=function(){
 //gets customer details from sales id
 function getCustomerDetailsFromSalesId(req,res){ //get customer from sales
 
-    var salesId=req.params.salesId;
+    var salesId = req.params.salesId;
 
-    var value=salesId;
+    var value = salesId;
 
     var ourQuery = `select SALESID, CUSTACCOUNT , Customer, PHONE, EMAIL, ADDRESS, RSD from Customer_SalesID where SALESID = '${salesId}'`;
 
@@ -35,9 +35,9 @@ function getCustomerDetailsFromSalesId(req,res){ //get customer from sales
 
 //gets sales order details for a particular sales ID in AX 2009
 function getSalesOrderDetailsFromSalesId(salesId){
-    var value=salesId;
+    var value = salesId;
 
-    var ourQuery = "select distinct A.SALESID, SALESNAME, CREATEDDATETIME, Customer, ITEMID ,ITEMNAME, SALESQTY , LINEAMOUNT, SalesStatus from SalesDetail_hws A  WHERE A.SALESID=@value";
+    var ourQuery = "select distinct sales_TB.SALESID, SALESNAME, CREATEDDATETIME, Customer, ITEMID ,ITEMNAME, SALESQTY , LINEAMOUNT, SalesStatus from SalesDetail_hws sales_TB  WHERE sales_TB.SALESID=@value";
 
     return utilityModel.sqlQuery(ourQuery,config09,value);
 }
@@ -45,8 +45,8 @@ function getSalesOrderDetailsFromSalesId(salesId){
 //gets sales information for a particular customer  //used in aggregate and opportunity
 function getSalesFromCustomer(req,res){//get sales from customer
 
-    var account=req.params.account;
-    var value=account;
+    var account = req.params.account;
+    var value = account;
 
     var ourQuery = 'select top 5 SalesID, createdDate,Amount,CustAccount, Customer from SalesSummary_Hws where CustAccount = @value order by createdDate desc';
 

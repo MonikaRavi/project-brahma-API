@@ -1,7 +1,7 @@
 var express = require('express');
 var app =  express();
 app.use(express.static('public'));
-var RateLimit=require('express-rate-limit');
+var RateLimit = require('express-rate-limit');
 
 // var bodyParser = require('body-parser');   //required for POST requests
 // app.use(bodyParser.json());
@@ -10,7 +10,7 @@ var cors = require('cors');
 app.use(cors());
 
 //for DOS attack prevention
-var limiter=require('./security/dos.js');
+var limiter = require('./security/dos.js');
 app.use(limiter.limiter);
 
 var favicon = require('serve-favicon');

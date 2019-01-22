@@ -1,9 +1,11 @@
-const AX365Model=require('../model/AX365.model');
+const AX365Model = require('../model/AX365.model');
 
 
 //return the top 5 sales orders for a particular customer account
 function salesOrderByCustomer(req,res){
+
 	return AX365Model.getSalesOrderByCustomer(req.params.account);
+
 }
 
 
@@ -12,39 +14,54 @@ function salesOrderlist(req,res){
 
 	AX365Model.getSalesOrderByCustomer(req.params.account).then(function(recordset){
 		
-		if(recordset.recordsets[0].length!==0){
-			var customer={
+		if(recordset.recordsets[0].length !== 0){
+
+			var customer = {
 		                CustAccount:recordset.recordsets[0][1].CustAccount,
 		                Customer:recordset.recordsets[0][1].Customer
 		         	};
 
 			    //get the first five sales records of the customer     		
-	      	var tempData=[];
+	      	var tempData = [];
+
 	        recordset.recordsets[0].forEach(function(customer){
-	            var tempCus={
-	                SalesId:customer.SalesID,
-	                createdDate:customer.createdDate,
-	                Amount:customer.Amount
+
+	            var tempCus = {
+	                
+	                SalesId : customer.SalesID,
+	                createdDate : customer.createdDate,
+	                Amount : customer.Amount
+	            
 	            }
+
 	            tempData.push(tempCus);
+	        
 	        });
 
         	res.send(tempData);
+		
 		}else{
-			res.status(404).send({
+		 
+		 	res.status(404).send({
+		
 				status: 404,
 				errorMessage:'No records could be found for this salesId, please retry with another Customer id.'
+		
 			})
+		
 		}	
 
 	},function(error){
+		
 		res.status(400).send(err);
+	
 	});
 					
 }
 
-module.exports={
-	salesOrderByCustomer,
-	// customerDetails,
+module.exports = {
+ 
+ 	salesOrderByCustomer,
 	salesOrderlist
+
 }
