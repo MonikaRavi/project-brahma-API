@@ -1,10 +1,11 @@
-var RateLimit=require('express-rate-limit');
+var RateLimit =require('express-rate-limit');
 
-var limiter=new RateLimit({
-	windowMS:1*60*1000, //1 minutes
-	max:10, //limit each IP to 100 requests per windwoMS
-	delayMs:0, //disable delaying -- full speed until the max limit is reached
-	message:'Error: Too many requests, your IP has been flagged!!',
+var limiter = new RateLimit({
+	
+	windowMS : 1*60*1000, //1 minutes
+	max : 19, //limit each IP to 100 requests per windwoMS
+	delayMs : 0, //disable delaying -- full speed until the max limit is reached
+	message : 'Error: Too many requests, your IP has been flagged!!',
 	// onLimitReached:function(req,res,options){
 	// 	console.log('limit reached@!');
 		
@@ -15,6 +16,8 @@ var limiter=new RateLimit({
 	// }
 });
 
-module.exports={
+module.exports = {
+
 	limiter
+
 }

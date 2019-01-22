@@ -32,16 +32,14 @@ function customerSalesList(req,res){
 
 	AX2009Model.getSalesFromCustomer(req,res).then(function(recordset){
 		
-		console.log(recordset);
-		console.log('recordset.recorsets:',recordset.recordsets[0]);
-		console.log('recordset: length',recordset.recordsets[0].length);
-		
 		if(recordset.recordsets[0].length !== 0){
 			
+			var data = recordset.recordsets[0][1];
+
 			var customer = {
 			        
-			        CustAccount : recordset.recordsets[0][1].CustAccount,
-			        Customer : recordset.recordsets[0][1].Customer
+			        CustAccount : data.CustAccount,
+			        Customer : data.Customer
 			    
 			    };
 		    //get the top 5 sales order of the customer
@@ -95,16 +93,18 @@ function AX2009CustomerDetailsFromSalesId(req,res){
 		console.log(result);
 
 		if(result.recordsets[0].length !== 0){
+
+			var data=result.recordsets[0][0];
 			
 			res.send([{
 			
-				so : result.recordsets[0][0].SALESID,
-				account : result.recordsets[0][0].CustAccount,
-				name : result.recordsets[0][0].Customer,
-				phone : result.recordsets[0][0].PHONE,
-				email : result.recordsets[0][0].EMAIL,
-				address : result.recordsets[0][0].ADDRESS,
-				RSD : result.recordsets[0][0].RSD
+				so : data.SALESID,
+				account : data.CustAccount,
+				name : data.Customer,
+				phone : data.PHONE,
+				email : data.EMAIL,
+				address : data.ADDRESS,
+				RSD : data.RSD
 			
 			}])
 
