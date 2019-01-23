@@ -43,7 +43,7 @@ var path = require('path');
 	router.route('/v1/AX365/salesOrderlist/:account').get(AX365Controller.salesOrderlist); //C000622
 
 		//get safety/plumbing accounts from salesforce 
-	router.route('/v1/salesforce/:type').get(salesforceController.accountsByType); //{safety,plumbing}
+	router.route('/v1/salesforce/distributor/:type').get(salesforceController.accountsByType); //{safety,plumbing}
 
 		//get shipping details from feightview
 	router.route('/v1/freightview/:salesOrder').get(freightViewController.shipmentDataFromFreightView);
