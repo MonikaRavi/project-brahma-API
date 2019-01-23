@@ -8,7 +8,7 @@ var path = require('path');
 	var AX2009Controller = require('./../controller/AX2009.controller');
 	var AX365Controller = require('./../controller/AX365.controller');
 	var freightViewController = require('./../controller/freightview.controller');
-	var twilioController = require('./../controller/toolio.controller.js');
+	var twilioController = require('./../controller/twilio.controller.js');
 
 
 //API end point for landing page
