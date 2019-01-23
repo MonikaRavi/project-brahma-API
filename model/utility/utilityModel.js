@@ -21,7 +21,7 @@ var sqlQuery = function(ourQuery,config,value){
 	            
                 if (err) reject(err);
 
-                resolve(recordset);	  
+                resolve(recordset); 
 	         	
 	         	sql.close();
         		
