@@ -54,7 +54,6 @@ var getAccounts = function(accountType) {//accounts
         return new Promise(function(resolve, reject) {
 
             sfConnection.getToken().then(function(result){
-                console.log('token:',result);
 
                 url = 'https://haws--iot.cs8.my.salesforce.com/services/apexrest/showAccounts/' + accountType
 

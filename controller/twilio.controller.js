@@ -15,7 +15,7 @@ var reminder = function(req,res) {
 	var phone;
 	var email;
 	// var bod;
-	console.log('salesid:',req.params.salesId);
+	// console.log('salesid:',req.params.salesId);
 
 	AX2009Model.getCustomerDetailsFromSalesId(req,res).then(function(result){
 
@@ -24,12 +24,12 @@ var reminder = function(req,res) {
 			name = JSON.stringify(result.recordsets[0][0].Customer),
 			phone = JSON.stringify(result.recordsets[0][0].PHONE),
 			email = JSON.stringify(result.recordsets[0][0].EMAIL)
-			console.log('name:',name, 'phone',phone,'email',email);
+			// console.log('name:',name, 'phone',phone,'email',email);
 			// bod=name + phone + email;	
 		}
 		
 		const bod = name + phone + email;	
-		console.log('body',bod);
+		// console.log('body',bod);
 		
 		client.messages.create({ 
 

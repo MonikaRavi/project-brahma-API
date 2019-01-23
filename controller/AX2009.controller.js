@@ -90,7 +90,7 @@ function AX2009CustomerDetailsFromSalesId(req,res){
 
 	AX2009Model.getCustomerDetailsFromSalesId(req,res).then(function(result){
 	
-		console.log(result);
+		// console.log(result);
 
 		if(result.recordsets[0].length !== 0){
 
