@@ -73,7 +73,7 @@ var call = function(req,res){
 
 }
 
-module.exports = s{
+module.exports = {
 	reminder,
 	call
 }

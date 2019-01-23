@@ -7,7 +7,7 @@ function getShipmentDataFromFreightView(salesOrder){
 	var url = "https://www.freightview.com/api/v1.0/shipments/";
 	var pro = 123;
 	var bol = 456;
-	var pickupDate = "2017-02-12";
+	var pickupDate = "2018-10-30";
 	var ref = salesOrder;
 	var configFrieghtView = configFreightView.getFrieghtViewConfig(url,pro,bol,pickupDate,ref);
 

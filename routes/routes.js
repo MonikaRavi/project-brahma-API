@@ -8,7 +8,7 @@ var path = require('path');
 	var AX2009Controller = require('./../controller/AX2009.controller');
 	var AX365Controller = require('./../controller/AX365.controller');
 	var freightViewController = require('./../controller/freightview.controller');
-	var toolioController = require('./../controller/toolio.controller.js');
+	var twilioController = require('./../controller/toolio.controller.js');
 
 
 //API end point for landing page
@@ -49,9 +49,9 @@ var path = require('path');
 	router.route('/v1/freightview/:salesOrder').get(freightViewController.shipmentDataFromFreightView);
 
 		//send message from twilio
-	router.route('/twilio/:salesId').get(toolioController.reminder); //send text message
+	router.route('/twilio/:salesId').get(twilioController.reminder); //send text message
 
 		//send voice call from twilio
-	router.route('/twilio/').get(toolioController.call);
+	router.route('/twilio/').get(twilioController.call);
 
  module.exports = router;
