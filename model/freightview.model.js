@@ -19,7 +19,7 @@ function getShipmentDataFromFreightView(salesOrder){
 	  		
 	  		if (err) reject(err);
 	  		
-	  		var body=JSON.parse(body);
+	  		 var body=JSON.parse(body);
 
 	  		console.log('body:',body);
 	  		

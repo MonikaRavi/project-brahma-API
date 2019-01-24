@@ -22,7 +22,7 @@ var path = require('path');
 
 
 		//get sales order list from AX2009
-	router.route('/v1/AX2009/salesOrderlist').get(AX2009Controller.AX2009SalesOrderList);
+	router.route('/v1/AX2009/salesOrderList').get(AX2009Controller.AX2009SalesOrderList);
 
 		//get customer details from sales Id for AX2009
 	router.route('/v1/AX2009/customerDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSalesId); //SO00000155 (correct)
@@ -40,7 +40,16 @@ var path = require('path');
 	router.route('/v1/AX2009/customerSalesList/:account').get(AX2009Controller.customerSalesList);  //00764
 
 		//get sales order list for a customer account for AX365
-	router.route('/v1/AX365/salesOrderlist/:account').get(AX365Controller.salesOrderlist); //C000622
+	// router.route('/v1/AX365/salesOrderListForCustomer/:account').get(AX365Controller.salesOrderlistForCustomer); //C000622
+
+		//get top 50 sales order List from Avlis 
+	 router.route('/v1/AX365/salesOrderList').get(AX365Controller.salesOrderList);
+
+	 	//get customer details from sales Id from Avlis
+	 router.route('/v1/AX365/customerDetailsFromSalesId/:salesId').get(AX365Controller.customerDetailsFromSalesId);
+
+	 	//get sales details from SalesId from Avlis
+	 router.route('/v1/AX365/salesOrderDetailsFromSalesId/:salesId').get(AX365Controller.salesOrderDetailsFromSalesId);
 
 		//get safety/plumbing accounts from salesforce 
 	router.route('/v1/salesforce/distributor/:type').get(salesforceController.accountsByType); //{safety,plumbing}

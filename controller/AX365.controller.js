@@ -10,7 +10,7 @@ function salesOrderByCustomer(req,res){
 
 
 //find the opportunity for a particular customer in AX365
-function salesOrderlist(req,res){
+function salesOrderListForCustomer(req,res){
 
 	AX365Model.getSalesOrderByCustomer(req.params.account).then(function(recordset){
 		
@@ -53,15 +53,74 @@ function salesOrderlist(req,res){
 
 	},function(error){
 		
-		res.status(400).send(err);
+		res.status(400).send(error);
 	
 	});
 					
 }
 
+function salesOrderList(req,res){
+	AX365Model.getSalesOrderList().then(function(recordset){
+
+		// console.log('recordsset:',recordset.recordsets[0]);
+
+		res.send(recordset.recordsets[0]);
+	
+	},function(error){
+	
+		res.status(404).send({
+		
+				status : 404,
+				errorMessage :'No results were found for this query!'
+		
+			});
+	
+	})
+
+}
+
+function customerDetailsFromSalesId(req,res){
+	console.log('salesId:',req.params.salesId);
+	AX365Model.getCustomerDetailsFromSalesId(req.params.salesId).then(function(result){
+		
+		res.send(result.recordsets[0][0]);
+	
+	},function(error){
+
+		res.status(404).send({
+		
+				status : 404,
+				errorMessage :'No results were found for this query!'
+		
+			});
+
+	})
+}
+
+function salesOrderDetailsFromSalesId(req,res){
+
+	AX365Model.getSalesOrderDetailsFromSalesId(req.params.salesId).then(function(result){
+
+		res.send(result.recordsets[0][0]);
+
+	},function(error){
+
+		res.status(404).send({
+		
+				status : 404,
+				errorMessage :'No results were found for this query!'
+		
+			});
+	})
+}
+
+
 module.exports = {
  
  	salesOrderByCustomer,
-	salesOrderlist
+	salesOrderList,
+	salesOrderListForCustomer,
+	customerDetailsFromSalesId,
+	salesOrderDetailsFromSalesId
 
 }
