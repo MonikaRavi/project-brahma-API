@@ -3,13 +3,14 @@ var configFreightView = require('./../configuration/freightview.config');
 
 
 function getShipmentDataFromFreightView(salesOrder){
+	console.log('salesOrder:',salesOrder);
 	//setting up configuration for freightview
 	var url = "https://www.freightview.com/api/v1.0/shipments/";
-	var pro = 123;
-	var bol = 456;
-	var pickupDate = "2018-10-30";
+	// var pro = 123;
+	// var bol = 456;
+	// var pickupDate = "2018-10-30";
 	var ref = salesOrder;
-	var configFrieghtView = configFreightView.getFrieghtViewConfig(url,pro,bol,pickupDate,ref);
+	var configFrieghtView = configFreightView.getFrieghtViewConfig(url,ref);
 
 
 	return new Promise(function(resolve, reject){
@@ -19,6 +20,8 @@ function getShipmentDataFromFreightView(salesOrder){
 	  		if (err) reject(err);
 	  		
 	  		var body=JSON.parse(body);
+
+	  		console.log('body:',body);
 	  		
 	  		if(body.shipments.length !== 0){
 	  		
