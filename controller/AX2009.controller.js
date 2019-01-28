@@ -59,12 +59,12 @@ function customerSalesList(req,res){
 		        
 		        });
 		    //return the data
-				res.send ({
+				res.send ([{
 			      	
 			      	customer : customer,
 			        data : tempData
 			    
-			    });
+			    }]);
 			
 			}else{
 			 

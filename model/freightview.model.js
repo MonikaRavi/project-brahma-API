@@ -2,20 +2,19 @@ var request = require("request");
 var configFreightView = require('./../configuration/freightview.config');
 
 
-function getShipmentDataFromFreightView(salesOrder){
+function getShipmentDataFromSalesOrder(salesOrder){
 	console.log('salesOrder:',salesOrder);
 	//setting up configuration for freightview
 	var url = "https://www.freightview.com/api/v1.0/shipments/";
-	// var pro = 123;
-	// var bol = 456;
-	// var pickupDate = "2018-10-30";
 	var ref = salesOrder;
-	var configFrieghtView = configFreightView.getFrieghtViewConfig(url,ref);
+	
 
+	var configFreightViewDetails = configFreightView.getFreightViewConfig(url);
+	configFreightViewDetails.qs.ref=salesOrder;
 
 	return new Promise(function(resolve, reject){
 
-		request(configFrieghtView, function (err, response, body) {
+		request(configFreightViewDetails, function (err, response, body) {
 	  		
 	  		if (err) reject(err);
 	  		
@@ -44,6 +43,49 @@ function getShipmentDataFromFreightView(salesOrder){
 	
 }
 
+
+function getShipmentDataFromPickUpDate(pickUpDate){
+
+	console.log('pickUpDate:',pickUpDate);
+	//setting up configuration for freightview
+	var url = "https://www.freightview.com/api/v1.0/shipments/";
+	var pickupDate = pickUpDate;
+	var configFreightViewDetails = configFreightView.getFreightViewConfig(url);
+	configFreightViewDetails.qs.pickupDate = '2019-1-24';
+
+	console.log('configFreightViewDetails:',configFreightViewDetails);
+
+	return new Promise(function(resolve, reject){
+
+		request(configFreightView, function (err, response, body) {
+	  		
+	  		if (err) reject(err);
+	  		
+	  		var body=JSON.parse(body);
+
+	  		console.log('body:',body);
+	  		
+	  		if(body.shipments.length !== 0){
+	  			console.log('body:',body);
+	  			resolve(body.shipments[0]);
+	  		
+	  		}else{
+	  		
+	  			reject({
+	  		
+	  				status:200,
+	  				errorMessage:'No records found!'
+	  		
+	  			})
+	  		
+	  		}
+	  			 
+		})
+	
+	})
+	
+}
 module.exports={
-	getShipmentDataFromFreightView
+	getShipmentDataFromSalesOrder,
+	getShipmentDataFromPickUpDate
 }

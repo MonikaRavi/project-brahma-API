@@ -29,18 +29,25 @@ var path = require('path');
 
 		//get sales order details from sales Id for AX2009
 	router.route('/v1/AX2009/salesOrderDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009salesOrderDetailsFromSalesID); //SO-1787116
-
+		
+		//get customer info and the related sales list for an account for AX2009
+	router.route('/v1/AX2009/customerSalesList/:account').get(AX2009Controller.customerSalesList);  //00764
+	
+	
 		//get sales order details from sales id for Salesforce
 	router.route('/v1/salesforce/salesOrderDetailsFromSalesId/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116
 
 		//get opportunity for an account for salesforce
 	router.route('/v1/salesforce/opportunities/:account').get(salesforceController.opportunity);  //00764
 
-		//get customer info and the related sales list for an account for AX2009
-	router.route('/v1/AX2009/customerSalesList/:account').get(AX2009Controller.customerSalesList);  //00764
+		//get safety/plumbing accounts from salesforce 
+	router.route('/v1/salesforce/distributor/:type').get(salesforceController.accountsByType); //{safety,plumbing}
+
+
 
 		//get sales order list for a customer account for AX365
 	// router.route('/v1/AX365/salesOrderListForCustomer/:account').get(AX365Controller.salesOrderlistForCustomer); //C000622
+
 
 		//get top 50 sales order List from Avlis 
 	 router.route('/v1/AX365/salesOrderList').get(AX365Controller.salesOrderList);
@@ -49,14 +56,16 @@ var path = require('path');
 	 router.route('/v1/AX365/customerDetailsFromSalesId/:salesId').get(AX365Controller.customerDetailsFromSalesId);
 
 	 	//get sales details from SalesId from Avlis
-	 router.route('/v1/AX365/salesOrderDetailsFromSalesId/:salesId').get(AX365Controller.salesOrderDetailsFromSalesId);
+	 router.route('/v1/AX365/salesOrderDetailsFromSalesId/:salesId').get(AX365Controller.salesOrderDetailsFromSalesId);	
 
-		//get safety/plumbing accounts from salesforce 
-	router.route('/v1/salesforce/distributor/:type').get(salesforceController.accountsByType); //{safety,plumbing}
 
-		//get shipping details from feightview
-	router.route('/v1/freightview/:salesOrder').get(freightViewController.shipmentDataFromFreightView);
+		//get shipping details from feightview using reference number(sales order)
+	router.route('/v1/freightviewDetailsFromSalesId/:salesOrder').get(freightViewController.shipmentDataFromSalesOrder);  //
 
+		//get shipping details from freightview using pick up Date
+	router.route('/v1/freightviewDetailsFromPickUpDate/:pickUpDate').get(freightViewController.shipmentDataFromPickUpDate); 
+
+	
 		//send message from twilio
 	router.route('/twilio/:salesId').get(twilioController.reminder); //send text message
 
