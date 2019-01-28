@@ -101,7 +101,7 @@ function salesOrderDetailsFromSalesId(req,res){
 
 	AX365Model.getSalesOrderDetailsFromSalesId(req.params.salesId).then(function(result){
 
-		res.send([result.recordsets[0][0]]);
+		res.send(result.recordsets[0]);
 
 	},function(error){
 
