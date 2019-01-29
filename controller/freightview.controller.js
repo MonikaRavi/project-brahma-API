@@ -14,13 +14,17 @@ function shipmentDataFromSalesOrder(req,res){
 	}
 	
 	freightviewModel.getShipmentDataFromSalesOrderWithSO(salesIdNumberOnly).then((data)=>{
-		if(data !== null){
 
+		if(data !== null && data!==undefined){
+
+			var tracking=[];
 	  		//sort the tracking.history
-	  		var tracking=data.tracking.history.sort(function(a,b){
-	  			return new Date(b.createdDate)-new Date(a.createdDate);
-	  		})
 
+	  		if(typeof data.tracking!="undefined"){
+	  			var tracking=data.tracking.history.sort(function(a,b){
+	  				return new Date(b.createdDate)-new Date(a.createdDate);
+	  			})
+	  		}
 	  		res.send({
 
 	  			carrier : data.rate.carrier,
@@ -81,7 +85,7 @@ function shipmentDataFromPickUpDate(req,res){
 	  		var tracking=data.tracking.history.sort(function(a,b){
 				return new Date(b.createdDate)-new Date(a.createdDate);
 			})
-			
+
 	  		res.send({
 
 	  			carrier : data.rate.carrier,
