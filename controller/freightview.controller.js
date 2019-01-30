@@ -8,6 +8,7 @@ function shipmentDataFromSalesOrder(req,res){
 	var salesOrder=req.params.salesOrder;
 
 	freightviewModel.getShipmentDataFromSalesOrder(salesOrder).then((data)=>{
+		console.log('data:',data);
 		var shipmentsObject=data.shipments[0];
 		if(typeof shipmentsObject!="undefined"){  //means if data is not empty
 
