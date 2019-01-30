@@ -54,10 +54,6 @@ function getSalesFromCustomer(req,res){//get sales from customer
 
 }
 
-
-
-
-
 module.exports={
 	getSalesFromCustomer,
   getCustomerDetailsFromSalesId,

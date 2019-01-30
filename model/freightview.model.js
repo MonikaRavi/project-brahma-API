@@ -25,16 +25,6 @@ function getShipmentDataFromSalesOrder(salesOrder){
 
 			      resolve(body);
 
-			      // if(typeof body.shipments[0]=="undefined"){ //meaning no data is returned ie. body.shipments[0]={[]}
-			      
-			      //   resolve (body);
-
-			      // }else{
-			        
-			      //   resolve(body.shipments[0]);
-
-			      // }
-
 			    } 
 		  			 
 			})

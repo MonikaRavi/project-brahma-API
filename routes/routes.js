@@ -22,20 +22,20 @@ var path = require('path');
 
 
 		//get sales order list from AX2009
-	router.route('/v1/AX2009/salesOrderList').get(AX2009Controller.AX2009SalesOrderList);
+	router.route('/v1/AX2009/salesOrderList').get(AX2009Controller.salesOrderList);
 
 		//get customer details from sales Id for AX2009
-	router.route('/v1/AX2009/customerDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009CustomerDetailsFromSalesId); //SO00000155 (correct)
+	router.route('/v1/AX2009/customerFromSales/:salesId').get(AX2009Controller.customerDetailsFromSalesId); //SO00000155 (correct)
 
 		//get sales order details from sales Id for AX2009
-	router.route('/v1/AX2009/salesOrderDetailsFromSalesId/:salesId').get(AX2009Controller.AX2009salesOrderDetailsFromSalesID); //SO-1787116
+	router.route('/v1/AX2009/salesDetails/:salesId').get(AX2009Controller.salesOrderDetailsFromSalesID); //SO-1787116
 		
 		//get customer info and the related sales list for an account for AX2009
 	router.route('/v1/AX2009/customerSalesList/:account').get(AX2009Controller.customerSalesList);  //00764
 	
 	
 		//get sales order details from sales id for Salesforce
-	router.route('/v1/salesforce/salesOrderDetailsFromSalesId/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116
+	router.route('/v1/salesforce/salesDetails/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116
 
 		//get opportunity for an account for salesforce
 	router.route('/v1/salesforce/opportunities/:account').get(salesforceController.opportunity);  //00764
@@ -53,23 +53,24 @@ var path = require('path');
 	 router.route('/v1/AX365/salesOrderList').get(AX365Controller.salesOrderList);
 
 	 	//get customer details from sales Id from Avlis
-	 router.route('/v1/AX365/customerDetailsFromSalesId/:salesId').get(AX365Controller.customerDetailsFromSalesId);
+	 router.route('/v1/AX365/customerFromSales/:salesId').get(AX365Controller.customerDetailsFromSalesId);
 
 	 	//get sales details from SalesId from Avlis
-	 router.route('/v1/AX365/salesOrderDetailsFromSalesId/:salesId').get(AX365Controller.salesOrderDetailsFromSalesId);	
+	 router.route('/v1/AX365/salesDetails/:salesId').get(AX365Controller.salesOrderDetailsFromSalesId);	
+
 
 
 		//get shipping details from feightview using reference number(sales order)
-	router.route('/v1/freightviewDetailsFromSalesId/:salesOrder').get(freightViewController.shipmentDataFromSalesOrder);  //
+	router.route('/v1/Freightview/shipmentDetailsFromSales/:salesOrder').get(freightViewController.shipmentDataFromSalesOrder);  //
 
 		//get shipping details from freightview using pick up Date
-	router.route('/v1/freightviewDetailsFromPickUpDate/:pickUpDate').get(freightViewController.shipmentDataFromPickUpDate); 
+	router.route('/v1/Freightview/shipmentDetailsFromDate/:pickUpDate').get(freightViewController.shipmentDataFromPickUpDate); 
 
 	
 		//send message from twilio
-	router.route('/twilio/:salesId').get(twilioController.reminder); //send text message
+	router.route('/v1/twilio/:salesId').get(twilioController.reminder); //send text message
 
 		//send voice call from twilio
-	router.route('/twilio/').get(twilioController.call);
+	router.route('/v1/twilio/').get(twilioController.call);
 
  module.exports = router;

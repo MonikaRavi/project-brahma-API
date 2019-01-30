@@ -11,21 +11,30 @@ var sqlQuery = function(ourQuery,config,value){
     
 	  	sql.connect(config, function (err) {    
 
-	        if (err) console.log(err);
+	        if (err){
 
-	        var request = new sql.Request();      
+	        	reject(err);
 
-	        request.input('value',sql.VarChar(15),value); 
+	        }else{
 
-        	request.query(ourQuery, function (err, recordset) {
+	        	var request = new sql.Request();      
+
+		        request.input('value',sql.VarChar(15),value); 
+
+	        	request.query(ourQuery, function (err, recordset) {
 	            
-                if (err) reject(err);
+	                if (err) {
 
-                resolve(recordset); 
-	         	
-	         	sql.close();
+	                	reject(err);
+
+	                }else{
+
+	                	resolve(recordset); 
+		         	}
+		         	sql.close();
         		
-        	});
+        		});
+	        }	        
 	        	
 	    })
 

@@ -9,7 +9,7 @@ function salesOrderDetailsFromSalesId(req,res){
     // if(result.records[0].length)
 
         var tempVal = result.records[0];
-        if(tempVal !== undefined){
+        if(typeof tempVal != "undefined"){
           
             res.send([{
                 name : tempVal.Name,
@@ -24,18 +24,18 @@ function salesOrderDetailsFromSalesId(req,res){
         
         }else{
         
-            res.status(404).send({
-        
-                status : 404,
-                errorMessage :'No records could be found for this salesId, please retry with another SalesId.'
-        
-            })
+            res.status(200).send([]);
         
         }    
       
     },function(error){
       
-        res.status(400).send(error);
+        res.status(400).send({
+        
+                status : 400,
+                errorMessage :'Bad Request!'
+        
+            });
       
     })
 
@@ -45,25 +45,25 @@ function salesOrderDetailsFromSalesId(req,res){
 function opportunity(req,res){
   
     salesforceModel.getOpportunity(req.params.account).then(function(result){
-  
-        if(result.length !== 0){
+        console.log('typeof result:',typeof result[0]);
+        if(typeof result[0] != 'undefined'){
   
             res.send(result);
   
         }else{
   
-            res.status(404).send({
-  
-                status : 404,
-                errorMessage : 'No records could be found for this salesId, please retry with another customer Account.'
-  
-            });
+            res.status(200).send([]);
   
         }
     
     },function(error){
   
-        res.send(error);
+        res.status(400).send({
+        
+                status : 400,
+                errorMessage :'Bad Request!'
+        
+            });
   
     })
 
@@ -81,15 +81,18 @@ function accountsByType(req, res) {
     },
     function(err) {
 
-      console.log(err);
-      
-      res.status(400).send(err);
+      res.status(200).send([]);
     
     }
 
     ).catch(function(err){
     
-    res.status(400).send(err);
+    res.status(400).send({
+        
+                status : 400,
+                errorMessage :'Bad Request!'
+        
+            });
   
     })
 

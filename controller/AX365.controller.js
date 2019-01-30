@@ -1,7 +1,7 @@
 const AX365Model = require('../model/AX365.model');
 
 
-//return the top 5 sales orders for a particular customer account
+//return the top 5 sales orders for a particular customer account//for aggregate controller
 function salesOrderByCustomer(req,res){
 
 	return AX365Model.getSalesOrderByCustomer(req.params.account);
@@ -14,7 +14,7 @@ function salesOrderListForCustomer(req,res){
 
 	AX365Model.getSalesOrderByCustomer(req.params.account).then(function(recordset){
 		
-		if(recordset.recordsets[0].length !== 0){
+		if(typeof result.recordsets[0][0] !=="undefined"){
 
 			var customer = {
 		                CustAccount:recordset.recordsets[0][1].CustAccount,
@@ -42,12 +42,7 @@ function salesOrderListForCustomer(req,res){
 		
 		}else{
 		 
-		 	res.status(404).send({
-		
-				status: 404,
-				errorMessage:'No records could be found for this salesId, please retry with another Customer id.'
-		
-			})
+		 	res.status(200).send([])
 		
 		}	
 
@@ -60,11 +55,13 @@ function salesOrderListForCustomer(req,res){
 }
 
 function salesOrderList(req,res){
+
 	AX365Model.getSalesOrderList().then(function(recordset){
 
-		// console.log('recordsset:',recordset.recordsets[0]);
-
-		res.send(recordset.recordsets[0]);
+		if(typeof recordset.recordsets[0][0]!='undefined')
+			res.send(recordset.recordsets[0]);
+		else
+			res.status(200).send([]);
 	
 	},function(error){
 	
@@ -76,15 +73,15 @@ function salesOrderList(req,res){
 			});
 	
 	})
-
 }
 
 function customerDetailsFromSalesId(req,res){
 	console.log('salesId:',req.params.salesId);
 	AX365Model.getCustomerDetailsFromSalesId(req.params.salesId).then(function(result){
-		
-		res.send([result.recordsets[0][0]]);
-	
+		if(typeof result.recordsets[0][0]!='undefined')
+			res.send(result.recordsets[0]);
+		else
+			res.status(200).send([]);
 	},function(error){
 
 		res.status(404).send({
@@ -100,9 +97,10 @@ function customerDetailsFromSalesId(req,res){
 function salesOrderDetailsFromSalesId(req,res){
 
 	AX365Model.getSalesOrderDetailsFromSalesId(req.params.salesId).then(function(result){
-
-		res.send(result.recordsets[0]);
-
+		if(typeof result.recordsets[0][0]!='undefined')
+			res.send(result.recordsets[0]);
+		else
+			res.status(200).send([]);
 	},function(error){
 
 		res.status(404).send({

@@ -14,7 +14,7 @@ function shipmentDataFromSalesOrder(req,res){
 			var tracking=[];
 
 	  		//sort the tracking.history 
-	  		console.log('typeof data',typeof data);
+	  		// console.log('typeof data',typeof data);
 	  		if(typeof shipmentsObject.tracking!="undefined"){ //sometimes Sales Orders don't have tracking info (but have other info)
 	  			
 	  			var tracking=shipmentsObject.tracking.history.sort(function(a,b){
@@ -36,10 +36,10 @@ function shipmentDataFromSalesOrder(req,res){
 		  	 	tracking : tracking
 	  		
 	  		})
-	  		console.log('if');
+	  		// console.log('if');
 	  	
 	  	}else{
-	  		console.log('else');
+	  		// console.log('else');
 	  		var salesIdNumberOnly=salesOrder.split("-")[1];
 	  		freightviewModel.getShipmentDataFromSalesOrder(salesIdNumberOnly).then((data)=>{
 	  			var shipmentsObject=data.shipments[0];
@@ -62,13 +62,15 @@ function shipmentDataFromSalesOrder(req,res){
 		  		
 		  			})
 		  		}else{
-		  			res.send({
-		  				data:[]
-		  			})
+		  			res.status(200).send([]);
 		  		}
 
 		  	},(error)=>{
-		  		res.status(404).send("Unable to Connect to the server");
+		  		res.status(404).send({
+	  	
+			  		status : 404,
+			  		errorMessage : "Bad request" 	
+			  	});
 		  	});
 	  	}
 	},function(error){
@@ -76,7 +78,7 @@ function shipmentDataFromSalesOrder(req,res){
 		res.status(404).send({
 	  	
 	  		status : 404,
-	  		errorMessage : "Unable to connect to the server!" 	
+	  		errorMessage : "Bad request" 	
 	  	})
 	
 	});
@@ -114,7 +116,7 @@ function shipmentDataFromPickUpDate(req,res){
 		res.status(404).send({
 	  	
 	  		status : 404,
-	  		errorMessage : 'No shipping information was available for this sales Order. Please try with different one!'
+	  		errorMessage : 'Bad request'
 	  	
 	  	})
 	
