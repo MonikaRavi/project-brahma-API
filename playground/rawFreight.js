@@ -6,7 +6,7 @@ var options = {
   qs: {
   //   pro: 123,
   //   bol: 456,
-		    ref: 'SO-1889465'
+		    ref: '18100336'
     // pickupDate="2017-02-12"
   },
   auth: {
@@ -17,8 +17,35 @@ var options = {
   }
 }
 
-request(options, function (err, res, body) {
-  if (err) throw err;
-  var body=JSON.parse(body);
-  console.log(body.shipments[0].origin)
+new Promise((resolve, reject)=>{
+  
+  request(options, function (err, res, body) {
+ 
+    if (err){
+      reject(err);
+    }
+    else{
+      
+      var body=JSON.parse(body);
+      
+      // console.log('body.shipments[0]:',body.shipments[0]);
+      // console.log('type of body.shipments[0]:',typeof body.shipments[0]);
+
+      if(typeof body.shipments[0]=="undefined"){ //meaning no data is returned ie. body.shipments[0]={[]}
+        console.log('typeof body:',typeof body);
+        console.log('typeof body.shipments[0]:',typeof body.shipments[0]);
+        resolve (body);
+
+      }else{
+        
+        resolve(body.shipments[0]);
+
+      }
+
+    } 
+})
+}).then(function(data){
+  console.log('data*:',data);
+},(error)=>{
+  console.log('error*:',error);
 })

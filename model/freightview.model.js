@@ -2,77 +2,75 @@ var request = require("request");
 var configFreightView = require('./../configuration/freightview.config');
 
 
-function getShipmentDataFromSalesOrderWithSO(salesIdNumberOnly){
+function getShipmentDataFromSalesOrder(salesOrder){
 		
 	var configFreightViewDetails = configFreightView.getFreightViewConfig();
 	
 	return new Promise(function(resolve, reject){
 			
 			//first send off a request with SO- in front
-			// console.log('with');
-			configFreightViewDetails.qs.ref='SO-'+salesIdNumberOnly;
+			configFreightViewDetails.qs.ref=salesOrder;
+
 			request(configFreightViewDetails, function (err, response, body) {
 		  		
-		  		if (err) reject(err);
-		  		
-		  		 var body=JSON.parse(body);		
-		  		 // console.log("body with:",body.shipments[0].carrier);  		
-		  		
-		  		if(body.shipments.length !== 0){
-		  		
-		  			resolve(body.shipments[0]);
-		  		
-		  		}else{
+		  		if (err){
 
-		  			reject({
-		  		
-		  				status:200,
-		  				errorMessage:'No records found!'
-		  		
-		  			})
-		  		
-		  		}
+			      reject(err);
+
+			    }
+
+			    else{
+			      
+			      var body=JSON.parse(body);
+
+			      resolve(body);
+
+			      // if(typeof body.shipments[0]=="undefined"){ //meaning no data is returned ie. body.shipments[0]={[]}
+			      
+			      //   resolve (body);
+
+			      // }else{
+			        
+			      //   resolve(body.shipments[0]);
+
+			      // }
+
+			    } 
 		  			 
 			})
 		
 	})
 }
 
-function getShipmentDataFromSalesOrderWithoutSO(salesIdNumberOnly){
+// function getShipmentDataFromSalesOrderWithoutSO(salesIdNumberOnly){
 
-	var configFreightViewDetails = configFreightView.getFreightViewConfig();
+// 	var configFreightViewDetails = configFreightView.getFreightViewConfig();
 
-	return new Promise(function(resolve, reject){
+// 	return new Promise(function(resolve, reject){
 		
-		//first send off a request without SO- in front
+// 		//first send off a request without SO- in front
 
-		configFreightViewDetails.qs.ref=salesIdNumberOnly;
+// 		configFreightViewDetails.qs.ref=salesIdNumberOnly;
 
-		request(configFreightViewDetails, function (err, response, body) {
+// 		request(configFreightViewDetails, function (err, response, body) {
 	  		
-	  		if (err) reject(err);
+// 	  		if (err) reject(err);
 	  		
-	  		 var body=JSON.parse(body);	  		 
+// 	  		 var body=JSON.parse(body);	  		 
 	  		
-	  		if(body.shipments.length !== 0){
+// 	  		if(body.shipments.length !== 0){//must change
 	  		
-	  			resolve(body.shipments[0]);
+// 	  			resolve(body.shipments[0]);
 	  		
-	  		}else{
-	  			reject({
-	  		
-	  				status:200,
-	  				errorMessage:'No records found!'
-	  		
-	  			})
-	  		
-	  		}
+// 	  		}else{
+// 	  			resolve(body);	  		
+// 	  		}
 	  			 
-		})
+// 		})
 	
-	})
+// 	})
 
-}	
+// }	
 
 
 
@@ -130,7 +128,7 @@ function getShipmentDataFromPickUpDate(pickUpDate){
 }
 
 module.exports={
-	getShipmentDataFromSalesOrderWithSO,
+	getShipmentDataFromSalesOrder,
 	getShipmentDataFromPickUpDate,
-	getShipmentDataFromSalesOrderWithoutSO
+	
 }
