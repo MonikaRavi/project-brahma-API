@@ -34,6 +34,7 @@ var path = require('path');
 	router.route('/v1/AX2009/customerSalesList/:account').get(AX2009Controller.customerSalesList);  //00764
 	
 	
+
 		//get sales order details from sales id for Salesforce
 	router.route('/v1/salesforce/salesDetails/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116
 
@@ -47,7 +48,6 @@ var path = require('path');
 
 		//get sales order list for a customer account for AX365
 	// router.route('/v1/AX365/salesOrderListForCustomer/:account').get(AX365Controller.salesOrderlistForCustomer); //C000622
-
 
 		//get top 50 sales order List from Avlis 
 	 router.route('/v1/AX365/salesOrderList').get(AX365Controller.salesOrderList);
@@ -66,11 +66,14 @@ var path = require('path');
 		//get shipping details from freightview using pick up Date
 	router.route('/v1/Freightview/shipmentDetailsFromDate/:pickUpDate').get(freightViewController.shipmentDataFromPickUpDate); 
 
+
 	
 		//send message from twilio
 	router.route('/v1/twilio/:salesId').get(twilioController.reminder); //send text message
 
 		//send voice call from twilio
 	router.route('/v1/twilio/').get(twilioController.call);
+
+	
 
  module.exports = router;
