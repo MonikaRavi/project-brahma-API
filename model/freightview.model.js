@@ -32,41 +32,8 @@ function getShipmentDataFromSalesOrder(salesOrder){
 	})
 }
 
-// function getShipmentDataFromSalesOrderWithoutSO(salesIdNumberOnly){
-
-// 	var configFreightViewDetails = configFreightView.getFreightViewConfig();
-
-// 	return new Promise(function(resolve, reject){
-		
-// 		//first send off a request without SO- in front
-
-// 		configFreightViewDetails.qs.ref=salesIdNumberOnly;
-
-// 		request(configFreightViewDetails, function (err, response, body) {
-	  		
-// 	  		if (err) reject(err);
-	  		
-// 	  		 var body=JSON.parse(body);	  		 
-	  		
-// 	  		if(body.shipments.length !== 0){//must change
-	  		
-// 	  			resolve(body.shipments[0]);
-	  		
-// 	  		}else{
-// 	  			resolve(body);	  		
-// 	  		}
-	  			 
-// 		})
-	
-// 	})
-
-// }	
-
-
-
 function getShipmentDataFromPickUpDate(pickUpDate){
 
-	//setting up configuration for freightview
 	var url = "https://www.freightview.com/api/v1.0/shipments/";
 	var pickupDate = pickUpDate;
 
@@ -93,11 +60,9 @@ function getShipmentDataFromPickUpDate(pickUpDate){
 	  		if (err) reject(err);
 	  		
 	  		var body=JSON.parse(body);
-
-	  		// console.log('body:',body.shipments.length);
 	  		
 	  		if(body.shipments.length !== 0 && typeof(body)!=null){
-	  			// console.log()
+
 	  			resolve(body.shipments[0]);
 	  		
 	  		}else{

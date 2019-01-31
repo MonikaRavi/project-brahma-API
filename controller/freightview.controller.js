@@ -8,14 +8,15 @@ function shipmentDataFromSalesOrder(req,res){
 	var salesOrder=req.params.salesOrder;
 
 	freightviewModel.getShipmentDataFromSalesOrder(salesOrder).then((data)=>{
-		console.log('data:',data);
+
 		var shipmentsObject=data.shipments[0];
+		
 		if(typeof shipmentsObject!="undefined"){  //means if data is not empty
 
 			var tracking=[];
 
 	  		//sort the tracking.history 
-	  		// console.log('typeof data',typeof data);
+
 	  		if(typeof shipmentsObject.tracking!="undefined"){ //sometimes Sales Orders don't have tracking info (but have other info)
 	  			
 	  			var tracking=shipmentsObject.tracking.history.sort(function(a,b){
@@ -33,14 +34,13 @@ function shipmentDataFromSalesOrder(req,res){
 		  	 	destination : shipmentsObject.destination.address + shipmentsObject.destination.city + shipmentsObject.destination.state,
 		  	 	company : shipmentsObject.destination.company,
 		  	 	status : shipmentsObject.status,
+		  	 	summary:shipmentsObject.summary,
 		  	 	pickupDate : shipmentsObject.pickupDate,
 		  	 	tracking : tracking
 	  		
 	  		})
-	  		// console.log('if');
 	  	
 	  	}else{
-	  		// console.log('else');
 	  		var salesIdNumberOnly=salesOrder.split("-")[1];
 	  		freightviewModel.getShipmentDataFromSalesOrder(salesIdNumberOnly).then((data)=>{
 	  			var shipmentsObject=data.shipments[0];

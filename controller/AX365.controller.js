@@ -76,7 +76,7 @@ function salesOrderList(req,res){
 }
 
 function customerDetailsFromSalesId(req,res){
-	console.log('salesId:',req.params.salesId);
+
 	AX365Model.getCustomerDetailsFromSalesId(req.params.salesId).then(function(result){
 		if(typeof result.recordsets[0][0]!='undefined')
 			res.send(result.recordsets[0]);

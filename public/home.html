@@ -67,7 +67,7 @@
                     }                       
             </code>
 
-            <h3>/v1/AX2009/customerDetailsFromSalesId/:SalesId</h3>
+            <h3>/v1/AX2009/customerFromSales/:SalesId</h3>
 
             <h5>Give the customer Details of AX2009 from SalesID</h5>
             <h5>:salesId for trial {SO-1787116}</h5>
@@ -88,7 +88,7 @@
                     ]
             </code>
 
-            <h3>/v1/AX2009/salesOrderDetailsFromSalesId/:salesId</h3>
+            <h3>/v1/AX2009/salesDetails/:salesId</h3>
 
             <h5>Get sales order details from sales Id for AX2009</h5>
             <h5>:salesOrder for trial {SO-1787116}</h5>
@@ -134,7 +134,7 @@
                         }
             </code>
 
-            <h3>/v1/salesforce/salesOrderDetailsFromSalesId/:salesId</h3>
+            <h3>/v1/salesforce/salesDetails/:salesId</h3>
 
             <h5>Get sales order details from sales Id for salesforce</h5>
             <h5>:salesOrder for trial {SO-1787116}</h5>
@@ -211,7 +211,7 @@
             </code>
 
 
-            <h3>/v1/AX365/customerDetailsFromSalesId/:salesId/h3>
+            <h3>/v1/AX365/customerFromSales/:salesId/h3>
 
             <h5>Get customer Details from Sales ID from AX365</h5>
             <h5>:salesId for trial {OV000446}</h5>
@@ -234,7 +234,7 @@
                         }
             </code>
 
-            <h3>/v1/AX365/salesOrderDetailsFromSalesId/:salesId/h3>
+            <h3>/v1/AX365/salesDetails/:salesId/h3>
 
             <h5>Get sales Order Details from Sales ID from AX365</h5>
             <h5>:salesId for trial {OV000410}</h5>
@@ -251,6 +251,37 @@
                             "SALESNAME": sales name,
                             "QTY": quantity,
                             "SALESSTATUS": sales status
+                        }
+            </code>
+
+            <h3>/v1/Freightview/shipmentDetailsFromSales/:salesOrder</h3>
+
+            <h5>Get shipment Details from Sales Order ID from Freightview</h5>
+            <h5>:salesId for trial {SO-1892032}</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                        {
+                            "carrier": carrier name
+                            "total": total amount
+                            "charges": [
+                                {
+                                    "name": expense type,
+                                    "amount": amount
+                                },
+                                {
+                                    "name": expense type,
+                                    "amount": amount
+                                },
+                                ...
+                            ],
+                            "referenceNumber": reference number,
+                            "destination": destination,
+                            "company": company,
+                            "status": status of delivery,
+                            "pickupDate": pick up Date,
+                            "tracking": Tracking information (array)
                         }
             </code>
 
