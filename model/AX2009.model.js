@@ -54,9 +54,24 @@ function getSalesFromCustomer(req,res){//get sales from customer
 
 }
 
+function getOnHand(){
+    var ourQuery=`SELECT [ITEMID]
+      ,[ITEMNAME]
+      ,[CONFIGID]
+      ,[ItemGroup]
+      ,[Total Available]
+  FROM [InventOnHand_Std] where ITEMID = '7501'`;
+
+    return utilityModel.sqlQuery(ourQuery,config09);
+
+
+
+}
+
 module.exports={
 	getSalesFromCustomer,
   getCustomerDetailsFromSalesId,
   getSalesOrderList,
-  getSalesOrderDetailsFromSalesId
+  getSalesOrderDetailsFromSalesId,
+  getOnHand
 }

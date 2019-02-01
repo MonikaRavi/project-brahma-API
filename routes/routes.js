@@ -32,6 +32,9 @@ var path = require('path');
 		
 		//get customer info and the related sales list for an account for AX2009
 	router.route('/v1/AX2009/customerSalesList/:account').get(AX2009Controller.customerSalesList);  //00764
+
+		//get on hand items from inventory
+	router.route('/v1/AX2009/inventory/onHand').get(AX2009Controller.onHand);
 	
 	
 

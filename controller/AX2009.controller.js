@@ -143,6 +143,14 @@ function salesFromCustomer(req,res){
 
 }
 
+function onHand(req,res){
+	AX2009Model.getOnHand().then(function(result){
+		res.send(result.recordsets[0]);
+	},(error)=>{
+		res.status(400).send(error);
+	});
+}
+
 
 module.exports = {
 
@@ -150,6 +158,7 @@ module.exports = {
 	customerDetailsFromSalesId,
 	salesOrderList,
 	salesOrderDetailsFromSalesID,
-	customerSalesList
+	customerSalesList,
+	onHand
 
 }
