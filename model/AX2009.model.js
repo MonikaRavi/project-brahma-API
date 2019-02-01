@@ -45,7 +45,7 @@ function getSalesOrderDetailsFromSalesId(salesId){
 //gets sales information for a particular customer  //used in aggregate and opportunity
 function getSalesFromCustomer(req,res){//get sales from customer
 
-    var account = req.params.account;
+    var account = req.params.Account;
     var value = account;
 
     var ourQuery = 'select top 5 SalesID, createdDate,Amount,CustAccount, Customer from SalesSummary_Hws where CustAccount = @value order by createdDate desc';

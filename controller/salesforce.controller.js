@@ -44,7 +44,7 @@ function salesOrderDetailsFromSalesId(req,res){
 //get opportunity for a particular customer in salesforce
 function opportunity(req,res){
   
-    salesforceModel.getOpportunity(req.params.account).then(function(result){
+    salesforceModel.getOpportunity(req.params.Account).then(function(result){
         console.log('typeof result:',typeof result[0]);
         if(typeof result[0] != 'undefined'){
   
@@ -72,7 +72,7 @@ function opportunity(req,res){
 // get Accounts by distributor type
 function accountsByType(req, res) {
 
-  salesforceModel.getAccounts(req.params.type).then(
+  salesforceModel.getAccounts(req.params.Type).then(
 
     function(data){
 
