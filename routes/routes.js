@@ -34,18 +34,18 @@ var path = require('path');
 	router.route('/v1/AX2009/customerSalesList/:account').get(AX2009Controller.customerSalesList);  //00764
 
 		//get on hand items from inventory
-	router.route('/v1/AX2009/inventory/onHand').get(AX2009Controller.onHand);
+	router.route('/v1/AX2009/Inventory/onHand').get(AX2009Controller.onHand); 
 	
 	
 
 		//get sales order details from sales id for Salesforce
-	router.route('/v1/salesforce/salesDetails/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116
+	router.route('/v1/Salesforce/salesDetails/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116
 
 		//get opportunity for an account for salesforce
-	router.route('/v1/salesforce/opportunities/:account').get(salesforceController.opportunity);  //00764
+	router.route('/v1/Salesforce/Opportunities/:Account').get(salesforceController.opportunity);  //00764  //c
 
 		//get safety/plumbing accounts from salesforce 
-	router.route('/v1/salesforce/distributor/:type').get(salesforceController.accountsByType); //{safety,plumbing}
+	router.route('/v1/Salesforce/Distributor/:Type').get(salesforceController.accountsByType); //{safety,plumbing}  //c
 
 
 
@@ -72,10 +72,10 @@ var path = require('path');
 
 	
 		//send message from twilio
-	router.route('/v1/twilio/:salesId').get(twilioController.reminder); //send text message
+	router.route('/v1/Twilio/:salesId').get(twilioController.reminder); //send text message  //c
 
 		//send voice call from twilio
-	router.route('/v1/twilio/').get(twilioController.call);
+	router.route('/v1/Twilio/').get(twilioController.call);  //c
 
 	
 

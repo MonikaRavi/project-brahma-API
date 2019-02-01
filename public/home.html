@@ -134,7 +134,25 @@
                         }
             </code>
 
-            <h3>/v1/salesforce/salesDetails/:salesId</h3>
+            <h3>/v1/AX2009/Inventory/onHand</h3>
+
+            <h5>returns on hand items in inventory</h5>
+
+            <h6><u>JSON Structure</u></h6>
+
+            <code style="display:block;white-space:pre-wrap">
+                        [
+                            {
+                                "ITEMID": Item Id,
+                                "ITEMNAME": Item Name,
+                                "CONFIGID": Configuration ID,
+                                "ItemGroup": Item Group,
+                                "Total Available": Quantity Available
+                            }
+                        ]       
+            </code>
+
+            <h3>/v1/Salesforce/salesDetails/:salesId</h3>
 
             <h5>Get sales order details from sales Id for salesforce</h5>
             <h5>:salesOrder for trial {SO-1787116}</h5>
@@ -155,7 +173,7 @@
                     ]
             </code> 
 
-            <h3>/v1/salesforce/opportunities/:SFCustomerId</h3>
+            <h3>/v1/Salesforce/Opportunities/:SFCustomerId</h3>
 
             <h5>returns Opportunity by salesforce Account Number</h5>
             <h5>:AxCustomerId for trial {00764}</h5>
@@ -170,7 +188,7 @@
                         }
             </code>
 
-            <h3>/v1/salesforce/distributor/:type</h3>
+            <h3>/v1/Salesforce/Distributor/:type</h3>
 
             <h5>returns Distributor Detail by Distributor Type</h5>
             <h5>:type can be {safety,plumbing}<h5>
