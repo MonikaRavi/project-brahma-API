@@ -54,13 +54,13 @@ function getSalesFromCustomer(req,res){//get sales from customer
 
 }
 
-function getOnHand(){
+function getOnHand(itemId){
     var ourQuery=`SELECT [ITEMID]
       ,[ITEMNAME]
       ,[CONFIGID]
       ,[ItemGroup]
       ,[Total Available]
-  FROM [InventOnHand_Std] where ITEMID = '7501'`;
+  FROM [InventOnHand_Std] where ITEMID = '${itemId}'`;
 
     return utilityModel.sqlQuery(ourQuery,config09);
 

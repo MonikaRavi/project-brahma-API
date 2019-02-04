@@ -10,9 +10,8 @@ function shipmentDataFromSalesOrder(req,res){
 	freightviewModel.getShipmentDataFromSalesOrder(salesOrder).then((data)=>{
 
 		var shipmentsObject=data.shipments[0];
-		
-		if(typeof shipmentsObject!="undefined"){  //means if data is not empty
 
+		if(typeof shipmentsObject!="undefined"){  //means if data is not empty
 			var tracking=[];
 
 	  		//sort the tracking.history 
@@ -34,7 +33,6 @@ function shipmentDataFromSalesOrder(req,res){
 		  	 	destination : shipmentsObject.destination.address + shipmentsObject.destination.city + shipmentsObject.destination.state,
 		  	 	company : shipmentsObject.destination.company,
 		  	 	status : shipmentsObject.status,
-		  	 	summary:shipmentsObject.summary,
 		  	 	pickupDate : shipmentsObject.pickupDate,
 		  	 	tracking : tracking
 	  		
@@ -63,6 +61,7 @@ function shipmentDataFromSalesOrder(req,res){
 		  		
 		  			})
 		  		}else{
+
 		  			res.status(200).send([]);
 		  		}
 

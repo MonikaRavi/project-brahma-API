@@ -10,7 +10,7 @@ function salesOrderList(req,res){
 			res.send(result.recordsets[0]);
 		
 		}else{
-		
+			
 			res.status(200).send([]);
 		
 		}		
@@ -86,7 +86,7 @@ function customerDetailsFromSalesId(req,res){
 	AX2009Model.getCustomerDetailsFromSalesId(req,res).then(function(result){
 
 		if(typeof result.recordsets[0][0] != "undefined"){
-
+			console.log('result:',result.recordsets[0][0]);
 			var data=result.recordsets[0][0];
 			
 			res.send([{
@@ -102,7 +102,7 @@ function customerDetailsFromSalesId(req,res){
 			}])
 
 		}else{
-			
+			console.log('hi');
 			res.status(200).send([]);
 		
 		}
@@ -144,7 +144,7 @@ function salesFromCustomer(req,res){
 }
 
 function onHand(req,res){
-	AX2009Model.getOnHand().then(function(result){
+	AX2009Model.getOnHand(req.params.itemId).then(function(result){
 		res.send(result.recordsets[0]);
 	},(error)=>{
 		res.status(400).send(error);
