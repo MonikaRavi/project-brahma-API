@@ -60,6 +60,13 @@ function getOnHand(itemId){
       ,[CONFIGID]
       ,[ItemGroup]
       ,[Total Available]
+      ,[CostPrice]
+      ,[LeadTimePurchase]
+      ,[HEIGHT]
+      ,[WIDTH]
+      ,[DEPTH]
+      ,[MFGCATEGORY]
+      ,[NETWEIGHT]
   FROM [InventOnHand_Std] where ITEMID = '${itemId}'`;
 
     return utilityModel.sqlQuery(ourQuery,config09);
