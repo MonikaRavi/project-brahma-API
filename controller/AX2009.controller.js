@@ -151,6 +151,148 @@ function onHand(req,res){
 	});
 }
 
+function invoiceDetail(req,res){
+	AX2009Model.getInvoiceDetail(req.params.salesId).then(function(result){
+		 var resultArray=result.recordsets[0];
+
+		if(typeof resultArray != "undefined"){
+						
+			var newResult=[];
+
+			//first arrange the object in proper shape (seperate invoice ID and invoice details)
+			resultArray.forEach(function(resultItem,index){
+				
+				var singleObject={};
+
+				singleObject.INVOICEID=resultItem.INVOICEID;
+				singleObject.INVOICEDATE=resultItem.INVOICEDATE;
+				singleObject.INVOICEDETAILS=[{
+					ITEMID:resultItem.ITEMID,
+					ITEMNAME:resultItem.ITEMNAME,
+					SALESQTY:resultItem.SALESQTY,
+					LINEAMOUNT:resultItem.LINEAMOUNT,
+					UNITPRICE:resultItem.UNITPRICE,
+					DISCOUNT:resultItem.DISCOUNT
+				}]
+
+				newResult.push(singleObject);
+			})
+
+
+			var newnewResult=[];
+			newnewResult.push(newResult[0]);
+			var count=0;
+			for(i=0;i<newResult.length;i++){
+
+				for(j=i+1;j<newResult.length;j++){
+					if(newResult[i].INVOICEID==newResult[j].INVOICEID){
+						newnewResult[count].INVOICEDETAILS.push(newResult[j].INVOICEDETAILS[0]);
+						continue;
+					}else{
+						i=j-1;
+						count++;
+						newnewResult.push(newResult[j]);
+						break;
+					}
+				}
+				
+			}
+		res.send(newnewResult);
+
+		
+		}else{
+		
+			res.status(200).send([]);
+
+		}
+		
+	},function(error){
+		
+		res.status(400).send(error);
+	
+	})
+}
+
+function salesHeaders(req,res){
+	AX2009Model.getSalesHeaders(req.params.salesId).then(function(result){
+		console.log('result:;',result);
+		if(typeof result.recordsets[0][0] != "undefined"){
+			
+			res.send(result.recordsets[0]);
+		
+		}else{
+		
+			res.status(200).send([]);
+
+		}
+		
+	},function(error){
+		
+		res.status(400).send(error);
+	})
+}
+
+function commissionDetails(req,res){
+	AX2009Model.getCommissionDetails(req.params.salesId).then(function(result){
+		
+		var resultArray=result.recordsets[0];
+		// console.log('result:;',resultArray);
+		if(typeof result.recordsets[0][0] != "undefined"){
+			
+			var newResult=[];
+
+			//first arrange the object in proper shape (seperate invoice ID and invoice details)
+			resultArray.forEach(function(resultItem,index){
+				
+				var singleObject={};
+
+				singleObject.INVOICEID=resultItem.INVOICEID;
+				singleObject.INVOICEDATE=resultItem.INVOICEDATE;
+				singleObject.INVOICEDETAILS=[{
+					REPID:resultItem.REPID,
+					REP:resultItem.REP,
+					CURRENCYCODE:resultItem.CURRENCYCODE,
+					COMMISSIONDATE:resultItem.COMMISSIONDATE
+				}]
+
+				newResult.push(singleObject);
+			})
+
+			// console.log('newResult:',newResult);
+			var newnewResult=[];
+			newnewResult.push(newResult[0]);
+			var count=0;
+			for(i=0;i<newResult.length;i++){
+
+				for(j=i+1;j<newResult.length;j++){
+					if(newResult[i].INVOICEID==newResult[j].INVOICEID){
+						// console.log('true');
+						newnewResult[count].INVOICEDETAILS.push(newResult[j].INVOICEDETAILS[0]);
+						continue;
+					}else{
+						// console.log('false');
+						i=j-1;
+						count++;
+						newnewResult.push(newResult[j]);
+						break;
+					}
+				}
+				
+			}
+		res.send(newnewResult);
+		
+		}else{
+		
+			res.status(200).send([]);
+
+		}
+		
+	},function(error){
+		
+		res.status(400).send(error);
+	})
+}
+
 
 module.exports = {
 
@@ -159,6 +301,9 @@ module.exports = {
 	salesOrderList,
 	salesOrderDetailsFromSalesID,
 	customerSalesList,
-	onHand
+	onHand,
+	invoiceDetail,
+	salesHeaders,
+	commissionDetails
 
 }

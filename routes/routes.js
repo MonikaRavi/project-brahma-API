@@ -9,16 +9,28 @@ var path = require('path');
 	var AX365Controller = require('./../controller/AX365.controller');
 	var freightViewController = require('./../controller/freightview.controller');
 	var twilioController = require('./../controller/twilio.controller.js');
+	var cloudinaryController=require('./../controller/cloudinary.controller.js');
+
+	var webtoken=require('./../security/webtoken.js');
 
 
-//API end point for landing page
+		//API end point for landing page
 	var viewPath = __dirname + '/../public/';
 	router.get('/', function(req, res) {
 	  res.sendFile(path.resolve(viewPath + "home.html"));
 	});
 
-
-//API EndPoints Version__1
+		//authentication
+	router.use(function(req,res,next){
+		var login=webtoken.token(req.header('x-auth')).then((result)=>{
+			if(result){
+				console.log('authenticated!');
+				next();
+			}
+		},(error)=>{
+			res.send('Invalid Token');
+		});	
+	})
 
 
 		//get sales order list from AX2009
@@ -35,6 +47,13 @@ var path = require('path');
 
 		//get on hand items from inventory
 	router.route('/v1/AX2009/Inventory/onHand/:itemId').get(AX2009Controller.onHand); 
+
+		//get invoice details from salesId
+	router.route('/v1/AX2009/invoiceDetails/:salesId').get(AX2009Controller.invoiceDetail);
+
+	router.route('/v1/AX2009/salesHeaders/:salesId').get(AX2009Controller.salesHeaders);
+
+	router.route('/v1/AX2009/commissionDetails/:salesId').get(AX2009Controller.commissionDetails);
 	
 	
 
@@ -76,6 +95,10 @@ var path = require('path');
 
 		//send voice call from twilio
 	router.route('/v1/Twilio/').get(twilioController.call);  //c
+
+
+		//get cloudinary pics
+	router.route('/v1/Cloudinary/:itemId').get(cloudinaryController.pictures);
 
 	
 

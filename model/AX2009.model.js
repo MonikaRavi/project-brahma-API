@@ -70,9 +70,38 @@ function getOnHand(itemId){
   FROM [InventOnHand_Std] where ITEMID = '${itemId}'`;
 
     return utilityModel.sqlQuery(ourQuery,config09);
+}
 
 
+function getInvoiceDetail(salesId){
 
+  var ourQuery=`SELECT INVOICEID, INVOICEDATE, ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT ,UnitPrice, DISCOUNT
+
+    FROM SalesInvoice_Commission_Detail 
+
+    WHERE SALESID='${salesId}' GROUP BY INVOICEID,INVOICEDATE, ITEMID, ITEMNAME, SALESQTY,LINEAMOUNT,UnitPrice,Discount`;
+
+    return utilityModel.sqlQuery(ourQuery,config09);
+}
+
+function getSalesHeaders(salesId){
+
+  var ourQuery=`SELECT DISTINCT SALESID, INVOICEACCOUNT, SALESGROUP, DELIVERYNAME , DELIVERYADDRESS , InvoiceToAddress, InvoiceCustomer, CustomerPO
+
+      FROM SalesInvoice_Commission_Detail WHERE SalesID='${salesId}'`;  
+
+      return utilityModel.sqlQuery(ourQuery,config09);
+}
+
+function getCommissionDetails(salesId){
+
+  var ourQuery=`SELECT INVOICEID, INVOICEDATE, REPID, REP,SUM(AMOUNTMST) AS Amount, CURRENCYCODE,CommissionDate 
+
+      FROM SalesInvoice_Commission_Detail 
+
+      WHERE SALESID='${salesId}' GROUP BY INVOICEID,INVOICEDATE,REPID, REP, CURRENCYCODE, COMMISSIONDATE`; 
+
+      return utilityModel.sqlQuery(ourQuery,config09);
 }
 
 module.exports={
@@ -80,5 +109,8 @@ module.exports={
   getCustomerDetailsFromSalesId,
   getSalesOrderList,
   getSalesOrderDetailsFromSalesId,
-  getOnHand
+  getOnHand,
+  getInvoiceDetail,
+  getSalesHeaders,
+  getCommissionDetails
 }
