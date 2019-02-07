@@ -302,18 +302,19 @@ function commissionDetails(req,res){
 }
 
 function commissionAndInvoiceDetails(req,res){
-	AX2009Model.getCommissionAndInvoiceDetails(req.params.salesId).then(function(result){
-		// var resultArray=result.recordsets[0];
 
-		// console.log('result:',result);
+	AX2009Model.getCommissionAndInvoiceDetails(req.params.salesId).then(function(result){
+		
 		if(typeof result!=="undefined"){
-				var resultArray=result.invoiceData;
-				if(typeof resultArray != "undefined"){
+
+				var invoiceDataArray=result.invoiceData;
+
+				if(typeof invoiceDataArray != "undefined"){
 							
-					var newResult=[];
+					var shapedInvoiceArrayV1=[];
 
 					//first arrange the object in proper shape (seperate invoice ID and invoice details)
-					resultArray.forEach(function(resultItem,index){
+					invoiceDataArray.forEach(function(resultItem,index){
 						
 						var singleObject={};
 
@@ -328,54 +329,54 @@ function commissionAndInvoiceDetails(req,res){
 							DISCOUNT:resultItem.DISCOUNT
 						}]
 
-						newResult.push(singleObject);
+						shapedInvoiceArrayV1.push(singleObject);
+
 					})
 
+					//putting line items in corresponding INVOICE ID
 
-					var newnewResult=[];
-					newnewResult.push(newResult[0]);
+					var shapedInvoiceArrayV2=[];
+					shapedInvoiceArrayV2.push(shapedInvoiceArrayV1[0]);
 					var count=0;
-					for(i=0;i<newResult.length;i++){
+					for(i=0;i<shapedInvoiceArrayV1.length;i++){
 
-						for(j=i+1;j<newResult.length;j++){
-							if(newResult[i].INVOICEID==newResult[j].INVOICEID){
-								newnewResult[count].INVOICEDETAILS.push(newResult[j].INVOICEDETAILS[0]);
+						for(j=i+1;j<shapedInvoiceArrayV1.length;j++){
+							if(shapedInvoiceArrayV1[i].INVOICEID==shapedInvoiceArrayV1[j].INVOICEID){
+								shapedInvoiceArrayV2[count].INVOICEDETAILS.push(shapedInvoiceArrayV1[j].INVOICEDETAILS[0]);
 								continue;
 							}else{
 								i=j-1;
 								count++;
-								newnewResult.push(newResult[j]);
+								shapedInvoiceArrayV2.push(shapedInvoiceArrayV1[j]);
 								break;
 							}
 						}
 						
 					}
-			// res.send({invoice:newnewResult,commission:result.commissionData});
-
-				console.log('invoice	:',newnewResult);
-
-
-				console.log('commission****:',result.commissionData);
+			
+			//assign commission to corresponding invoices
 				var commission=result.commissionData;
-				var trueResult;
-				for(Iindex=0;Iindex<newnewResult.length;Iindex++){
-					for(cIndex=0;cIndex<commission.length;cIndex++){
-						console.log('newnewResult[Iindex].INVOICEID',newnewResult[Iindex].INVOICEID);
-						console.log('commission.INVOICEID',commission[cIndex].INVOICEID);
-						if(newnewResult[Iindex].INVOICEID==commission[cIndex].INVOICEID){
-							console.log('true');
-							console.log('newnewResult[Iindex]:',newnewResult[Iindex]);
-							console.log('commission[cIndex]:',commission[cIndex]);
-							//newnewResult[Iindex].
-							
-							// newnewResult[Iindex].push(commission[cIndex]);
+				var finalInvoiceDetails=shapedInvoiceArrayV2;
+				for(var Iindex=0;Iindex<shapedInvoiceArrayV2.length;Iindex++){
+					for(var cIndex=0;cIndex<commission.length;cIndex++){
+						
+						if(shapedInvoiceArrayV2[Iindex].INVOICEID==commission[cIndex].INVOICEID){
+							var com={
+								REPID:commission[cIndex].REPID,
+								REP:commission[cIndex].REP,
+								Amount:commission[cIndex].Amount,
+								CURRENCYCODE:commission[cIndex].CURRENCYCODE,
+								COMMISSIONDATE:commission[cIndex].COMMISSIONDATE
+							}
+							finalInvoiceDetails[Iindex].commission=com;
 
-							continue;
+
 						}
+						
 					}
+
 				}
-				console.log(newnewResult);
-				res.send(newnewResult);
+				res.send(finalInvoiceDetails);
 			
 			}else{
 			
