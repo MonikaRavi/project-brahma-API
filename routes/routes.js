@@ -51,13 +51,14 @@ var path = require('path');
 		//get invoice details from salesId
 	// router.route('/v1/AX2009/invoiceDetails/:salesId').get(AX2009Controller.invoiceDetail);
 
-	// router.route('/v1/AX2009/salesHeaders/:salesId').get(AX2009Controller.salesHeaders);
+	router.route('/v1/AX2009/salesHeaders/:salesId').get(AX2009Controller.salesHeaders);
 
 	// router.route('/v1/AX2009/commissionDetails/:salesId').get(AX2009Controller.commissionDetails);
 	
 	router.route('/v1/AX2009/invoice/details/:salesId').get(AX2009Controller.commissionAndInvoiceDetails);
 	
 
+	router.route('/v1/AX2009/Inventory/List').get(AX2009Controller.inventoryList);
 
 		//get sales order details from sales id for Salesforce
 	router.route('/v1/Salesforce/salesDetails/:salesId').get(salesforceController.salesOrderDetailsFromSalesId) //SO-1787116

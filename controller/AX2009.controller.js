@@ -156,7 +156,9 @@ function invoiceDetail(req,res){
 		 var resultArray=result.recordsets[0];
 
 		if(typeof resultArray != "undefined"){
-						
+			
+			//reorder the invoice details
+
 			var newResult=[];
 
 			//first arrange the object in proper shape (seperate invoice ID and invoice details)
@@ -198,6 +200,10 @@ function invoiceDetail(req,res){
 				
 			}
 		res.send(newnewResult);
+
+
+		//add commission data to the invoice data
+
 
 		
 		}else{
@@ -304,48 +310,72 @@ function commissionAndInvoiceDetails(req,res){
 				var resultArray=result.invoiceData;
 				if(typeof resultArray != "undefined"){
 							
-				var newResult=[];
+					var newResult=[];
 
-				//first arrange the object in proper shape (seperate invoice ID and invoice details)
-				resultArray.forEach(function(resultItem,index){
-					
-					var singleObject={};
+					//first arrange the object in proper shape (seperate invoice ID and invoice details)
+					resultArray.forEach(function(resultItem,index){
+						
+						var singleObject={};
 
-					singleObject.INVOICEID=resultItem.INVOICEID;
-					singleObject.INVOICEDATE=resultItem.INVOICEDATE;
-					singleObject.INVOICEDETAILS=[{
-						ITEMID:resultItem.ITEMID,
-						ITEMNAME:resultItem.ITEMNAME,
-						SALESQTY:resultItem.SALESQTY,
-						LINEAMOUNT:resultItem.LINEAMOUNT,
-						UNITPRICE:resultItem.UNITPRICE,
-						DISCOUNT:resultItem.DISCOUNT
-					}]
+						singleObject.INVOICEID=resultItem.INVOICEID;
+						singleObject.INVOICEDATE=resultItem.INVOICEDATE;
+						singleObject.INVOICEDETAILS=[{
+							ITEMID:resultItem.ITEMID,
+							ITEMNAME:resultItem.ITEMNAME,
+							SALESQTY:resultItem.SALESQTY,
+							LINEAMOUNT:resultItem.LINEAMOUNT,
+							UNITPRICE:resultItem.UNITPRICE,
+							DISCOUNT:resultItem.DISCOUNT
+						}]
 
-					newResult.push(singleObject);
-				})
+						newResult.push(singleObject);
+					})
 
 
-				var newnewResult=[];
-				newnewResult.push(newResult[0]);
-				var count=0;
-				for(i=0;i<newResult.length;i++){
+					var newnewResult=[];
+					newnewResult.push(newResult[0]);
+					var count=0;
+					for(i=0;i<newResult.length;i++){
 
-					for(j=i+1;j<newResult.length;j++){
-						if(newResult[i].INVOICEID==newResult[j].INVOICEID){
-							newnewResult[count].INVOICEDETAILS.push(newResult[j].INVOICEDETAILS[0]);
+						for(j=i+1;j<newResult.length;j++){
+							if(newResult[i].INVOICEID==newResult[j].INVOICEID){
+								newnewResult[count].INVOICEDETAILS.push(newResult[j].INVOICEDETAILS[0]);
+								continue;
+							}else{
+								i=j-1;
+								count++;
+								newnewResult.push(newResult[j]);
+								break;
+							}
+						}
+						
+					}
+			// res.send({invoice:newnewResult,commission:result.commissionData});
+
+				console.log('invoice	:',newnewResult);
+
+
+				console.log('commission****:',result.commissionData);
+				var commission=result.commissionData;
+				var trueResult;
+				for(Iindex=0;Iindex<newnewResult.length;Iindex++){
+					for(cIndex=0;cIndex<commission.length;cIndex++){
+						console.log('newnewResult[Iindex].INVOICEID',newnewResult[Iindex].INVOICEID);
+						console.log('commission.INVOICEID',commission[cIndex].INVOICEID);
+						if(newnewResult[Iindex].INVOICEID==commission[cIndex].INVOICEID){
+							console.log('true');
+							console.log('newnewResult[Iindex]:',newnewResult[Iindex]);
+							console.log('commission[cIndex]:',commission[cIndex]);
+							//newnewResult[Iindex].
+							
+							// newnewResult[Iindex].push(commission[cIndex]);
+
 							continue;
-						}else{
-							i=j-1;
-							count++;
-							newnewResult.push(newResult[j]);
-							break;
 						}
 					}
-					
 				}
-			res.send({invoice:newnewResult,commission:result.commissionData});
-
+				console.log(newnewResult);
+				res.send(newnewResult);
 			
 			}else{
 			
@@ -357,6 +387,14 @@ function commissionAndInvoiceDetails(req,res){
 	},function(error){
 		
 		res.status(400).send(error);
+	})
+}
+
+function inventoryList(req,res){
+	AX2009Model.getInventoryList().then(function(result){
+		res.send(result.recordsets[0]);
+	},(error)=>{
+		res.status(200).send(error);
 	})
 }
 
@@ -373,5 +411,6 @@ module.exports = {
 	invoiceDetail,
 	salesHeaders,
 	commissionDetails,
-	commissionAndInvoiceDetails
+	commissionAndInvoiceDetails,
+	inventoryList
 }

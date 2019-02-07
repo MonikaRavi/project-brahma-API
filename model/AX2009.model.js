@@ -105,17 +105,17 @@ function getCommissionDetails(salesId){
 }
 
 var getCommissionAndInvoiceDetails=async function(salesId){
-  // var ourQuery=`SELECT INVOICEID, INVOICEDATE, REPID, REP,SUM(AMOUNTMST) AS Amount, CURRENCYCODE,CommissionDate,ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT ,UnitPrice, DISCOUNT 
+  var ourQuery=`SELECT INVOICEID, INVOICEDATE, REPID, REP,SUM(AMOUNTMST) AS Amount, CURRENCYCODE,CommissionDate,ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT ,UnitPrice, DISCOUNT 
 
-  //     FROM SalesInvoice_Commission_Detail 
+      FROM SalesInvoice_Commission_Detail 
 
-  //     WHERE SALESID='${salesId}' GROUP BY INVOICEID,INVOICEDATE,REPID, REP, CURRENCYCODE, COMMISSIONDATE, ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT ,UnitPrice, DISCOUNT`;
+      WHERE SALESID='${salesId}' GROUP BY INVOICEID,INVOICEDATE,REPID, REP, CURRENCYCODE, COMMISSIONDATE, ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT ,UnitPrice, DISCOUNT`;
 
     var ourCommissionQuery=`SELECT 
-      REPID, REP,sum(AMOUNTMST) as Amount, CURRENCYCODE, max(CommissionDate) as CommissionDate
+      INVOICEID, INVOICEDATE,REPID, REP,sum(AMOUNTMST) as Amount, CURRENCYCODE, max(CommissionDate) as CommissionDate
       FROM SalesInvoice_Commission_Detail
       WHERE SALESID='${salesId}'
-      GROUP BY REPID,REP,CURRENCYCODE`
+      GROUP BY REPID,REP,CURRENCYCODE,INVOICEID, INVOICEDATE`
 
     var ourInvoiceQuery=`select  --Sales headers
       INVOICEID, INVOICEDATE, ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT, UnitPrice, DISCOUNT 
@@ -182,6 +182,13 @@ var getCommissionAndInvoiceDetails=async function(salesId){
 // })
 }
 
+function getInventoryList(){
+  var ourQuery=`select ITEMID , ITEMNAME from InventID_MainLOB`;
+
+  return utilityModel.sqlQuery(ourQuery,config09);
+
+}
+
 
 
 module.exports={
@@ -193,5 +200,6 @@ module.exports={
   getInvoiceDetail,
   getSalesHeaders,
   getCommissionDetails,
-  getCommissionAndInvoiceDetails
+  getCommissionAndInvoiceDetails,
+  getInventoryList
 }
