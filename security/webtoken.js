@@ -6,10 +6,10 @@ function token(token){
 	var decoded=jwt.verify(token,'sampleSalt');
 	return new Promise((resolve,reject)=>{
 		if(decoded.user==authTokenFile.authData)
-		resolve(true);
-	else
-		reject(false);
-	})	
+			resolve(true);
+		else
+			reject(false);
+		});	
 }
 
 

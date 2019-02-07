@@ -104,6 +104,86 @@ function getCommissionDetails(salesId){
       return utilityModel.sqlQuery(ourQuery,config09);
 }
 
+var getCommissionAndInvoiceDetails=async function(salesId){
+  // var ourQuery=`SELECT INVOICEID, INVOICEDATE, REPID, REP,SUM(AMOUNTMST) AS Amount, CURRENCYCODE,CommissionDate,ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT ,UnitPrice, DISCOUNT 
+
+  //     FROM SalesInvoice_Commission_Detail 
+
+  //     WHERE SALESID='${salesId}' GROUP BY INVOICEID,INVOICEDATE,REPID, REP, CURRENCYCODE, COMMISSIONDATE, ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT ,UnitPrice, DISCOUNT`;
+
+    var ourCommissionQuery=`SELECT 
+      REPID, REP,sum(AMOUNTMST) as Amount, CURRENCYCODE, max(CommissionDate) as CommissionDate
+      FROM SalesInvoice_Commission_Detail
+      WHERE SALESID='${salesId}'
+      GROUP BY REPID,REP,CURRENCYCODE`
+
+    var ourInvoiceQuery=`select  --Sales headers
+      INVOICEID, INVOICEDATE, ITEMID , ITEMNAME , SALESQTY, LINEAMOUNT, UnitPrice, DISCOUNT 
+      FROM SalesInvoice_Commission_Detail
+      WHERE SALESID='${salesId}'
+      GROUP BY INVOICEID,INVOICEDATE,ITEMID,ITEMNAME,SALESQTY,LINEAMOUNT,UnitPrice,DISCOUNT`;
+
+  // return new Promise((resolve,reject)=>{
+
+    var commissionData;
+    var invoiceData;
+     // utilityModel.sqlQuery(ourCommissionQuery,config09).then((resultInvoice)=>{
+     //    console.log('commision:',resultInvoice.recordsets[0]);
+     //    commissionData=resultInvoice.recordsets[0];
+     //  })
+     //  .then(()=>{
+     //    utilityModel.sqlQuery(ourInvoiceQuery,config09).then((resultCommission)=>{
+     //      console.log('invoice:',resultCommission.recordsets[0]);
+     //      invoiceData=resultCommission.recordsets[0];
+     //    })
+     //  }).then(()=>{
+     //    resolve({commissionData:commissionData,
+     //    invoiceData:invoiceData})
+     //  })
+     //  .catch((err)=>{
+     //    reject(err);
+     //  })
+
+      // 
+    var errorM;
+   
+
+
+    async function commission(){
+      let promiseCommission= utilityModel.sqlQuery(ourCommissionQuery,config09);
+      let commissionResult=await promiseCommission;
+      return commissionResult.recordsets[0];
+    }
+
+    async function invoice(){
+      let promiseInvoice= utilityModel.sqlQuery(ourInvoiceQuery,config09);
+      let invoiceResult=await promiseInvoice;
+      return invoiceResult.recordsets[0];
+    }
+
+    try{
+     var commissionData=await commission();
+     var invoiceData=await invoice();
+
+    }catch(error){
+      
+      errorM=error;
+    
+    }
+  
+  return new Promise((resolve,reject)=>{
+
+    if(errorM){
+      reject(errorM);
+    }else{
+      resolve({commissionData:commissionData,invoiceData:invoiceData})
+    }
+  })
+// })
+}
+
+
+
 module.exports={
 	getSalesFromCustomer,
   getCustomerDetailsFromSalesId,
@@ -112,5 +192,6 @@ module.exports={
   getOnHand,
   getInvoiceDetail,
   getSalesHeaders,
-  getCommissionDetails
+  getCommissionDetails,
+  getCommissionAndInvoiceDetails
 }
