@@ -10,7 +10,7 @@ function shipmentDataFromSalesOrder(req,res){
 	freightviewModel.getShipmentDataFromSalesOrder(salesOrder).then((data)=>{
 
 		var shipmentsObject=data.shipments[0];
-
+		console.log('type of shipmentsObject:',typeof shipmentsObject);
 		if(typeof shipmentsObject!="undefined"){  //means if data is not empty
 			var tracking=[];
 
@@ -42,11 +42,17 @@ function shipmentDataFromSalesOrder(req,res){
 	  		var salesIdNumberOnly=salesOrder.split("-")[1];
 	  		freightviewModel.getShipmentDataFromSalesOrder(salesIdNumberOnly).then((data)=>{
 	  			var shipmentsObject=data.shipments[0];
-
+	  			console.log('type of shipmentsObject:',shipmentsObject);
+	
 	  			if(typeof shipmentsObject!="undefined"){
-		  			var tracking=shipmentsObject.tracking.history.sort(function(a,b){
+
+		  			if(typeof shipmentsObject.tracking.history!="undefined" && typeof shipmentsObject.tracking!="undefined"){ //sometimes Sales Orders don't have tracking info (but have other info)
+	  			
+	  					var tracking=shipmentsObject.tracking.history.sort(function(a,b){
 	  					return new Date(b.createdDate)-new Date(a.createdDate);
-	  				})
+	  					})
+	  		
+	  			}
 		  			res.send({
 
 			  			carrier : shipmentsObject.rate.carrier,
