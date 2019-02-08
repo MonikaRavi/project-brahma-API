@@ -67,6 +67,8 @@ function getOnHand(itemId){
       ,[DEPTH]
       ,[MFGCATEGORY]
       ,[NETWEIGHT]
+      ,TOTALQTY
+      ,REVENUE
   FROM [InventOnHand_Std] where ITEMID = '${itemId}'`;
 
     return utilityModel.sqlQuery(ourQuery,config09);

@@ -16,7 +16,7 @@ function shipmentDataFromSalesOrder(req,res){
 
 	  		//sort the tracking.history 
 
-	  		if(typeof shipmentsObject.tracking!="undefined"){ //sometimes Sales Orders don't have tracking info (but have other info)
+	  		if(typeof shipmentsObject.tracking.history!="undefined"){ //sometimes Sales Orders don't have tracking info (but have other info)
 	  			
 	  			var tracking=shipmentsObject.tracking.history.sort(function(a,b){
 	  				return new Date(b.createdDate)-new Date(a.createdDate);
