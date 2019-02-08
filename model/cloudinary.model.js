@@ -16,11 +16,22 @@ var getPictures=function(itemId){
 		// console.log('returnedURL:',returnedURL);
 		var formatURL=returnedURL.slice(0,14)+'s'+returnedURL.slice(14);
 		var formattedURL=formatURL.slice(0,41)+'-'+formatURL.slice(41);
+		var fURL=formattedURL.slice(10,);
+		var len=fURL.length;
+		var fURL1=fURL.substring(0,len-4);
+		console.log('fURL1:',fURL1);
 
-		console.log(formattedURL);
+
+
+		// var urlObj={
+		// 	url:formattedURL.slice(10,)
+		// }
+		// console.log('url:',urlObj);
+		// console.log(formattedURL);
+
 		             
 
-		resolve(formattedURL);
+		resolve({url:fURL1});
 
 
 	});
