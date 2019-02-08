@@ -8,35 +8,20 @@ cloudinary.config({
 
 
 var getPictures=function(itemId){	
+	// console.log('itemId :',itemId);
+	return new Promise((resolve,reject)=>{	
+		var url='Asset/'+`${itemId}`+'.jpg';
+		// console.log('url:',url);
+		var returnedURL=cloudinary.image(url);
+		// console.log('returnedURL:',returnedURL);
+		var formatURL=returnedURL.slice(0,14)+'s'+returnedURL.slice(14);
+		var formattedURL=formatURL.slice(0,41)+'-'+formatURL.slice(41);
 
-	return new Promise((resolve,reject)=>{
-		
-		// cloudinary.v2.api.resources_by_tag("guitar",{ resource_type: 'raw'}, function(error, result){
-			 	
-		//  	if(error) 
-		//  		reject(error);
-		//  	else
-		//  		resolve(result);
+		console.log(formattedURL);
+		             
 
-		//  	console.log(result.resources); 
-		
-		// });
-		// cloudinary.v2.api.resources(
-  // 			{ type: 'upload'}, 
-  // 				function(error, result){console.log(result); 
-  // 					resolve(result);
-  // 				});
-			
-  		// console.log(cloudinary.image("Products/samples/CuriousKeeda-Musical-Instruments-Featured-Imahe.jpg"));
+		resolve(formattedURL);
 
-  		// cloudinary.v2.api.resources(
-  		// 	function(error, result){console.log(result)
-  		// 		resolve(result);});
-
-  		cloudinary.v2.search.expression("resource_type:image").execute(
-  function(error, result){console.log(result)
-
-  	resolve(result)});
 
 	});
 

@@ -69,7 +69,7 @@ function getOnHand(itemId){
       ,[NETWEIGHT]
       ,TOTALQTY
       ,REVENUE
-  FROM [InventOnHand_Std] where ITEMID = '${itemId}'`;
+  FROM InventOnHand_Std_Revenue where ITEMID = '${itemId}'`;
 
     return utilityModel.sqlQuery(ourQuery,config09);
 }
