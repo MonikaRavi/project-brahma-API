@@ -192,6 +192,13 @@ function getInventoryList(){
 
 }
 
+function getCloudImage(Item){
+
+  var query = `select case when ITEMID is null then 0 else 1 end as flagImage from temp_lookup_CloudImage where ITEMID ='${Item}'`;
+
+  return utilityModel.sqlQuery(query,config09);
+
+}
 
 
 module.exports={
@@ -204,5 +211,6 @@ module.exports={
   getSalesHeaders,
   getCommissionDetails,
   getCommissionAndInvoiceDetails,
-  getInventoryList
+  getInventoryList,
+  getCloudImage
 }

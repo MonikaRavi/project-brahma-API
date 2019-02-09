@@ -399,6 +399,21 @@ function inventoryList(req,res){
 	})
 }
 
+function cloudImageFlag(req,res){
+
+
+	AX2009Model.getCloudImage(req.params.itemID).then(function(result){
+
+		res.status(200).send(result.recordset);
+		
+	}, function(error){
+
+		console.log(error);
+
+		res.status(400).send(error);
+	})
+
+}
 
 
 module.exports = {
@@ -413,5 +428,6 @@ module.exports = {
 	salesHeaders,
 	commissionDetails,
 	commissionAndInvoiceDetails,
-	inventoryList
+	inventoryList,
+	cloudImageFlag
 }

@@ -60,6 +60,8 @@ var path = require('path');
 
 	router.route('/v1/AX2009/Inventory/List').get(AX2009Controller.inventoryList);
 
+	router.route('/v1/AX2009/Inventory/checkImage/:itemID').get(AX2009Controller.cloudImageFlag);
+
 	
 
 		//get sales order details from sales id for Salesforce
