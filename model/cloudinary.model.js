@@ -19,7 +19,7 @@ var getPictures=function(itemId){
 		var fURL=formattedURL.slice(10,);
 		var len=fURL.length;
 		var fURL1=fURL.substring(0,len-4);
-		console.log('fURL1:',fURL1);
+		//console.log('fURL1:',fURL1);
 
 
 
@@ -31,7 +31,7 @@ var getPictures=function(itemId){
 
 		             
 
-		resolve({url:fURL1});
+		resolve([{url:fURL1}]);
 
 
 	});
